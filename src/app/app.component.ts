@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DeviceDetectorService } from './services/device-detector.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'cococasing-storefront';
+  title = 'cococasing';
+  isMobile = false;
+
+  constructor(private deviceDetector: DeviceDetectorService) {
+    this.isMobile = this.deviceDetector.isMobile()
+  }
 }

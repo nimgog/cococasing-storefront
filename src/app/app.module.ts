@@ -1,18 +1,53 @@
+/* eslint-disable */
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ProductPageComponent } from './product-page/product-page.component';
+import { AccordionComponent } from './accordion/accordion.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { ImageSliderComponent } from './product-page/image-slider/image-slider.component';
+import { CustomHammerConfig } from './custom-hammer-config';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
+const Client = require('shopify-buy');
+
+export const client = Client.buildClient({
+  domain: 'cococasing.myshopify.com',
+  storefrontAccessToken: environment.storeFrontAT,
+});
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProductPageComponent,
+    AccordionComponent,
+    ImageSliderComponent,
   ],
   imports: [
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HammerModule,
+    HttpClientModule,
+    NgxImageZoomModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: CustomHammerConfig,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
