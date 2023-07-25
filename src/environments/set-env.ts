@@ -1,25 +1,26 @@
+
 const setEnv = () => {
-  const fs = require("fs");
+  const fs = require('fs');
   const writeFile = fs.writeFile;
   // Configure Angular `environment.ts` file path
-  const targetPath = "./src/environments/environment.prod.ts";
+  const targetPath = './src/environments/environment.prod.ts';
   // Load node modules
-  const colors = require("colors");
-  const appVersion = require("../../package.json").version;
-  require("dotenv").config({
-    path: "src/environments/.env",
+  const colors = require('colors');
+  const appVersion = require('../../package.json').version;
+  require('dotenv').config({
+    path: 'src/environments/.env',
   });
   // `environment.ts` file structure
   const envConfigFile = `export const environment = {
-  ipapiKey: '${process.env["ipapiKey"]}',
-  storeFrontAT: '${process.env["storeFrontAT"]}',
+  ipapiKey: '${process.env['ipapiKey']}',
+  storeFrontAT: '${process.env['storeFrontAT']}',
   appVersion: '${appVersion}',
   production: true,
 };
 `;
   console.log(
     colors.magenta(
-      "The file `environment.ts` will be written with the following content: \n"
+      'The file `environment.ts` will be written with the following content: \n'
     )
   );
   writeFile(targetPath, envConfigFile, (err: any) => {
