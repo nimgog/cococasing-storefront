@@ -1,44 +1,32 @@
+<div class="header p-3" *ngIf="isMobile">
+  <a href="https://cococasing.se/">
+    <img src="/assets/img/cococasing_logo.png" alt="Coco Casing" class="icon" [class.icon--mobile]="isMobile" />
+  </a>
+</div>
+
 <div class="overlay" *ngIf="!loaded">
   <mat-spinner></mat-spinner>
 </div>
 
 <div class="d-flex" [class.flex-row]="!isMobile" [class.flex-column]="isMobile">
-  <div
-    class="image-container container d-flex flex-row justify-content-center align-items-center"
-    [class.image-container--desktop]="!isMobile"
-    (swipeleft)="onSwipeLeft()"
-    (swiperight)="onSwipeRight()"
-  >
-  <div class="header header--desktop p-3" *ngIf="!isMobile">
-    <a href="https://cococasing.se/" >
-      <img src="/assets/img/cococasing_logo.png" alt="Coco Casing" class="icon" [class.icon--mobile]="isMobile">
-    </a>
-  </div>
-    <app-image-slider
-      [selectedImages]="selectedImages"
-      (imageFullScreen)="setImageFullScreen($event)"
-    ></app-image-slider>
+  <div class="image-container container d-flex flex-row justify-content-center align-items-center"
+    [class.image-container--desktop]="!isMobile" (swipeleft)="onSwipeLeft()" (swiperight)="onSwipeRight()">
+    <div class="header header--desktop p-3" *ngIf="!isMobile">
+      <a href="https://cococasing.se/">
+        <img src="/assets/img/cococasing_logo.png" alt="Coco Casing" class="icon" [class.icon--mobile]="isMobile">
+      </a>
+    </div>
+    <app-image-slider [selectedImages]="selectedImages"
+      (imageFullScreen)="setImageFullScreen($event)"></app-image-slider>
 
     <div class="tab-container" *ngIf="isMobile">
-      <div
-        class="tab"
-        [class.tab--selected]="tab === 'selection'"
-        (click)="setTab('selection')"
-      >
+      <div class="tab" [class.tab--selected]="tab === 'selection'" (click)="setTab('selection')">
         <p class="text--small m-0">Selection</p>
       </div>
-      <div
-        class="tab"
-        [class.tab--selected]="tab === 'info'"
-        (click)="setTab('info')"
-      >
+      <div class="tab" [class.tab--selected]="tab === 'info'" (click)="setTab('info')">
         <p class="text--small m-0">Product details</p>
       </div>
-      <div
-        class="tab"
-        [class.tab--selected]="tab === 'about'"
-        (click)="setTab('about')"
-      >
+      <div class="tab" [class.tab--selected]="tab === 'about'" (click)="setTab('about')">
         <p class="text--small m-0">About</p>
       </div>
     </div>
@@ -56,12 +44,9 @@
         <div class="d-flex flex-column justify-content-left">
           <h5 class="text-header--alternative-label mt-3">iPhone Model</h5>
           <div class="d-flex flex-row">
-            <div
-              *ngFor="let value of serieOptions?.values; let i = index"
-              class="model-selection-box"
+            <div *ngFor="let value of serieOptions?.values; let i = index" class="model-selection-box"
               [class.model-selection-box--selected]="selectedModel === value.value"
-              (click)="setSelectedModel(value.value)"
-            >
+              (click)="setSelectedModel(value.value)">
               <p class="text--small m-0">
                 {{ value.value }}
               </p>
@@ -72,13 +57,9 @@
         <div class="d-flex flex-column justify-content-left">
           <h5 class="text-header--alternative-label mt-3">iPhone version</h5>
           <div class="d-flex flex-row">
-            <div
-              *ngFor="let value of modelOptions?.values; let i = index"
-              class="model-selection-box"
+            <div *ngFor="let value of modelOptions?.values; let i = index" class="model-selection-box"
               [class.model-selection-box--selected]="selectedSeries === value.value"
-              [class.disabled]="!options[selectedModel].model[value.value]"
-              (click)="setSelectedSeries(value.value)"
-            >
+              [class.disabled]="!options[selectedModel].model[value.value]" (click)="setSelectedSeries(value.value)">
               <p class="text--small m-0">
                 {{ value.value }}
               </p>
@@ -90,34 +71,21 @@
           <h5 class="text-header--alternative-label mt-3 mb-0">
             Choose your color
           </h5>
-          <div
-            class="options-container d-flex flex-row w-100 justify-content-between"
-          >
-            <div
-              *ngFor="let value of colorOptions?.values; let i = index"
+          <div class="options-container d-flex flex-row w-100 justify-content-between">
+            <div *ngFor="let value of colorOptions?.values; let i = index"
               class="model-selection-box mt-2 options-background"
               ngClass="options-background--{{ value.value.toLowerCase() }}"
               [class.model-selection-box--selected]="selectedColor === value.value"
-              [class.disabled]="!options[selectedModel].colors[value.value]"
-              (click)="setSelectedColor(value.value)"
-            >
+              [class.disabled]="!options[selectedModel].colors[value.value]" (click)="setSelectedColor(value.value)">
               <p class="text--small m-0">
                 {{ colors[value.value] }}
               </p>
             </div>
           </div>
         </div>
-        <div
-          class="to-bottom d-flex justify-content-center align-items-center"
-          (click)="scrollToBottom()"
-          [class.to-bottom--hidden]="isAtBottom"
-          *ngIf="isMobile"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="1em"
-            viewBox="0 0 512 512"
-          >
+        <div class="to-bottom d-flex justify-content-center align-items-center" (click)="scrollToBottom()"
+          [class.to-bottom--hidden]="isAtBottom" *ngIf="isMobile">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
             <style>
               svg {
                 fill: #ffffff;
@@ -126,8 +94,7 @@
               }
             </style>
             <path
-              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-            />
+              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
           </svg>
         </div>
         <div class="checkout--bar d-flex flex-column">
@@ -154,24 +121,16 @@
           {{ product?.description }}
         </p>
         <div class="my-2">
-          <app-accordion
-            title="What's included?"
-            information="1x Premium Screen protector, 1x Premium Lens protector, 1x Case"
-          ></app-accordion>
+          <app-accordion title="What's included?"
+            information="1x Premium Screen protector, 1x Premium Lens protector, 1x Case"></app-accordion>
         </div>
         <div class="my-2">
-          <app-accordion
-            class="my-2"
-            title="How about shipping?"
-            information="We ship for free, currently we ship to most of Europe."
-          ></app-accordion>
+          <app-accordion class="my-2" title="How about shipping?"
+            information="We ship for free, currently we ship to most of Europe."></app-accordion>
         </div>
         <div class="my-2">
-          <app-accordion
-            class="my-2"
-            title="hmm, any special Features?"
-            information="Our case is designed with the modern user in mind. It's compatible with wireless charging systems, including MagSafe. Crafted for durability and functionality, the case offers enhanced protection for both your camera lens and screen. It features an ultra-slim, 1.2mm profile for a seamless fit, while its soft, flexible surface provides an anti-slip grip. For additional security, the case also ensures superior drop and scratch protection. Experience optimal phone protection without sacrificing style or convenience."
-          ></app-accordion>
+          <app-accordion class="my-2" title="hmm, any special Features?"
+            information="Our case is designed with the modern user in mind. It's compatible with wireless charging systems, including MagSafe. Crafted for durability and functionality, the case offers enhanced protection for both your camera lens and screen. It features an ultra-slim, 1.2mm profile for a seamless fit, while its soft, flexible surface provides an anti-slip grip. For additional security, the case also ensures superior drop and scratch protection. Experience optimal phone protection without sacrificing style or convenience."></app-accordion>
         </div>
         <div class="checkout--bar d-flex flex-column">
           <div class="delimiter w-100"></div>
@@ -209,20 +168,14 @@
         </p>
         <div class="review my-3">
           <a href="https://uk.trustpilot.com/review/cococasing.se">
-            <img
-              class="review__img"
-              src="assets/img/reviews.png"
-              alt="Check out our reviews"
-            />
+            <img class="review__img" src="assets/img/reviews.png" alt="Check out our reviews" />
           </a>
         </div>
         <div class="d-flex flex-row">
           <div class="about-image">
             <img src="assets/img/nadi_nimer.png" alt="about us" />
           </div>
-          <div
-            class="d-flex flex-column align-items-center justify-content-center w-100"
-          >
+          <div class="d-flex flex-column align-items-center justify-content-center w-100">
             <p class="font-weight-thin">All the best</p>
             <p class="font-weight-thin">Nadi & Nimer</p>
           </div>
@@ -266,12 +219,9 @@
         <div class="d-flex flex-column justify-content-left">
           <h5 class="text-header--alternative-label mt-3">iPhone Model</h5>
           <div class="d-flex flex-row">
-            <div
-              *ngFor="let value of serieOptions?.values; let i = index"
-              class="model-selection-box"
+            <div *ngFor="let value of serieOptions?.values; let i = index" class="model-selection-box"
               [class.model-selection-box--selected]="selectedModel === value.value"
-              (click)="setSelectedModel(value.value)"
-            >
+              (click)="setSelectedModel(value.value)">
               <p class="text--small m-0">
                 {{ value.value }}
               </p>
@@ -282,13 +232,9 @@
         <div class="d-flex flex-column justify-content-left">
           <h5 class="text-header--alternative-label mt-3">iPhone version</h5>
           <div class="d-flex flex-row">
-            <div
-              *ngFor="let value of modelOptions?.values; let i = index"
-              class="model-selection-box"
+            <div *ngFor="let value of modelOptions?.values; let i = index" class="model-selection-box"
               [class.model-selection-box--selected]="selectedSeries === value.value"
-              [class.disabled]="!options[selectedModel].model[value.value]"
-              (click)="setSelectedSeries(value.value)"
-            >
+              [class.disabled]="!options[selectedModel].model[value.value]" (click)="setSelectedSeries(value.value)">
               <p class="text--small m-0">
                 {{ value.value }}
               </p>
@@ -300,34 +246,21 @@
           <h5 class="text-header--alternative-label mt-3 mb-0">
             Choose your color
           </h5>
-          <div
-            class="options-container d-flex flex-row w-100 justify-content-between"
-          >
-            <div
-              *ngFor="let value of colorOptions?.values; let i = index"
+          <div class="options-container d-flex flex-row w-100 justify-content-between">
+            <div *ngFor="let value of colorOptions?.values; let i = index"
               class="model-selection-box mt-2 options-background"
               ngClass="options-background--{{ value.value.toLowerCase() }}"
               [class.model-selection-box--selected]="selectedColor === value.value"
-              [class.disabled]="!options[selectedModel].colors[value.value]"
-              (click)="setSelectedColor(value.value)"
-            >
+              [class.disabled]="!options[selectedModel].colors[value.value]" (click)="setSelectedColor(value.value)">
               <p class="text--small m-0">
                 {{ colors[value.value] }}
               </p>
             </div>
           </div>
         </div>
-        <div
-          class="to-bottom d-flex justify-content-center align-items-center"
-          (click)="scrollToBottom()"
-          [class.to-bottom--hidden]="isAtBottom"
-          *ngIf="isMobile"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="1em"
-            viewBox="0 0 512 512"
-          >
+        <div class="to-bottom d-flex justify-content-center align-items-center" (click)="scrollToBottom()"
+          [class.to-bottom--hidden]="isAtBottom" *ngIf="isMobile">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
             <style>
               svg {
                 fill: #ffffff;
@@ -336,8 +269,7 @@
               }
             </style>
             <path
-              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-            />
+              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
           </svg>
         </div>
         <div class="checkout--bar d-flex flex-column">
@@ -373,24 +305,16 @@
             {{ product?.description }}
           </p>
           <div class="my-2">
-            <app-accordion
-              title="What's included?"
-              information="1x Premium Screen protector, 1x Premium Lens protector, 1x Case"
-            ></app-accordion>
+            <app-accordion title="What's included?"
+              information="1x Premium Screen protector, 1x Premium Lens protector, 1x Case"></app-accordion>
           </div>
           <div class="my-2">
-            <app-accordion
-              class="my-2"
-              title="How about shipping?"
-              information="We ship for free, currently we ship to most of Europe."
-            ></app-accordion>
+            <app-accordion class="my-2" title="How about shipping?"
+              information="We ship for free, currently we ship to most of Europe."></app-accordion>
           </div>
           <div class="my-2">
-            <app-accordion
-              class="my-2"
-              title="hmm, any special Features?"
-              information="Our case is designed with the modern user in mind. It's compatible with wireless charging systems, including MagSafe. Crafted for durability and functionality, the case offers enhanced protection for both your camera lens and screen. It features an ultra-slim, 1.2mm profile for a seamless fit, while its soft, flexible surface provides an anti-slip grip. For additional security, the case also ensures superior drop and scratch protection. Experience optimal phone protection without sacrificing style or convenience."
-            ></app-accordion>
+            <app-accordion class="my-2" title="hmm, any special Features?"
+              information="Our case is designed with the modern user in mind. It's compatible with wireless charging systems, including MagSafe. Crafted for durability and functionality, the case offers enhanced protection for both your camera lens and screen. It features an ultra-slim, 1.2mm profile for a seamless fit, while its soft, flexible surface provides an anti-slip grip. For additional security, the case also ensures superior drop and scratch protection. Experience optimal phone protection without sacrificing style or convenience."></app-accordion>
           </div>
           <div class="checkout--bar d-flex flex-column">
             <div class="delimiter w-100"></div>
@@ -437,20 +361,14 @@
           </p>
           <div class="review my-3">
             <a href="https://uk.trustpilot.com/review/cococasing.se">
-              <img
-                class="review__img"
-                src="assets/img/reviews.png"
-                alt="Check out our reviews"
-              />
+              <img class="review__img" src="assets/img/reviews.png" alt="Check out our reviews" />
             </a>
           </div>
           <div class="d-flex flex-row">
             <div class="about-image">
               <img src="assets/img/nadi_nimer.png" alt="about us" />
             </div>
-            <div
-              class="d-flex flex-column align-items-center justify-content-center w-100"
-            >
+            <div class="d-flex flex-column align-items-center justify-content-center w-100">
               <p class="font-weight-thin">All the best</p>
               <p class="font-weight-thin">Nadi & Nimer</p>
             </div>
@@ -488,16 +406,10 @@
 
 <div *ngIf="showFullScreen" class="product-image--fullscreen">
   <div class="close d-flex align-items-center justify-content-center">
-    <svg
-      class="close--X"
-      (click)="closeFullScreen()"
-      xmlns="http://www.w3.org/2000/svg"
-      height="1em"
-      viewBox="0 0 384 512"
-    >
+    <svg class="close--X" (click)="closeFullScreen()" xmlns="http://www.w3.org/2000/svg" height="1em"
+      viewBox="0 0 384 512">
       <path
-        d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"
-      />
+        d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z" />
     </svg>
   </div>
   <lib-ngx-image-zoom [thumbImage]="imageFullScreen.src"></lib-ngx-image-zoom>

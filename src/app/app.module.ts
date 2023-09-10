@@ -1,6 +1,10 @@
 /* eslint-disable */
 import { NgModule } from '@angular/core';
-import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  HAMMER_GESTURE_CONFIG,
+  HammerModule,
+} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,8 +18,9 @@ import { ImageSliderComponent } from './product-page/image-slider/image-slider.c
 import { CustomHammerConfig } from './custom-hammer-config';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HomePageComponent } from './home-page/home-page.component';
+import { ProductSliderComponent } from './product-slider/product-slider.component';
 
 const Client = require('shopify-buy');
 
@@ -30,6 +35,8 @@ export const client = Client.buildClient({
     ProductPageComponent,
     AccordionComponent,
     ImageSliderComponent,
+    HomePageComponent,
+    ProductSliderComponent,
   ],
   imports: [
     MatExpansionModule,

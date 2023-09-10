@@ -21,6 +21,7 @@ import { DeviceDetectorService } from '../services/device-detector.service';
 export class ProductPageComponent implements OnInit, OnDestroy {
   @ViewChild(ImageSliderComponent) imageSliderComponent!: ImageSliderComponent;
 
+  title = 'cococasing';
   product!: Product;
   colors = colors;
   currency = '';
