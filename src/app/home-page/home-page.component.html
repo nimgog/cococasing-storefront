@@ -178,10 +178,14 @@
       </span>
     </div>
 
-    <div class="py-[32px] grid grid-cols-3">
-      <div *ngFor="let image of instagramGalleryImages" class="aspect-w-1 aspect-h-1">
-        <img class="object-cover" [src]="image.src" [alt]="image.alt" />
-      </div>
+    <div class="py-[32px]">
+      <a href="https://www.instagram.com/coco.casing/" target="_blank" rel="noopener noreferrer">
+        <div class="grid grid-cols-3">
+          <div *ngFor="let image of instagramGalleryImages" class="aspect-w-1 aspect-h-1">
+            <img class="object-cover" [src]="image.src" [alt]="image.alt" />
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 
@@ -278,9 +282,15 @@
         </div>
 
         <div class="flex justify-around px-[10px]">
-          <img src="/assets/img/home/social_media/instagram.png" alt="Instagram" />
-          <img src="/assets/img/home/social_media/tiktok.png" alt="TikTok" />
-          <img src="/assets/img/home/social_media/youtube.png" alt="YouTube" />
+          <a href="https://www.instagram.com/coco.casing/" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/img/home/social_media/instagram.png" alt="Instagram" />
+          </a>
+          <a href="https://www.tiktok.com/@cococasing" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/img/home/social_media/tiktok.png" alt="TikTok" />
+          </a>
+          <a href="https://www.youtube.com/@cococasing" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/img/home/social_media/youtube.png" alt="YouTube" />
+          </a>
         </div>
       </div>
     </div>
