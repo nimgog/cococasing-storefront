@@ -1,6 +1,6 @@
 <app-navbar *ngIf="useNewLayout"></app-navbar>
 
-<div *ngIf="useNewLayout; else oldLayout">
+<div *ngIf="useNewLayout; else oldLayout" class="bg-white">
   <router-outlet></router-outlet>
 </div>
 <ng-template #oldLayout>
