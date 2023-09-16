@@ -8,7 +8,7 @@ import { filter, map } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  showNavAndFooter = false;
+  useNewLayout = false;
 
   constructor(private readonly router: Router) {}
 
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
         map((event) => event as NavigationStart)
       )
       .subscribe(
-        (event) => (this.showNavAndFooter = !event.url.startsWith('/products'))
+        (event) => (this.useNewLayout = !event.url.startsWith('/products'))
       );
   }
 }

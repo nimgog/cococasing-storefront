@@ -1,5 +1,11 @@
-<app-navbar *ngIf="showNavAndFooter"></app-navbar>
+<app-navbar *ngIf="useNewLayout"></app-navbar>
 
-<router-outlet></router-outlet>
+<div *ngIf="useNewLayout; else oldLayout">
+  <router-outlet></router-outlet>
+</div>
+<ng-template #oldLayout>
+  <router-outlet></router-outlet>
+</ng-template>
 
-<app-footer *ngIf="showNavAndFooter"></app-footer>
+<app-news-signup *ngIf="useNewLayout"></app-news-signup>
+<app-footer *ngIf="useNewLayout"></app-footer>
