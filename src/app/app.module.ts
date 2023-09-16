@@ -23,7 +23,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ProductSliderComponent } from './home-page/product-slider/product-slider.component';
 import { FooterComponent } from './footer/footer.component';
 import { InstaGalleryComponent } from './home-page/insta-gallery/insta-gallery.component';
-import { NewsSignupComponent } from './home-page/news-signup/news-signup.component';
+import { NewsSignupComponent } from './news-signup/news-signup.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
