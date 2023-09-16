@@ -23,6 +23,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ProductSliderComponent } from './home-page/product-slider/product-slider.component';
 import { FooterComponent } from './footer/footer.component';
 import { InstaGalleryComponent } from './home-page/insta-gallery/insta-gallery.component';
+import { NewsSignupComponent } from './home-page/news-signup/news-signup.component';
 
 const Client = require('shopify-buy');
 
@@ -41,6 +42,7 @@ export const client = Client.buildClient({
     ProductSliderComponent,
     FooterComponent,
     InstaGalleryComponent,
+    NewsSignupComponent,
   ],
   imports: [
     MatExpansionModule,

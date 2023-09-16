@@ -12,7 +12,9 @@
     </div>
     <div class="flex justify-between align-items-center h-[72px] px-1.5">
       <img src="/assets/img/home/nav/menu.png" alt="Menu" />
-      <img src="/assets/img/home/nav/coco_logo_dark.png" alt="Coco Casing logo" />
+      <a routerLink="/">
+        <img src="/assets/img/home/nav/coco_logo_dark.png" alt="Coco Casing logo" />
+      </a>
       <img src="/assets/img/home/nav/shopping_bag.png" alt="Shopping bag" />
     </div>
   </div>
@@ -177,29 +179,7 @@
 
   <app-insta-gallery></app-insta-gallery>
 
-  <!-- Sign Up -->
-  <div class="bg-coco-orange px-[44px] py-[24px] flex flex-col gap-y-[16px]">
-    <div>
-      <span class="block text-center text-white text-uppercase text-[24px] font-bold !font-anekt leading-[32px]">
-        Join us & save
-      </span>
-
-      <span class="block text-center text-white text-[16px] font-roboto leading-[24px]">
-        Sign up and stay up to date on all the latest news.
-      </span>
-    </div>
-
-    <div class="flex justify-center">
-      <form class="grow flex items-center max-w-[250px] bg-white rounded-[8px]">
-        <input
-          class="grow px-[6px] py-[8px] rounded-l-[8px] placeholder-[#111827] text-[16px] font-extralight !font-anekb leading-[20px] !outline-none"
-          placeholder="Your Email*" />
-        <button class="shrink-0 flex justify-center items-center w-[40px] h-full rounded-r-[8px]" type="submit">
-          <img class="w-8 h-8" src="/assets/img/home/arrow_right.svg" alt="Sign up" />
-        </button>
-      </form>
-    </div>
-  </div>
+  <app-news-signup></app-news-signup>
 
   <app-footer></app-footer>
 </div>

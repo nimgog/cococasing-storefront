@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SlideProduct } from '../product-slider/slide-product';
+import { SlideProduct } from './product-slider/slide-product';
 
 @Component({
   selector: 'app-home-page',
