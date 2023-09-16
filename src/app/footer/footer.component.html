@@ -1,0 +1,96 @@
+<div class="flex justify-center px-2 py-8 bg-coco-dark-blue">
+  <div class="grow flex flex-col max-w-centered-content">
+    <div class="grow flex flex-col sm:flex-row sm:justify-between gap-y-8">
+      <div class="grid grid-cols-2 gap-x-20 sm:gap-x-16 lg:gap-x-24 px-2 sm:pr-0 lg:pl-0 pb-8">
+        <div class="text-uppercase">
+          <span class="text-[#F9FAFB] text-[14px] font-medium !font-anekt leading-[20px]">
+            About
+          </span>
+
+          <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#E5E7EB] text-[12px] font-roboto leading-[16px]">
+            <li>
+              <span class="whitespace-nowrap">About Coco Casing&trade;</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">FAQ</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">Privacy Policy</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">Refund Policy</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">Shipping Policy</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">Terms of Service</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-uppercase">
+          <span class=" text-[#F9FAFB] text-[14px] font-medium !font-anekt leading-[20px]">
+            Pages
+          </span>
+
+          <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#E5E7EB] text-[12px] font-roboto leading-[16px]">
+            <li>
+              <span class="whitespace-nowrap">Home</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">Products</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">Contact</span>
+            </li>
+            <li>
+              <span class="whitespace-nowrap">Blog</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grow flex justify-between md:gap-x-10 lg:gap-x-24 px-2 sm:px-0 pb-8">
+        <div class="shrink-0 text-[#9CA3AF] text-uppercase text-[12px] font-roboto leading-[16px]">
+          <span class="block whitespace-nowrap">Shadida Trading Company AB</span>
+          <span class="block whitespace-nowrap">559356-9345</span>
+          <span class="block whitespace-nowrap">Kristianstadsgatan 10,</span>
+          <span class="block whitespace-nowrap">21423 Malmö, Sweden.</span>
+        </div>
+
+        <div class="grow flex flex-col-reverse md:flex-row justify-end sm:justify-center items-stretch gap-y-[2px]">
+          <div class="shrink-0 flex justify-center gap-x-8 md:gap-x-2 lg:gap-x-8 px-[10px] lg:pl-0 lg:pr-0">
+            <a href="https://www.instagram.com/coco.casing/" target="_blank" rel="noopener noreferrer">
+              <img src="/assets/img/home/social_media/instagram.png" alt="Instagram" />
+            </a>
+
+            <a href="https://www.tiktok.com/@cococasing" target="_blank" rel="noopener noreferrer">
+              <img src="/assets/img/home/social_media/tiktok.png" alt="TikTok" />
+            </a>
+
+            <a href="https://www.youtube.com/@cococasing" target="_blank" rel="noopener noreferrer">
+              <img src="/assets/img/home/social_media/youtube.png" alt="YouTube" />
+            </a>
+          </div>
+
+          <div class="shrink-0 md:grow flex md:flex-col justify-center">
+            <!-- Ask Nimer for the large logo (svg would be the best) -->
+            <img src="/assets/img/home/coco_logo_light_small.png" alt="Coco Casing logo" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center border-t border-[#E5E7EB] text-white">
+      <div class="flex flex-col">
+        <div class="flex justify-center gap-x-2 py-4">
+          <img *ngFor="let image of paymentOptionImages" [src]="image.src" [alt]="image.alt" class="w-8 lg:w-9" />
+        </div>
+        <span class="block text-center text-[#9CA3AF] text-[12px] font-medium !font-anekt leading-[20px]">
+          &copy;{{ currentYear }}, Coco-Casing
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

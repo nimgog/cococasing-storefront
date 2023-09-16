@@ -21,6 +21,8 @@ import { environment } from 'src/environments/environment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductSliderComponent } from './product-slider/product-slider.component';
+import { FooterComponent } from './footer/footer.component';
+import { InstaGalleryComponent } from './home-page/insta-gallery/insta-gallery.component';
 
 const Client = require('shopify-buy');
 
@@ -37,6 +39,8 @@ export const client = Client.buildClient({
     ImageSliderComponent,
     HomePageComponent,
     ProductSliderComponent,
+    FooterComponent,
+    InstaGalleryComponent,
   ],
   imports: [
     MatExpansionModule,

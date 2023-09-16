@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  important: true,
   content: [
     './src/app/home-page/**/*.{html,ts}',
     './src/app/product-slider/**/*.{html,ts}',
@@ -15,6 +16,9 @@ module.exports = {
         anekb: ['"Anek Bangla"', 'sans-serif'],
         anekt: ['"Anek Telugu"', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif'],
+      },
+      maxWidth: {
+        'centered-content': '1264px',
       },
     },
   },

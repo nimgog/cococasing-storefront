@@ -1,0 +1,19 @@
+<div class="flex justify-center px-[8px]">
+  <div class="grow flex flex-col max-w-centered-content">
+    <div class="py-[4px] border-b border-[#D1D5DB]">
+      <span class="text-[#1F2937] text-uppercase text-[16px] font-medium !font-anekt">
+        #Coco-Casing
+      </span>
+    </div>
+
+    <div class="py-[32px]">
+      <a href="https://www.instagram.com/coco.casing/" target="_blank" rel="noopener noreferrer">
+        <div class="grid grid-cols-3">
+          <div *ngFor="let image of instaGalleryImages" class="aspect-w-1 aspect-h-1">
+            <img class="object-cover" [src]="image.src" [alt]="image.alt" />
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
