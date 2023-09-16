@@ -2,8 +2,9 @@
 module.exports = {
   important: true,
   content: [
-    './src/app/home-page/**/*.{html,ts}',
-    './src/app/product-slider/**/*.{html,ts}',
+    'src/app/**/*.{html,ts}',
+    '!src/app/accordion/**/*.{html,ts}',
+    '!src/app/product-page/**/*.{html,ts}',
   ],
   theme: {
     extend: {

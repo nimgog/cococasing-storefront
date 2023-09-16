@@ -20,7 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HomePageComponent } from './home-page/home-page.component';
-import { ProductSliderComponent } from './product-slider/product-slider.component';
+import { ProductSliderComponent } from './home-page/product-slider/product-slider.component';
 import { FooterComponent } from './footer/footer.component';
 import { InstaGalleryComponent } from './home-page/insta-gallery/insta-gallery.component';
 
