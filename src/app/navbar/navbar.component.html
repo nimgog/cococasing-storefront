@@ -8,20 +8,20 @@
     </div>
   </div>
 
-  <div class="flex justify-center">
+  <div class="flex justify-center bg-white">
     <div class="grow flex flex-col max-w-centered-content">
       <!-- TODO: Check what's the desired height in the new design: 75 vs 61 px -->
-      <div class="flex justify-between align-items-center h-[61px] px-1.5">
-        <button class="md:hidden">
+      <div class="grow flex justify-between align-items-center h-[61px] px-1.5">
+        <button class="lg:hidden">
           <img src="/assets/img/home/nav/menu.png" alt="Menu" />
         </button>
 
-        <div class="flex items-center gap-x-4">
+        <div class="shrink-0 flex items-center gap-x-4">
           <a routerLink="/">
             <img src="/assets/img/home/nav/coco_logo_dark.png" alt="Coco Casing logo" />
           </a>
 
-          <div class="hidden md:flex gap-x-4 text-coco-dark-blue text-[16px] font-medium font-roboto leading-[24px]">
+          <div class="hidden lg:flex gap-x-4 text-coco-dark-blue text-[16px] font-medium font-roboto leading-[24px]">
             <a routerLink="/">
               <span class="text-uppercase">iPhone Cases</span>
             </a>
@@ -40,9 +40,21 @@
           </div>
         </div>
 
-        <button>
-          <img src="/assets/img/home/nav/shopping_bag.png" alt="Shopping bag" />
-        </button>
+        <div class="lg:grow flex justify-end items-center gap-x-4">
+          <!-- Spacer to force the search to shrink when it'd be too close to the nav links -->
+          <div class="hidden lg:block shrink-0 w-10"></div>
+
+          <form class="grow hidden lg:flex gap-x-2.5 max-w-[235px] px-2 py-0.5 bg-coco-light-gray rounded-2xl">
+            <button class="shrink-0 rounder-l-2xl" type="submit">
+              <img src="/assets/img/home/nav/search.svg" alt="Search" />
+            </button>
+            <input class="grow bg-coco-light-gray rounded-r-2xl !outline-none" type="search" placeholder="Search ..." />
+          </form>
+
+          <button class="shrink-0">
+            <img src="/assets/img/home/nav/shopping_bag.png" alt="Shopping bag" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
