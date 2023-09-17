@@ -27,6 +27,7 @@ import { NewsSignupComponent } from './news-signup/news-signup.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
+import { BlogTeaserComponent } from './home-page/blog-teaser/blog-teaser.component';
 
 const Client = require('shopify-buy');
 
@@ -49,6 +50,7 @@ export const client = Client.buildClient({
     NavbarComponent,
     NotFoundPageComponent,
     AboutPageComponent,
+    BlogTeaserComponent,
   ],
   imports: [
     MatExpansionModule,
