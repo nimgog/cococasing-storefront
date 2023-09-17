@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SlideProduct } from './product-slider/slide-product';
+import { FeaturedProduct } from './featured-product';
 
 @Component({
   selector: 'app-home-page',
@@ -7,7 +7,7 @@ import { SlideProduct } from './product-slider/slide-product';
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent {
-  firstSliderProduct: SlideProduct = {
+  firstSliderProduct: FeaturedProduct = {
     id: 'first',
     name: 'Forest Green',
     description: 'A green guard for your gadget',
@@ -16,7 +16,7 @@ export class HomePageComponent {
     devisa: 'SEK',
   };
 
-  secondSliderProduct: SlideProduct = {
+  secondSliderProduct: FeaturedProduct = {
     id: 'second',
     name: 'French Lavender',
     description: 'A lavender haven for you',

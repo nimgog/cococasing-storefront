@@ -1,4 +1,4 @@
-export interface SlideProduct {
+export interface FeaturedProduct {
   id: string;
   name: string;
   description: string;

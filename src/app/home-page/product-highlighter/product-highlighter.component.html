@@ -1,0 +1,43 @@
+<div class="flex gap-x-1">
+  <div *ngFor="let product of products" class="lg:flex w-1/2 h-[504px] px-4 pt-2 pb-4 bg-coco-dark-blue rounded-lg">
+    <div class="grow hidden lg:flex justify-center items-center">
+      <img class="object-contain" [src]="product.imageUrl" [alt]="product.name" />
+    </div>
+
+    <div class="flex flex-col items-center gap-y-0.5 h-full">
+      <div [ngClass]="[isNewProduct(product) ? 'bg-coco-orange' : 'bg-[#DC2626]']"
+        class="flex justify-center w-[81px] px-2 py-1">
+        <span
+          class="text-white text-center text-uppercase text-[12px] font-medium !font-anekt leading-7 tracking-[1.2px]">
+          {{ getProductAnnouncement(product) }}
+        </span>
+      </div>
+
+      <div class="flex lg:hidden justify-center h-[288px]">
+        <img class="object-contain" [src]="product.imageUrl" [alt]="product.name" />
+      </div>
+
+      <div class="grow flex flex-col justify-end lg:justify-center items-center lg:w-[243px] h-full">
+        <div class="flex flex-col items-center w-full lg:pt-4 pb-2 lg:border-l lg:border-[#F3F4F6]">
+          <span
+            class="text-white text-uppercase text-[14px] lg:text-[18px] font-medium !font-anekt leading-[20px] tracking-[1.4px] lg:tracking-[1.8px]">
+            {{ product.name }}
+          </span>
+          <span class="pt-1 pb-2 lg:pb-2.5 text-[#E5E7EB] text-[12px] font-roboto leading-[16px] tracking-[1.2px]">
+            {{ product.description }}
+          </span>
+          <span
+            class="text-white text-uppercase text-[14px] lg:text-[18px] font-semibold !font-anekt leading-[20px] lg:leading-[28px] tracking-[1.4px] lg:tracking-[1.8px]">
+            {{ product.price }} {{ product.devisa }}
+          </span>
+        </div>
+
+        <button class="bg-coco-orange w-[143px] h-[34px] lg:mt-2.5 px-8 py-1 rounded">
+          <span class="text-white text-uppercase text-[14px] font-semibold !font-anekb">
+            Add to cart
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

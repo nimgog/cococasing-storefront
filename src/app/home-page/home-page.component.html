@@ -1,7 +1,7 @@
 <!-- TODO: Go through px values and turn them to rem -->
 <!-- TODO: Do font sizing + re-ask Nimer if Roboto can be overriden with anekb or anekt ('!' can be removed now) -->
+<!-- TODO: Typo in ALL components needs to be re-checked, PX->REM and design-wise as well -->
 
-<!-- Hero -->
 <div>
   <div class="h-[466px] bg-coco-light-gray bg-[url('/assets/img/home-page/hero-cases.png')] bg-cover bg-no-repeat">
   </div>
@@ -28,18 +28,21 @@
 
 <app-blog-teaser></app-blog-teaser>
 
-<!-- Trending -->
-<div class="flex justify-center pt-[64px] px-[8px]">
+<div class="flex justify-center pt-16 md:pt-24 lg:pt-32 px-2">
   <div class="grow flex flex-col max-w-centered-content">
-    <div class="py-[4px] border-b border-[#D1D5DB]">
+    <div class="py-1 border-b border-[#D1D5DB]">
+      <!-- TODO: Just like for the other headings, re-check the new design for font changes -->
       <span class="text-[#111827] text-uppercase text-[18px] !font-anekt leading-[28px]">
         New at Coco-Casing
       </span>
     </div>
 
-    <div class="pt-[32px]">
-      <app-product-slider [firstProduct]="firstSliderProduct" [secondProduct]="secondSliderProduct"
+    <div class="pt-8">
+      <app-product-slider class="sm:hidden" [firstProduct]="firstSliderProduct" [secondProduct]="secondSliderProduct"
         [allowSlideBeyondEnds]="false"></app-product-slider>
+
+      <app-product-highlighter class="hidden sm:block" [firstProduct]="firstSliderProduct"
+        [secondProduct]="secondSliderProduct"></app-product-highlighter>
     </div>
   </div>
 </div>

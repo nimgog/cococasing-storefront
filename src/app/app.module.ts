@@ -32,6 +32,7 @@ import { BlogPageComponent } from './blog-page/blog-page.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { ProductCategoriesComponent } from './home-page/product-categories/product-categories.component';
+import { ProductHighlighterComponent } from './home-page/product-highlighter/product-highlighter.component';
 
 const Client = require('shopify-buy');
 
@@ -59,6 +60,7 @@ export const client = Client.buildClient({
     FaqPageComponent,
     ContactPageComponent,
     ProductCategoriesComponent,
+    ProductHighlighterComponent,
   ],
   imports: [
     MatExpansionModule,

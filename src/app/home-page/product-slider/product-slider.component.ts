@@ -6,7 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
-import { SlideProduct } from './slide-product';
+import { FeaturedProduct } from '../featured-product';
 
 @Component({
   selector: 'app-product-slider',
@@ -46,15 +46,15 @@ import { SlideProduct } from './slide-product';
 })
 export class ProductSliderComponent implements OnInit {
   @Input()
-  firstProduct!: SlideProduct;
+  firstProduct!: FeaturedProduct;
 
   @Input()
-  secondProduct!: SlideProduct;
+  secondProduct!: FeaturedProduct;
 
   @Input()
   allowSlideBeyondEnds = true;
 
-  products!: SlideProduct[];
+  products!: FeaturedProduct[];
   currentProductIndex = 0;
 
   ngOnInit(): void {
@@ -80,15 +80,11 @@ export class ProductSliderComponent implements OnInit {
     );
   }
 
-  isNewProduct(product: SlideProduct) {
+  isNewProduct(product: FeaturedProduct) {
     return !product.discount;
   }
 
-  isDiscountedProduct(product: SlideProduct) {
-    return !!product.discount;
-  }
-
-  getProductAnnouncement(product: SlideProduct) {
+  getProductAnnouncement(product: FeaturedProduct) {
     return !product.discount
       ? 'New in'
       : `${product.discount.discountPercent}% sale`;
