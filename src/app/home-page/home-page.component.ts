@@ -11,7 +11,7 @@ export class HomePageComponent {
     id: 'first',
     name: 'Forest Green',
     description: 'A green guard for your gadget',
-    imageUrl: '/assets/img/home/promoted_products/forest_green_case.png',
+    imageUrl: '/assets/img/home-page/forest-green-case.png',
     price: 599,
     devisa: 'SEK',
   };
@@ -20,7 +20,7 @@ export class HomePageComponent {
     id: 'second',
     name: 'French Lavender',
     description: 'A lavender haven for you',
-    imageUrl: '/assets/img/home/promoted_products/french_lavender_case.png',
+    imageUrl: '/assets/img/home-page/french-lavender-case.png',
     discount: {
       discountPercent: 30,
       oldPrice: 599,

@@ -21,10 +21,10 @@ import { environment } from 'src/environments/environment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ProductSliderComponent } from './home-page/product-slider/product-slider.component';
-import { FooterComponent } from './footer/footer.component';
+import { PageFooterComponent } from './page-footer/page-footer.component';
 import { InstaGalleryComponent } from './home-page/insta-gallery/insta-gallery.component';
-import { NewsSignupComponent } from './news-signup/news-signup.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { PageNewsSignupComponent } from './page-news-signup/page-news-signup.component';
+import { PageHeaderComponent } from './page-header/page-header.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
 import { BlogTeaserComponent } from './home-page/blog-teaser/blog-teaser.component';
@@ -48,10 +48,10 @@ export const client = Client.buildClient({
     ImageSliderComponent,
     HomePageComponent,
     ProductSliderComponent,
-    FooterComponent,
+    PageFooterComponent,
     InstaGalleryComponent,
-    NewsSignupComponent,
-    NavbarComponent,
+    PageNewsSignupComponent,
+    PageHeaderComponent,
     NotFoundPageComponent,
     AboutPageComponent,
     BlogTeaserComponent,

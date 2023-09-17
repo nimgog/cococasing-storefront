@@ -1,7 +1,7 @@
 <!-- TODO: Consider adding Content-Security-Policy -->
 <!-- TODO: Revisit spacings and alignments in the design that might look strange -->
 <!-- TODO: Think about how could h1, h2, ... inherited styles be reset via Tailwind -->
-<app-navbar *ngIf="useNewLayout"></app-navbar>
+<app-page-header *ngIf="useNewLayout"></app-page-header>
 
 <div *ngIf="useNewLayout; else oldLayout" class="bg-white">
   <router-outlet></router-outlet>
@@ -10,5 +10,5 @@
   <router-outlet></router-outlet>
 </ng-template>
 
-<app-news-signup *ngIf="useNewLayout"></app-news-signup>
-<app-footer *ngIf="useNewLayout"></app-footer>
+<app-page-news-signup *ngIf="useNewLayout"></app-page-news-signup>
+<app-page-footer *ngIf="useNewLayout"></app-page-footer>

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class InstaGalleryComponent {
   instaGalleryImages: { src: string; alt: string }[] = [...Array(9)].map(
     (_, i) => ({
-      src: `/assets/img/home/instagram_gallery/ig_${i + 1}.png`,
+      src: `/assets/img/home-page/insta-gallery/ig-${i + 1}.png`,
       alt: `Instagram image #${i + 1}`,
     })
   );

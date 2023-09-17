@@ -18,34 +18,35 @@ export class ProductCategoriesComponent {
       name: 'The Coco Package',
       description:
         'A phone case package that can keep up with your active life.',
-      imageUrl: '/assets/img/home/product_categories/coco_package.jpg',
+      imageUrl: '/assets/img/home-page/product-categories/coco-package.jpg',
       pageUrl: '/', // TODO: Add link
     },
     {
       name: 'The Package',
       description: 'The package for casual activities for him and her.',
-      imageUrl: '/assets/img/home/product_categories/package.png',
+      imageUrl: '/assets/img/home-page/product-categories/package.png',
       pageUrl: '/', // TODO: Add link
     },
     {
       name: 'The Glass Kit',
       description: 'Reinforce your outer structure with the glass kit.',
-      imageUrl: '/assets/img/home/product_categories/glass_kit.png',
+      imageUrl: '/assets/img/home-page/product-categories/glass-kit.png',
       pageUrl: '/', // TODO: Add link
     },
     {
       name: 'Cases',
-      imageUrl: '/assets/img/home/product_categories/cases.png',
+      imageUrl: '/assets/img/home-page/product-categories/cases.png',
       pageUrl: '/', // TODO: Add link
     },
     {
       name: 'Screen Protectors',
-      imageUrl: '/assets/img/home/product_categories/screen_protectors.png',
+      imageUrl:
+        '/assets/img/home-page/product-categories/screen-protectors.png',
       pageUrl: '/', // TODO: Add link
     },
     {
       name: 'Lenses',
-      imageUrl: '/assets/img/home/product_categories/lenses.png',
+      imageUrl: '/assets/img/home-page/product-categories/lenses.png',
       pageUrl: '/', // TODO: Add link
     },
   ];
