@@ -1,12 +1,31 @@
 import { Component } from '@angular/core';
 
+interface FooterLink {
+  title: string;
+  url: string;
+}
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-  currentYear = new Date().getFullYear();
+  leftColumnLinks: FooterLink[] = [
+    { title: 'About Coco Casing&trade;', url: '/about' },
+    { title: 'FAQ', url: '/faq' },
+    { title: 'Privacy Policy', url: '/' }, // TODO: Add URL
+    { title: 'Refund Policy', url: '/' }, // TODO: Add URL
+    { title: 'Shipping Policy', url: '/' }, // TODO: Add URL
+    { title: 'Terms of Service', url: '/' }, // TODO: Add URL
+  ];
+
+  rightColumnLinks: FooterLink[] = [
+    { title: 'Home', url: '/' },
+    { title: 'Products', url: '/products' },
+    { title: 'Contact', url: '/contact' },
+    { title: 'Blog', url: '/blog' },
+  ];
 
   paymentOptionImages: { src: string; alt: string }[] = [
     { id: 'amex', name: 'American Express' },
@@ -22,4 +41,6 @@ export class FooterComponent {
     src: `/assets/img/home/payment/${option.id}.png`,
     alt: option.name,
   }));
+
+  currentYear = new Date().getFullYear();
 }

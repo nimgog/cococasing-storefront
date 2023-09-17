@@ -8,23 +8,8 @@
           </span>
 
           <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#E5E7EB] text-[12px] font-roboto leading-[16px]">
-            <li>
-              <span class="whitespace-nowrap">About Coco Casing&trade;</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">FAQ</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">Privacy Policy</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">Refund Policy</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">Shipping Policy</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">Terms of Service</span>
+            <li *ngFor="let link of leftColumnLinks">
+              <a [href]="link.url" [innerHTML]="link.title" class="whitespace-nowrap"></a>
             </li>
           </ul>
         </div>
@@ -35,17 +20,8 @@
           </span>
 
           <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#E5E7EB] text-[12px] font-roboto leading-[16px]">
-            <li>
-              <span class="whitespace-nowrap">Home</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">Products</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">Contact</span>
-            </li>
-            <li>
-              <span class="whitespace-nowrap">Blog</span>
+            <li *ngFor="let link of rightColumnLinks">
+              <a [href]="link.url" class="whitespace-nowrap">{{ link.title }}</a>
             </li>
           </ul>
         </div>
@@ -75,7 +51,8 @@
           </div>
 
           <div class="shrink-0 md:grow flex md:flex-col justify-center">
-            <!-- Ask Nimer for the large logo (svg would be the best) -->
+            <!-- TODO: Ask Nimer for the large logo (svg would be the best) -->
+            <!-- TODO: Should this be a link to the home page, like the logo in the navbar?  -->
             <img src="/assets/img/home/coco_logo_light_small.png" alt="Coco Casing logo" />
           </div>
         </div>

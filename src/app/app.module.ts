@@ -28,6 +28,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
 import { BlogTeaserComponent } from './home-page/blog-teaser/blog-teaser.component';
+import { BlogPageComponent } from './blog-page/blog-page.component';
+import { FaqPageComponent } from './faq-page/faq-page.component';
+import { ContactPageComponent } from './contact-page/contact-page.component';
 
 const Client = require('shopify-buy');
 
@@ -51,6 +54,9 @@ export const client = Client.buildClient({
     NotFoundPageComponent,
     AboutPageComponent,
     BlogTeaserComponent,
+    BlogPageComponent,
+    FaqPageComponent,
+    ContactPageComponent,
   ],
   imports: [
     MatExpansionModule,
