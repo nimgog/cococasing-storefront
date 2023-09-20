@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageNewsSignupComponent } from './page-news-signup.component';
+import { SiteHeaderComponent } from './site-header.component';
 
-describe('NewsSignupComponent', () => {
-  let component: PageNewsSignupComponent;
-  let fixture: ComponentFixture<PageNewsSignupComponent>;
+describe('SiteHeaderComponent', () => {
+  let component: SiteHeaderComponent;
+  let fixture: ComponentFixture<SiteHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PageNewsSignupComponent],
+      declarations: [SiteHeaderComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PageNewsSignupComponent);
+    fixture = TestBed.createComponent(SiteHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

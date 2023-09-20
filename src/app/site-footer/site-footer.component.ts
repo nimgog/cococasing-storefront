@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-page-footer',
-  templateUrl: './page-footer.component.html',
-  styleUrls: ['./page-footer.component.scss'],
+  selector: 'app-site-footer',
+  templateUrl: './site-footer.component.html',
+  styleUrls: ['./site-footer.component.scss'],
 })
-export class PageFooterComponent {
+export class SiteFooterComponent {
   leftColumnLinks: { title: string; url: string }[] = [
     { title: 'About Coco Casing&trade;', url: '/about' },
     { title: 'FAQ', url: '/faq' },
@@ -25,17 +25,17 @@ export class PageFooterComponent {
   socialMediaLinks: { title: string; imageUrl: string; siteUrl: string }[] = [
     {
       title: 'Link to our Instagram profile',
-      imageUrl: '/assets/img/page-footer/social/instagram.svg',
+      imageUrl: '/assets/img/site-footer/social/instagram.svg',
       siteUrl: 'https://www.instagram.com/coco.casing/',
     },
     {
       title: 'Link to our TikTok profile',
-      imageUrl: '/assets/img/page-footer/social/tiktok.svg',
+      imageUrl: '/assets/img/site-footer/social/tiktok.svg',
       siteUrl: 'https://www.tiktok.com/@cococasing',
     },
     {
       title: 'Link to our YouTube channel',
-      imageUrl: '/assets/img/page-footer/social/youtube.svg',
+      imageUrl: '/assets/img/site-footer/social/youtube.svg',
       siteUrl: 'https://www.youtube.com/@cococasing',
     },
   ];
@@ -51,7 +51,7 @@ export class PageFooterComponent {
     { id: 'union', name: 'UnionPay' },
     { id: 'visa', name: 'Visa' },
   ].map((option) => ({
-    src: `/assets/img/page-footer/payment/${option.id}.png`,
+    src: `/assets/img/site-footer/payment/${option.id}.png`,
     alt: option.name,
   }));
 

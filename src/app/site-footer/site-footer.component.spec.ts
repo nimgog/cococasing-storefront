@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageHeaderComponent } from './page-header.component';
+import { SiteFooterComponent } from './site-footer.component';
 
-describe('NavbarComponent', () => {
-  let component: PageHeaderComponent;
-  let fixture: ComponentFixture<PageHeaderComponent>;
+describe('SiteFooterComponent', () => {
+  let component: SiteFooterComponent;
+  let fixture: ComponentFixture<SiteFooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PageHeaderComponent],
+      declarations: [SiteFooterComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PageHeaderComponent);
+    fixture = TestBed.createComponent(SiteFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
