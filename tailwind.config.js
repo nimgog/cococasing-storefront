@@ -20,6 +20,7 @@ module.exports = {
       },
       maxWidth: {
         'centered-content': '1264px',
+        'widened-content': '1440px',
       },
     },
   },
