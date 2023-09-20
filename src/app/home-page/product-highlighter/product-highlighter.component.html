@@ -1,4 +1,5 @@
 <div class="flex gap-x-1">
+  <!-- TODO: The div above is shrinked in height below 500px in desktop view, should this be followed? -->
   <div *ngFor="let product of products" class="lg:flex w-1/2 h-[504px] px-4 pt-2 pb-4 bg-coco-dark-blue rounded-lg">
     <div class="grow hidden lg:flex justify-center items-center">
       <img class="object-contain" [src]="product.imageUrl" [alt]="product.name" />
