@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       colors: {
         'coco-dark-blue': '#030712',
+        'coco-dark-gray': '#374151',
         'coco-light-gray': '#F3F4F6',
         'coco-orange': '#F97316',
       },
@@ -19,7 +20,7 @@ module.exports = {
         roboto: ['Roboto', 'sans-serif'],
       },
       maxWidth: {
-        'centered-content': '1264px',
+        'centered-content': '1280px',
         'widened-content': '1440px',
       },
     },
@@ -27,8 +28,5 @@ module.exports = {
   corePlugins: {
     aspectRatio: false,
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    // ...
-  ],
+  plugins: [require('@tailwindcss/aspect-ratio')],
 };

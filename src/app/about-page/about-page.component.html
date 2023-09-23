@@ -1,1 +1,103 @@
-<p>about-page works!</p>
+<app-page-header imageUrl="/assets/img/about-page/page-banner.jpg">About Us</app-page-header>
+
+<div class="flex justify-center px-4">
+  <div class="flex flex-col max-w-centered-content gap-y-14 lg:gap-y-28 py-4 lg:py-28 pb-10">
+    <div class="flex flex-col lg:flex-row-reverse gap-x-10 gap-y-10">
+      <div class="lg:shrink-0 flex justify-center lg:w-[620px] lg:h-[316px]">
+        <!-- TODO: Revisit non-SVG images and include both mobile and desktop variants -->
+        <img src="/assets/img/about-page/our-purpose-pic.png" alt="Mobiles in Coco Cases" />
+      </div>
+
+      <div class="flex flex-col gap-y-2 lg:gap-y-4">
+        <span class="block lg:mb-2 text-coco-dark-gray text-uppercase text-lg lg:text-3xl font-medium !font-anekt">
+          Our Purpose
+        </span>
+
+        <p class="text-coco-dark-gray text-sm lg:text-base !font-anekb">
+          At Coco Casing, our purpose is crystal clear – to offer phone cases that not only look good but also protect
+          your cherished device. We understand the pivotal role your phone plays in your daily life, and we go the extra
+          mile to ensure it remains safeguarded from the rigors of everyday use.
+        </p>
+
+        <p class="text-coco-dark-gray text-sm lg:text-base !font-anekb">
+          Our commitment to delivering high-quality cases, made from top-tier materials, ensures that your phone stays
+          safe from bumps and scratches. We take pride in providing you with a range of choices that reflect your
+          personality while offering the durability your phone deserves.<br>
+          In essence, our purpose is to seamlessly integrate style, practicality, and protection into every Coco Casing
+          phone case, all while fostering a sense of trust and satisfaction with our valued customers.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-coco-light-gray">
+      <app-benefits-slider class="sm:hidden" [benefits]="benefits"></app-benefits-slider>
+      <app-benefits-highlighter class="hidden sm:block" [benefits]="benefits"></app-benefits-highlighter>
+    </div>
+
+    <div class="flex flex-col lg:flex-row-reverse gap-x-8 gap-y-10">
+      <div class="flex flex-col gap-y-2 lg:gap-y-4">
+        <span class="block mb-2 text-coco-dark-gray text-uppercase text-lg lg:text-3xl font-medium !font-anekt">
+          Our Roots
+        </span>
+
+        <p class="text-coco-dark-gray text-sm lg:text-base !font-anekb">
+          Coco Casing is a phone case company with a distinctive approach. We firmly believe that phone cases should
+          seamlessly blend practicality with style, and our designs are a testament to this philosophy. Offering an
+          array
+          of colors and designs, we empower you to discover the perfect case that aligns with your unique personality.
+        </p>
+
+        <p class="text-coco-dark-gray text-sm lg:text-base !font-anekb">
+          Founded in Sweden, Coco Casing is a brand under the umbrella of Shadida Trading Company AB, a family-owned
+          business. Our company is deeply committed to delivering innovative, straightforward, and equitable products to
+          our valued customers.<br>
+          Nimer & Nadi, the driving forces behind our brand, bring a wealth of professional experience from the
+          Electro-,
+          Automation-, and IT-consultancy industry. With over a decade of experience as operational business owners in
+          diverse sectors such as retail, food, tech, and the Swedish startup landscape, we have honed our ability to
+          consistently deliver high-quality products. Our focus remains steadfastly on understanding and prioritizing
+          the
+          needs of our customers while cultivating authentic, enduring relationships.
+        </p>
+
+        <p class="text-coco-dark-gray text-sm lg:text-base !font-anekb">
+          In the realm of mobile phone cases, this commitment shines through our rigorous quality assurance practices,
+          our
+          strong relationships with trusted suppliers, and our dedication to providing you, our valued visitor, with
+          accessible and efficient communication channels.
+        </p>
+      </div>
+
+      <div class="lg:shrink-0 flex justify-center lg:w-[632px] lg:h-[476px]">
+        <img class="object-contain" src="/assets/img/about-page/nadi-and-nimer.png" alt="Nadi and Nimer" />
+      </div>
+    </div>
+
+    <div class="bg-coco-light-gray lg:flex gap-x-8">
+      <div class="flex flex-col lg:justify-center items-center gap-y-2 lg:w-1/2 p-4">
+        <span class="text-coco-dark-gray text-uppercase text-lg lg:text-3xl font-bold !font-anekt">
+          All Around The World
+        </span>
+
+        <span class="text-coco-dark-gray text-center text-sm lg:text-lg font-medium lg:font-normal !font-anekb">
+          Thanks to our fans and customers across the globe for allowing Coco-Casing to grow worldwide.
+        </span>
+
+        <a class="mt-2 lg:mt-8 px-3 lg:px-6 py-2 lg:py-4 bg-coco-orange" href="https://www.instagram.com/coco.casing/"
+          target="_blank" rel="noopener noreferrer">
+          <span class="text-white text-sm font-semibold !font-anekb">
+            @COCO.CASING
+          </span>
+        </a>
+      </div>
+
+      <!-- TODO: Revisit parts where heavy ops are done by hidden/display and use the isMobile toggle if neede -->
+      <div class="hidden lg:flex lg:w-1/2 h-full">
+        <div *ngFor="let index of [1,2,3,4]">
+          <img [src]="'/assets/img/about-page/instagram/all-around-' + index + '.png'"
+            [alt]="'Instagram image #' + index" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -34,6 +34,9 @@ import { ContactPageComponent } from './contact-page/contact-page.component';
 import { ProductCategoriesComponent } from './home-page/product-categories/product-categories.component';
 import { ProductHighlighterComponent } from './home-page/product-highlighter/product-highlighter.component';
 import { HeroSectionComponent } from './home-page/hero-section/hero-section.component';
+import { PageHeaderComponent } from './page-header/page-header.component';
+import { BenefitsSliderComponent } from './about-page/benefits-slider/benefits-slider.component';
+import { BenefitsHighlighterComponent } from './about-page/benefits-highlighter/benefits-highlighter.component';
 
 const Client = require('shopify-buy');
 
@@ -63,6 +66,9 @@ export const client = Client.buildClient({
     ProductCategoriesComponent,
     ProductHighlighterComponent,
     HeroSectionComponent,
+    PageHeaderComponent,
+    BenefitsSliderComponent,
+    BenefitsHighlighterComponent,
   ],
   imports: [
     MatExpansionModule,

@@ -1,0 +1,23 @@
+<div class="flex gap-x-8 px-4 py-6">
+  <div *ngFor="let benefit of benefits" class="flex flex-col items-center gap-y-2.5">
+    <div>
+      <img [src]="benefit.imageUrl" [alt]="benefit.title" />
+    </div>
+
+    <span class="block text-center text-uppercase text-coco-dark-gray text-base font-medium !font-anekt">
+      {{ benefit.title }}
+    </span>
+
+    <div class="w-full flex flex-col">
+      <p class="text-[#111827] text-sm font-normal !font-anekb">
+        {{ benefit.description }}
+      </p>
+
+      <a [routerLink]="[benefit.learnMoreUrl]">
+        <span class="text-[#006FCF] text-sm font-medium !font-anekb">
+          Learn More &gt;
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
