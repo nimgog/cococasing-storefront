@@ -6,13 +6,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./site-footer.component.scss'],
 })
 export class SiteFooterComponent {
-  leftColumnLinks: { title: string; url: string }[] = [
+  leftColumnLinks: { title: string; url: string; target?: string }[] = [
     { title: 'About Coco Casing&trade;', url: '/about' },
     { title: 'FAQ', url: '/faq' },
-    { title: 'Privacy Policy', url: '/' }, // TODO: Add URL
-    { title: 'Refund Policy', url: '/' }, // TODO: Add URL
-    { title: 'Shipping Policy', url: '/' }, // TODO: Add URL
-    { title: 'Terms of Service', url: '/' }, // TODO: Add URL
+    {
+      title: 'Privacy Policy',
+      url: '/assets/docs/PrivacyPolicy.pdf',
+      target: '_blank',
+    },
+    {
+      title: 'Refund Policy',
+      url: '/assets/docs/RefundPolicy.pdf',
+      target: '_blank',
+    },
+    {
+      title: 'Shipping Policy',
+      url: '/assets/docs/ShippingPolicy.pdf',
+      target: '_blank',
+    },
+    {
+      title: 'Terms of Service',
+      url: '/assets/docs/TermsOfService.pdf',
+      target: '_blank',
+    },
   ];
 
   rightColumnLinks: { title: string; url: string }[] = [
