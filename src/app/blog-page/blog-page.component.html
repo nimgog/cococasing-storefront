@@ -24,8 +24,13 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-6 lg:gap-x-0.5 gap-y-2 pt-6 lg:pt-12">
-      <div *ngFor="let postPreview of postPreviews; let i = index"
-        [ngClass]="['lg:col-span-' + getColSpanForIndex(i), i > 0 ? 'lg:p-1 lg:' : '']">
+      <div *ngFor="let postPreview of postPreviews; let i = index" [ngClass]="[{
+          '2': 'lg:col-span-2',
+          '3': 'lg:col-span-3',
+          '4': 'lg:col-span-4',
+          '6': 'lg:col-span-6'}[getColSpanForIndex(i)],
+          i > 0 ? 'lg:p-1' : ''
+          ]">
         <div class="relative h-[204px] rounded-2xl" [ngClass]="[i === 0 ? 'lg:h-[460px]' : 'lg:h-[400px]']">
           <img class="w-full h-full object-cover rounded-2xl" [src]="postPreview.thumbnailUrl" alt="Read post" />
 
