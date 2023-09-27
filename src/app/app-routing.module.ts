@@ -7,11 +7,28 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { BlogPageComponent } from './blog-page/blog-page.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
+import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomePageComponent },
   { path: 'products', component: ProductPageComponent },
-  { path: 'blog', component: BlogPageComponent },
+  {
+    path: 'blog',
+    children: [
+      {
+        path: '',
+        component: BlogPageComponent,
+      },
+      {
+        path: ':category',
+        component: BlogPageComponent,
+      },
+      {
+        path: ':category/:slug',
+        component: BlogPostPageComponent,
+      },
+    ],
+  },
   { path: 'faq', component: FaqPageComponent },
   { path: 'contact', component: ContactPageComponent },
   { path: 'about', component: AboutPageComponent },
