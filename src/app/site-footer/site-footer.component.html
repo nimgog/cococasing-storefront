@@ -9,7 +9,12 @@
 
           <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#9CA3AF] text-xs font-roboto">
             <li *ngFor="let link of leftColumnLinks">
-              <a [href]="link.url" [innerHTML]="link.title" [target]="link.target" class="whitespace-nowrap"></a>
+              <a *ngIf="!link.target else nonNavLink" [routerLink]="link.url" [innerHTML]="link.title"
+                class="whitespace-nowrap"></a>
+
+              <ng-template #nonNavLink>
+                <a [href]="link.url" [innerHTML]="link.title" [target]="link.target" class="whitespace-nowrap"></a>
+              </ng-template>
             </li>
           </ul>
         </div>
@@ -21,7 +26,7 @@
 
           <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#9CA3AF] text-xs font-roboto">
             <li *ngFor="let link of rightColumnLinks">
-              <a [href]="link.url" class="whitespace-nowrap">{{ link.title }}</a>
+              <a [routerLink]="link.url" class="whitespace-nowrap">{{ link.title }}</a>
             </li>
           </ul>
         </div>
