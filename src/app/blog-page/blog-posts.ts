@@ -7,8 +7,8 @@ export const blogPosts: BlogPost[] = [
     category: 'lifestyle',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-1',
   },
   {
@@ -17,8 +17,8 @@ export const blogPosts: BlogPost[] = [
     category: 'lifestyle',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-2',
   },
   {
@@ -28,8 +28,8 @@ export const blogPosts: BlogPost[] = [
     category: 'update',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-3',
   },
   {
@@ -38,8 +38,8 @@ export const blogPosts: BlogPost[] = [
     category: 'training',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-4',
   },
   {
@@ -48,8 +48,8 @@ export const blogPosts: BlogPost[] = [
     category: 'lifestyle',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-5',
   },
   {
@@ -58,8 +58,8 @@ export const blogPosts: BlogPost[] = [
     category: 'lifestyle',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-1',
   },
   {
@@ -68,8 +68,8 @@ export const blogPosts: BlogPost[] = [
     category: 'lifestyle',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-2',
   },
   {
@@ -79,8 +79,8 @@ export const blogPosts: BlogPost[] = [
     category: 'update',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-3',
   },
   {
@@ -89,8 +89,8 @@ export const blogPosts: BlogPost[] = [
     category: 'training',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-4',
   },
   {
@@ -99,8 +99,8 @@ export const blogPosts: BlogPost[] = [
     category: 'lifestyle',
     publishedAt: new Date(2023, 4, 27),
     contentUrl: '',
-    thumbnailUrl: '',
-    bannerUrl: '',
+    thumbnailImageUrl: '',
+    headerImageUrl: '',
     slug: 'sample-post-5',
   },
 ].map(
@@ -108,7 +108,7 @@ export const blogPosts: BlogPost[] = [
     <BlogPost>{
       ...blogPost,
       contentUrl: `/assets/blog/${blogPost.slug}/content.md`,
-      thumbnailUrl: `/assets/blog/${blogPost.slug}/image.jpg`,
-      bannerUrl: `/assets/blog/${blogPost.slug}/image.jpg`,
+      thumbnailImageUrl: `/assets/blog/${blogPost.slug}/image.jpg`,
+      headerImageUrl: `/assets/blog/${blogPost.slug}/image.jpg`,
     }
 );

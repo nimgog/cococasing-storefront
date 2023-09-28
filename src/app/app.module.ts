@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import {
   BrowserModule,
   HAMMER_GESTURE_CONFIG,
@@ -38,6 +38,8 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import { BenefitsSliderComponent } from './about-page/benefits-slider/benefits-slider.component';
 import { BenefitsHighlighterComponent } from './about-page/benefits-highlighter/benefits-highlighter.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 const Client = require('shopify-buy');
 
@@ -71,6 +73,7 @@ export const client = Client.buildClient({
     BenefitsSliderComponent,
     BenefitsHighlighterComponent,
     BlogPostPageComponent,
+    ErrorPageComponent,
   ],
   imports: [
     MatExpansionModule,
@@ -82,6 +85,7 @@ export const client = Client.buildClient({
     HttpClientModule,
     NgxImageZoomModule,
     BrowserAnimationsModule,
+    MarkdownModule.forRoot(),
   ],
   providers: [
     {

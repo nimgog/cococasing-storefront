@@ -20,6 +20,7 @@ module.exports = {
         roboto: ['Roboto', 'sans-serif'],
       },
       maxWidth: {
+        'blog-content': '1040px',
         'centered-content': '1280px',
         'widened-content': '1440px',
       },

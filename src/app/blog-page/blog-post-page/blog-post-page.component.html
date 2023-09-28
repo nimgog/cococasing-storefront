@@ -1,1 +1,53 @@
-<p>blog-post-page works!</p>
+<!-- TODO: Only mobile and desktop views are ready, no other resolution inbetween -->
+<!-- TODO: Reminder! Roboto vs Anekb vs Anekt (this latter is evil in styling) -->
+<!-- TODO: Extract common text colors to Tailwind config -->
+
+<div class="flex justify-center">
+  <div class="grow flex flex-col items-center max-w-widened-content">
+    <div class="flex h-[140px] lg:h-[320px]">
+      <img class="object-cover" [src]="blogPost?.headerImageUrl" alt="Blog post header" />
+    </div>
+
+    <div class="flex flex-col items-center max-w-blog-content px-4 pt-8 lg:pt-36 pb-10 lg:pb-28">
+      <div class="w-full flex flex-col gap-y-8 border-b border-[#D1D5DB]">
+        <span class="text-uppercase text-coco-dark-gray text-lg lg:text-5xl font-bold !font-anekt lg:leading-[48px]">
+          {{ blogPost?.title }}
+        </span>
+
+        <div class="flex gap-x-8 pb-4">
+          <div class="flex items-center gap-x-1">
+            <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
+              <img src="/assets/img/blog-page/blog-post-page/author.svg" alt="Author" />
+            </div>
+
+            <span class="text-coco-dark-gray text-sm lg:text-base font-medium !font-anekb">
+              {{ blogPost?.author }}
+            </span>
+          </div>
+
+          <div class="flex items-center gap-x-1">
+            <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
+              <img src="/assets/img/blog-page/blog-post-page/calendar.svg" alt="Calendar" />
+            </div>
+
+            <span
+              class="text-uppercase text-coco-dark-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
+              {{ blogPost ? (blogPost.publishedAt | date) : '' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div markdown [data]="content" class="pt-12 pb-10">
+      </div>
+
+      <div>
+        <button routerLink="/blog" class="px-6 py-4 bg-[#111827] rounded-lg">
+          <span class="text-uppercase text-white text-sm font-semibold !font-anekb">
+            Return to blog
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

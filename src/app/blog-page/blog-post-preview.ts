@@ -4,6 +4,6 @@ export interface BlogPostPreview {
   title: string;
   category: PostCategory;
   publishedAt: Date;
-  thumbnailUrl: string;
+  thumbnailImageUrl: string;
   slug: string;
 }
