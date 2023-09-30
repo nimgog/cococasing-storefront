@@ -4,14 +4,14 @@
 
 <div class="flex justify-center">
   <div class="grow flex flex-col items-center max-w-widened-content">
-    <div class="flex h-[140px] lg:h-[320px]">
-      <img class="object-cover" [src]="blogPost?.headerImageUrl" alt="Blog post header" />
+    <div *ngIf="blogPost" class="flex h-[140px] lg:h-[320px]">
+      <img class="object-cover" [src]="blogPost.headingImageUrl" alt="Blog post header" />
     </div>
 
     <div class="flex flex-col items-center max-w-blog-content px-4 pt-8 lg:pt-36 pb-10 lg:pb-28">
-      <div class="w-full flex flex-col gap-y-8 border-b border-[#D1D5DB]">
+      <div *ngIf="blogPost" class="w-full flex flex-col gap-y-8 border-b border-[#D1D5DB]">
         <span class="text-uppercase text-coco-dark-gray text-lg lg:text-5xl font-bold !font-anekt lg:leading-[48px]">
-          {{ blogPost?.title }}
+          {{ blogPost.title }}
         </span>
 
         <div class="flex gap-x-8 pb-4">
@@ -21,7 +21,7 @@
             </div>
 
             <span class="text-coco-dark-gray text-sm lg:text-base font-medium !font-anekb">
-              {{ blogPost?.author }}
+              {{ blogPost.author }}
             </span>
           </div>
 
@@ -32,15 +32,18 @@
 
             <span
               class="text-uppercase text-coco-dark-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
-              {{ blogPost ? (blogPost.publishedAt | date) : '' }}
+              {{ blogPost.date | date }}
             </span>
           </div>
         </div>
       </div>
 
-      <div markdown [data]="content" class="pt-12 pb-10">
+      <div class="blog-post-body pt-12 pb-10">
+        <scully-content></scully-content>
       </div>
 
+      <!-- TODO: Maybe check the previous page in the history to decide if nav back should happen to -->
+      <!-- all categories or a specific (current post's category) one -->
       <div>
         <button routerLink="/blog" class="px-6 py-4 bg-[#111827] rounded-lg">
           <span class="text-uppercase text-white text-sm font-semibold !font-anekb">

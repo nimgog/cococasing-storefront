@@ -1,59 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { EMPTY, Subscription, catchError } from 'rxjs';
+import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
 import { BlogPost } from './blog-post';
-import { blogPosts } from '../blog-posts';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, catchError, map, switchMap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+
+interface BlogPostScullyRoute extends ScullyRoute {
+  author: string;
+  date: string;
+  headingImageUrl: string;
+}
 
 @Component({
   selector: 'app-blog-post-page',
   templateUrl: './blog-post-page.component.html',
   styleUrls: ['./blog-post-page.component.scss'],
 })
-export class BlogPostPageComponent implements OnInit {
-  blogPost?: BlogPost;
+export class BlogPostPageComponent implements OnInit, OnDestroy {
+  currentPostSub?: Subscription;
 
-  content = '';
+  blogPost?: BlogPost;
 
   constructor(
     private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly httpClient: HttpClient
+    private readonly scully: ScullyRoutesService
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.params
+    this.currentPostSub = this.scully
+      .getCurrent()
       .pipe(
-        switchMap((params) => {
-          const slug = params['slug'];
-
-          if (!slug) {
-            this.router.navigate(['/not-found']);
-            return EMPTY;
-          }
-
-          const blogPost =
-            slug && blogPosts.find((blogPost) => blogPost.slug === slug);
-
-          if (!blogPost) {
-            this.router.navigate(['/not-found']);
-            return EMPTY;
-          }
-
-          return this.httpClient
-            .get(`assets/blog/${slug}/content.md`, { responseType: 'text' })
-            .pipe(map((content) => ({ content, blogPost })));
-        }),
-        catchError(() => {
-          this.router.navigate(['/error']);
+        catchError((error) => {
+          // TODO: handle errors - navigate to show modal
+          console.log(error);
           return EMPTY;
         })
       )
-      .subscribe((result) => {
-        if (result) {
-          this.content = result.content;
-          this.blogPost = result.blogPost;
+      .subscribe((scullyRoute) => {
+        const postScullyRoute = scullyRoute as BlogPostScullyRoute;
+
+        if (!postScullyRoute) {
+          this.router.navigate(['/not-found'], { replaceUrl: true });
+          return;
         }
+
+        this.blogPost = {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          title: postScullyRoute.title!,
+          author: postScullyRoute.author,
+          date: new Date(postScullyRoute.date),
+          headingImageUrl: postScullyRoute.headingImageUrl,
+        };
       });
+  }
+
+  ngOnDestroy() {
+    this.currentPostSub?.unsubscribe();
   }
 }

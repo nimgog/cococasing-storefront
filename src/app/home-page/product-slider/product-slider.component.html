@@ -13,10 +13,10 @@
   </div>
 
   <div class="grow w-full relative">
-    <button (click)="showPreviousProduct()" [ngClass]="{ hidden: hideSlideArrows || !leftControlEnabled }"
+    <!-- <button (click)="showPreviousProduct()" [ngClass]="{ hidden: hideSlideArrows || !leftControlEnabled }"
       class="bg-coco-orange/75 z-3 absolute left-0 top-1/2 -translate-y-1/2 flex-none flex justify-center items-center w-[34px] h-[34px] rounded-full">
       <img src="/assets/img/home-page/product-slider/arrow-left.png" alt="Previous product" />
-    </button>
+    </button> -->
 
     <div class="grow flex justify-center h-[288px]">
       <img *ngFor="let product of products; let i = index" [@slideAnimation]="i - currentProductIndex"
@@ -24,10 +24,10 @@
         [alt]="product.name" />
     </div>
 
-    <button (click)="showNextProduct()" [ngClass]="{ hidden: hideSlideArrows || !rightControlEnabled }"
+    <!-- <button (click)="showNextProduct()" [ngClass]="{ hidden: hideSlideArrows || !rightControlEnabled }"
       class="bg-coco-orange/75 z-3 absolute right-0 top-1/2 transform -translate-y-1/2 flex-none flex justify-center items-center w-[34px] h-[34px] rounded-full">
       <img src="/assets/img/home-page/product-slider/arrow-right.png" alt="Next product" />
-    </button>
+    </button> -->
   </div>
 
   <div class="flex justify-center gap-x-2 pt-2 pb-4">

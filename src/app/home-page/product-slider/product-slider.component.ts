@@ -54,9 +54,6 @@ export class ProductSliderComponent implements OnInit {
   @Input()
   allowSlideBeyondEnds = true;
 
-  @Input()
-  hideSlideArrows = false;
-
   products!: FeaturedProduct[];
   currentProductIndex = 0;
 

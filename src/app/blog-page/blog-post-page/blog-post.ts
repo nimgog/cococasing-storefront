@@ -1,7 +1,6 @@
-import { BlogPostPreview } from '../blog-post-preview';
-
-export interface BlogPost extends BlogPostPreview {
+export interface BlogPost {
+  title: string;
   author: string;
-  contentUrl: string;
-  headerImageUrl: string;
+  date: Date;
+  headingImageUrl: string;
 }

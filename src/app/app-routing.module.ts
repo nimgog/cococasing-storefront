@@ -10,7 +10,7 @@ import { ContactPageComponent } from './contact-page/contact-page.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HomePageComponent },
+  { path: '', component: HomePageComponent, pathMatch: 'full' },
   { path: 'products', component: ProductPageComponent },
   {
     path: 'blog',
@@ -18,10 +18,12 @@ const routes: Routes = [
       {
         path: '',
         component: BlogPageComponent,
+        pathMatch: 'full',
       },
       {
         path: ':category',
         component: BlogPageComponent,
+        pathMatch: 'full',
       },
       {
         path: ':category/:slug',

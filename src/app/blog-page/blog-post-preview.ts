@@ -1,9 +1,9 @@
-import { PostCategory } from './post-category';
+import { PostCategory } from './blog-post-page/post-category';
 
 export interface BlogPostPreview {
   title: string;
   category: PostCategory;
-  publishedAt: Date;
+  date: Date;
   thumbnailImageUrl: string;
   slug: string;
 }
