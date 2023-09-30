@@ -1,6 +1,7 @@
 {
   "name": "cococasing-storefront",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,9 +11,10 @@
     "config": "ts-node src/environments/set-env.ts",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "blog:serve": "concurrently \"npm run blog:watch\" \"npm run scully:serve\"",
+    "blog:watch": "chokidar \"blog/**/*\" -c \"npx scully --scanRoutes\" --initial"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.9",
     "@angular/cdk": "^15.2.9",
@@ -58,6 +60,8 @@
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "autoprefixer": "^10.4.15",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.1",
     "eslint": "^8.33.0",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",

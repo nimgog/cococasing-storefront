@@ -1,10 +1,10 @@
 ---
-title: Work-Life Balance Management for Optimum Performance
+title: diam quam nulla porttitor massa id neque aliquam
 author: Nimer Shadida Johansson
 published: true
-date: 2023-09-30
-thumbnailImageUrl: /assets/img/blog/lifestyle/work-life-balance/heading.jpg
-headingImageUrl: /assets/img/blog/lifestyle/work-life-balance/heading.jpg
+date: 2023-09-25
+thumbnailImageUrl: /assets/img/blog/training/training-1/heading.jpg
+headingImageUrl: /assets/img/blog/training/training-1/heading.jpg
 ---
 
 ## The healthy work-life balance
@@ -14,10 +14,6 @@ Achieving a healthy work-life balance is essential for success and happiness in 
 ## The importance of work-life balance
 
 A well-balanced work-life routine enables individuals to perform at their best in both their personal and professional lives. Striking a balance between work and personal responsibilities can lead to increased job satisfaction, reduced stress levels, and improved mental and physical health. Furthermore, it fosters a positive work environment and promotes long-term success and happiness.
-
-<div class="flex justify-center pb-8">
-  <img class="object-contain" src="/assets/img/blog/lifestyle/work-life-balance/sample-post-image.jpg" alt="Sample image" />
-</div>
 
 ## The dangers of overworking
 

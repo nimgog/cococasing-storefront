@@ -3,8 +3,8 @@ title: diam quam nulla porttitor massa id neque aliquam
 author: Nimer Shadida Johansson
 published: true
 date: 2023-09-28
-thumbnailImageUrl: /assets/img/blog/lifestyle/lifestyle-2.jpg
-headingImageUrl: /assets/img/blog/lifestyle/lifestyle-2.jpg
+thumbnailImageUrl: /assets/img/blog/lifestyle/lifestyle-2/heading.jpg
+headingImageUrl: /assets/img/blog/lifestyle/lifestyle-2/heading.jpg
 ---
 
 ## The healthy work-life balance
