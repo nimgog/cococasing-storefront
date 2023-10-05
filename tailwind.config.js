@@ -19,6 +19,9 @@ module.exports = {
         anekt: ['"Anek Telugu"', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif'],
       },
+      height: {
+        'screen-minus-lg-header': 'calc(100vh - 76px)',
+      },
       maxWidth: {
         'blog-content': '1040px',
         'centered-content': '1280px',
