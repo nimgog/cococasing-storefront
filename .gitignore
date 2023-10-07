@@ -54,3 +54,4 @@ scully.cococasing-storefront.config.js
 /scully/**/*.js.map
 /scully/**/*.d.ts
 src/assets/scully-routes.json
+src/environments/environment.js*

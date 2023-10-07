@@ -40,6 +40,8 @@ import { BenefitsHighlighterComponent } from './about-page/benefits-highlighter/
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { GraphQLModule } from './graphql.module';
+import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
 
 const Client = require('shopify-buy');
 
@@ -74,6 +76,7 @@ export const client = Client.buildClient({
     BenefitsHighlighterComponent,
     BlogPostPageComponent,
     ErrorPageComponent,
+    ProductPageNewComponent,
   ],
   imports: [
     MatExpansionModule,
@@ -86,6 +89,7 @@ export const client = Client.buildClient({
     NgxImageZoomModule,
     BrowserAnimationsModule,
     ScullyLibModule,
+    GraphQLModule,
   ],
   providers: [
     {

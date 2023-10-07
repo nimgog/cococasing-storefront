@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductPageComponent } from './product-page/product-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
@@ -8,10 +7,29 @@ import { BlogPageComponent } from './blog-page/blog-page.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
+import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, pathMatch: 'full' },
-  { path: 'products', component: ProductPageComponent },
+  {
+    path: 'products',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/#products',
+      },
+      {
+        path: ':product',
+        component: ProductPageNewComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: ':product/:variation',
+        component: ProductPageNewComponent,
+      },
+    ],
+  },
   {
     path: 'blog',
     children: [
