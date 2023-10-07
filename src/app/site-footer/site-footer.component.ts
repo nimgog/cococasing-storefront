@@ -1,4 +1,6 @@
+import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-site-footer',
@@ -6,38 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./site-footer.component.scss'],
 })
 export class SiteFooterComponent {
-  leftColumnLinks: { title: string; url: string; target?: string }[] = [
-    { title: 'About Coco Casing&trade;', url: '/about' },
-    { title: 'FAQ', url: '/faq' },
-    {
-      title: 'Privacy Policy',
-      url: '/assets/docs/PrivacyPolicy.pdf',
-      target: '_blank',
-    },
-    {
-      title: 'Refund Policy',
-      url: '/assets/docs/RefundPolicy.pdf',
-      target: '_blank',
-    },
-    {
-      title: 'Shipping Policy',
-      url: '/assets/docs/ShippingPolicy.pdf',
-      target: '_blank',
-    },
-    {
-      title: 'Terms of Service',
-      url: '/assets/docs/TermsOfService.pdf',
-      target: '_blank',
-    },
-  ];
-
-  rightColumnLinks: { title: string; url: string }[] = [
-    { title: 'Home', url: '/' },
-    { title: 'Products', url: '/products' },
-    { title: 'Contact', url: '/contact' },
-    { title: 'Blog', url: '/blog' },
-  ];
-
   socialMediaLinks: { title: string; imageUrl: string; siteUrl: string }[] = [
     {
       title: 'Link to our Instagram profile',
@@ -72,4 +42,26 @@ export class SiteFooterComponent {
   }));
 
   currentYear = new Date().getFullYear();
+
+  constructor(
+    private readonly router: Router,
+    private readonly viewportScroller: ViewportScroller
+  ) {}
+
+  navigateToProducts() {
+    const urlTree = this.router.createUrlTree(['/'], { fragment: 'products' });
+
+    if (
+      this.router.isActive(urlTree, {
+        paths: 'exact',
+        fragment: 'exact',
+        matrixParams: 'ignored',
+        queryParams: 'ignored',
+      })
+    ) {
+      this.viewportScroller.scrollToAnchor('products');
+    } else {
+      this.router.navigate(['/'], { fragment: 'products' });
+    }
+  }
 }
