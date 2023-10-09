@@ -8,7 +8,7 @@ const routes: RouteConfig = {
   '/products/:product': {
     type: productRouterPlugin,
   },
-  '/products/:product/:variation': {
+  '/products/:product/:variant': {
     type: productRouterPlugin,
   },
   '/blog/:category': {

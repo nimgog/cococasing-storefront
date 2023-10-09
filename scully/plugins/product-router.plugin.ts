@@ -18,7 +18,7 @@ const fullColorNameLookup = new Map<string, string>([
 
 let cachedRoutes: {
   productRoutes: string[];
-  variationRoutes: string[];
+  variantRoutes: string[];
 } | null = null;
 
 const productRouter = async (
@@ -36,8 +36,8 @@ const productRouter = async (
     cachedRoutes = await firstValueFrom(fetchAllProductRoutes(apolloClient));
   }
 
-  const routes = routeTemplate.includes(':variation')
-    ? cachedRoutes.variationRoutes
+  const routes = routeTemplate.includes(':variant')
+    ? cachedRoutes.variantRoutes
     : cachedRoutes.productRoutes;
 
   return routes.map((route) => ({
@@ -74,7 +74,7 @@ const fetchAllProductRoutes = (apolloClient: ApolloClient<any>) => {
     map((result) => result.data.collection.products.nodes),
     map((products: any[]) => {
       const productRoutes = [];
-      const variationRoutes = [];
+      const variantRoutes = [];
 
       products.forEach((product) => {
         productRoutes.push(`/products/${product.handle}`);
@@ -96,23 +96,27 @@ const fetchAllProductRoutes = (apolloClient: ApolloClient<any>) => {
           new Map<string, string[]>()
         ) as Map<string, string[]>;
 
-        const variationRoutesForProduct = product.variants.nodes.map(
+        const variantRoutesForProduct = product.variants.nodes.map(
           (variant: any) => {
             const variantOptionValues = variant.title
               .split('/')
-              .map((attribute: string) =>
-                attribute.trim().toLowerCase().replace(' ', '-')
+              .map((optionValue: string) =>
+                optionValue.trim().toLowerCase().replace(' ', '-')
               ) as string[];
 
             const serie = variantOptionValues.find((optionValue) =>
               (optionsMap.get('series') || []).includes(optionValue)
             );
 
+            let variantSlug = `iphone-${serie}`;
+
             const model = variantOptionValues.find((optionValue) =>
               (optionsMap.get('model') || []).includes(optionValue)
             );
 
-            let variantSlug = `iphone-${serie}-${model}`;
+            if (model !== 'regular') {
+              variantSlug += `-${model}`;
+            }
 
             const color = variantOptionValues.find((optionValue) =>
               (optionsMap.get('color') || []).includes(optionValue)
@@ -134,10 +138,10 @@ const fetchAllProductRoutes = (apolloClient: ApolloClient<any>) => {
           }
         ) as string[];
 
-        variationRoutes.push(...variationRoutesForProduct);
+        variantRoutes.push(...variantRoutesForProduct);
       });
 
-      return { productRoutes, variationRoutes };
+      return { productRoutes, variantRoutes };
     })
   );
 };

@@ -23,18 +23,25 @@
             <img src="/assets/img/site-header/coco-logo-dark.svg" alt="Coco Casing logo" />
           </a>
 
-          <div class="hidden lg:flex gap-x-4 text-coco-dark-blue text-[16px] font-medium font-roboto leading-[24px]">
-            <a routerLink="/">
+          <div class="hidden lg:flex gap-x-2 text-coco-dark-blue text-[16px] font-medium font-roboto">
+            <a routerLink="/products/the-coco-case">
               <span class="text-uppercase">iPhone Cases</span>
             </a>
 
+            <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
+
+            <!-- TODO: Add link when the product gets available from the new collection -->
             <a routerLink="/">
               <span class="text-uppercase">Screen & Protection</span>
             </a>
 
-            <a routerLink="/">
+            <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
+
+            <a routerLink="/products/the-package">
               <span class="text-uppercase">The Coco Package</span>
             </a>
+
+            <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
 
             <a routerLink="/about">
               <span class="text-uppercase">About</span>
@@ -61,3 +68,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #navSeparator>
+  <div class="hidden lg:flex justify-center items-center pb-0.5">
+    <div class="bg-coco-orange w-1 h-1 rounded-full"></div>
+  </div>
+</ng-template>

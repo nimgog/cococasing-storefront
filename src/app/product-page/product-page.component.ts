@@ -95,7 +95,9 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         this.onOptionChange();
         this.loaded = true;
       })
-      .catch((error: string) => {});
+      .catch((error: string) => {
+        //
+      });
   }
 
   private setOptions(): void {

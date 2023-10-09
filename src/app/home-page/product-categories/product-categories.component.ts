@@ -25,7 +25,7 @@ export class ProductCategoriesComponent {
       name: 'The Package',
       description: 'The package for casual activities for him and her.',
       imageUrl: '/assets/img/home-page/product-categories/package.png',
-      pageUrl: '/', // TODO: Add link
+      pageUrl: '/products/the-package',
     },
     {
       name: 'The Glass Kit',
@@ -36,7 +36,7 @@ export class ProductCategoriesComponent {
     {
       name: 'Cases',
       imageUrl: '/assets/img/home-page/product-categories/cases.png',
-      pageUrl: '/', // TODO: Add link
+      pageUrl: '/products/the-coco-case',
     },
     {
       name: 'Screen Protectors',
