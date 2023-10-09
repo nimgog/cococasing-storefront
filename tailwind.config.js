@@ -13,6 +13,12 @@ module.exports = {
         'coco-dark-gray': '#374151',
         'coco-light-gray': '#F3F4F6',
         'coco-orange': '#F97316',
+        'coco-case-orange': '#FEA92A',
+        'coco-case-lavender': '#33418D',
+        'coco-case-beige': '#D9CEAA',
+        'coco-case-black': '#000000',
+        'coco-case-blue': '#33418D',
+        'coco-case-green': '#415035',
       },
       fontFamily: {
         anekb: ['"Anek Bangla"', 'sans-serif'],

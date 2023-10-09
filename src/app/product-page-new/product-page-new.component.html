@@ -1,1 +1,78 @@
-<p>product-page-new works!</p>
+<div *ngIf="!isLoading" class="flex flex-col items-center gap-y-8">
+  <div>
+    <span>{{ product.title }}</span>
+  </div>
+
+  <div>
+    <p>{{ product.description }}</p>
+  </div>
+
+  <div class="flex">
+    <!-- TODO: Include other variant-specific and -unspecific images -->
+    <div *ngFor="let image of [selectedVariant.image]">
+      <img [src]="image.url" [alt]="image.alt" class="max-h-[700px]" />
+    </div>
+  </div>
+
+  <div>
+    [Debug] variant ID: <span class="font-bold">{{ selectedVariant.id }}</span>
+  </div>
+
+  <div>
+    <span>
+      {{ selectedVariant.price.amount | number:'1.0-0' }} {{ selectedVariant.price.currencyCode }}
+    </span>
+  </div>
+
+  <div class="flex flex-col gap-y-4 p-2 bg-coco-light-gray rounded">
+    <div class="flex flex-col gap-y-2">
+      <div>
+        <span>iPhone model</span>
+      </div>
+
+      <div class="flex gap-x-4">
+        <button *ngFor="let serie of availableSeries"
+          [ngClass]="[serie === selectedSerie ? 'font-medium border-2 border-black' : '']"
+          class="option-selector-btn bg-white" (click)="changeSerie(serie)">
+          <span>
+            {{ serie }}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-y-2">
+      <div>
+        <span>iPhone version</span>
+      </div>
+
+      <div class="flex gap-x-4">
+        <button *ngFor="let model of availableModels" [ngClass]="[isValidVariant('model', model) ? '' : 'opacity-20 cursor-not-allowed',
+          model === selectedModel ? 'font-medium border-2 border-black' : '']" class="option-selector-btn bg-white"
+          [disabled]="!isValidVariant('model', model)" (click)="changeModel(model)">
+          <span>
+            {{ getModelTitle(model) }}
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="availableColors" class="flex flex-col gap-y-2">
+      <div>
+        <span>Choose your color</span>
+      </div>
+
+      <div class="flex gap-x-4">
+        <button *ngFor="let color of availableColors"
+          [ngClass]="[isValidVariant('color', color) ? '' : 'opacity-20 cursor-not-allowed',
+        color === selectedColor ? 'font-medium border-2 bg-white color-option-selected--' + color : 'text-white color-option-unselected--' + color]"
+          class="option-selector-btn" [disabled]="!isValidVariant('color', color)" (click)="changeColor(color)">
+          <span>
+            {{ getColorTitle(color) }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <pre>{{ product | json }}</pre>
+</div>

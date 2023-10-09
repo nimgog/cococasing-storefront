@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { map, tap } from 'rxjs';
+import { map, mergeMap, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,22 +9,39 @@ import { map, tap } from 'rxjs';
 export class ShopifyService {
   constructor(private readonly shopifyGraphQL: Apollo) {}
 
-  fetchAllProductRoutes() {
+  fetchProduct(productHandle: string, countryCode: string) {
     const query = gql`
-      {
-        collection(handle: "new-products") {
-          products(first: 250) {
+      query fetchProduct($handle: String!) @inContext(country: ${countryCode}) {
+        product(handle: $handle) {
+          title
+          description
+          options {
+            name
+            values
+          }
+          media(first: 250) {
             nodes {
-              handle
-              options {
-                name
-                values
+              mediaContentType
+              previewImage {
+                url
+                altText
               }
-              variants(first: 250) {
-                nodes {
-                  id
-                  title
-                }
+            }
+          }
+          variants(first: 250) {
+            nodes {
+              id
+              selectedOptions {
+                name
+                value
+              }
+              price {
+                amount
+                currencyCode
+              }
+              image {
+                url
+                altText
               }
             }
           }
@@ -32,84 +49,109 @@ export class ShopifyService {
       }
     `;
 
-    return this.shopifyGraphQL.query<any>({ query }).pipe(
-      map((result) => result.data.collection.products.nodes),
-      map((products: any[]) =>
-        products.flatMap((product) => {
-          const optionsMap = product.options.reduce(
-            (
-              prevMap: Map<string, string[]>,
-              option: { name: string; values: string[] }
-            ) => {
-              const key = option.name.toLowerCase();
-              const values = option.values.map((value: string) =>
-                value.toLowerCase().replace(' ', '-')
-              );
-
-              prevMap.set(key, values);
-
-              return prevMap;
-            },
-            new Map<string, string[]>()
-          ) as Map<string, string[]>;
-
-          const variantRoutes = product.variants.nodes.map((variant: any) => {
-            const variantOptionValues = variant.title
-              .split('/')
-              .map((attribute: string) =>
-                attribute.trim().toLowerCase().replace(' ', '-')
-              ) as string[];
-
-            let variantSlug = '';
-
-            const serie = variantOptionValues.find((optionValue) =>
-              (optionsMap.get('series') || []).includes(optionValue)
-            );
-
-            variantSlug += `iphone-${serie}`;
-
-            const model = variantOptionValues.find((optionValue) =>
-              (optionsMap.get('model') || []).includes(optionValue)
-            );
-
-            variantSlug += `-${model}`;
-
-            const color = variantOptionValues.find((optionValue) =>
-              (optionsMap.get('color') || []).includes(optionValue)
-            );
-
-            if (color) {
-              const fullColorNameLookup = new Map<string, string>([
-                ['beige', 'desert-beige'],
-                ['black', 'jet-black'],
-                ['blue', 'midnight-blue'],
-                ['green', 'forest-green'],
-                ['lavender', 'french-lavender'],
-                ['orange', 'sunset-orange'],
-              ]);
-
-              const fullColorName = fullColorNameLookup.get(color) || color;
-              variantSlug += `-${fullColorName}`;
-            }
-
-            if (variantSlug.includes('undefined')) {
-              console.error(
-                'Could not compose the variant slug from options:',
-                variantOptionValues
-              );
-            }
-
-            return `/products/${product.handle}/${variantSlug}`;
-          }) as string[];
-
-          variantRoutes.push(`/products/${product.handle}`);
-
-          return variantRoutes;
-        })
-      ),
-      tap((result) => {
-        console.log(result);
+    return this.shopifyGraphQL
+      .query<any>({
+        query,
+        variables: { handle: productHandle },
       })
-    );
+      .pipe(
+        tap((response) => console.log(response)),
+        mergeMap((response) => {
+          if (
+            !response.data?.product ||
+            response.error ||
+            response.errors?.length
+          ) {
+            return of(null);
+          }
+
+          return of(response.data.product).pipe(
+            map((product) => {
+              const media = product.media.nodes.map(
+                (mediaNode: any) => mediaNode.previewImage
+              );
+
+              const optionMap = new Map<string, string[]>(
+                product.options.map((option: any) => [
+                  option.name.toLowerCase(),
+                  option.values.map((value: string) =>
+                    value.toLowerCase().replace(' ', '-')
+                  ),
+                ])
+              );
+
+              const getVariantInfo = (theVariant: any) => {
+                const serie = theVariant.selectedOptions
+                  .find((option: any) => option.name.toLowerCase() === 'series')
+                  ?.value.toLowerCase();
+
+                let variantHandle = `iphone-${serie}`;
+
+                const model = theVariant.selectedOptions
+                  .find((option: any) => option.name.toLowerCase() === 'model')
+                  ?.value.toLowerCase()
+                  .replace(' ', '-');
+
+                if (model !== 'regular') {
+                  variantHandle += `-${model}`;
+                }
+
+                const color = theVariant.selectedOptions
+                  .find((option: any) => option.name.toLowerCase() === 'color')
+                  ?.value.toLowerCase();
+
+                if (color) {
+                  // TODO: Extract this
+                  const fullColorNameLookup = new Map<string, string>([
+                    ['beige', 'desert-beige'],
+                    ['black', 'jet-black'],
+                    ['blue', 'midnight-blue'],
+                    ['green', 'forest-green'],
+                    ['lavender', 'french-lavender'],
+                    ['orange', 'sunset-orange'],
+                  ]);
+
+                  variantHandle += `-${fullColorNameLookup.get(color)}`;
+                }
+
+                return {
+                  handle: variantHandle,
+                  serie,
+                  model,
+                  color,
+                };
+              };
+
+              const variantMap = new Map<string, any>(
+                product.variants.nodes.map((variant: any) => {
+                  const { handle, serie, model, color } =
+                    getVariantInfo(variant);
+
+                  return [
+                    handle,
+                    {
+                      id: variant.id,
+                      serie,
+                      model,
+                      color,
+                      price: variant.price,
+                      image: variant.image,
+                    },
+                  ];
+                })
+              );
+
+              return {
+                title: product.title,
+                description: product.description,
+                media,
+                optionMap,
+                variantMap,
+              };
+            }),
+            tap((x) => console.log(x))
+          );
+        })
+      );
   }
 }

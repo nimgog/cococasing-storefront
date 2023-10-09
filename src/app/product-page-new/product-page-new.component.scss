@@ -1,0 +1,49 @@
+.option-selector-btn {
+  @apply px-4 py-2 border rounded shadow;
+}
+
+.color-option-unselected {
+  &--black {
+    @apply bg-coco-case-black;
+  }
+
+  &--blue {
+    @apply bg-coco-case-blue;
+  }
+
+  &--green {
+    @apply bg-coco-case-green;
+  }
+  &--orange {
+    @apply bg-coco-case-orange;
+  }
+  &--beige {
+    @apply bg-coco-case-beige;
+  }
+  &--lavender {
+    @apply bg-coco-case-lavender;
+  }
+}
+
+.color-option-selected {
+  &--black {
+    @apply border-coco-case-black;
+  }
+
+  &--blue {
+    @apply border-coco-case-blue;
+  }
+
+  &--green {
+    @apply border-coco-case-green;
+  }
+  &--orange {
+    @apply border-coco-case-orange;
+  }
+  &--beige {
+    @apply border-coco-case-beige;
+  }
+  &--lavender {
+    @apply border-coco-case-lavender;
+  }
+}

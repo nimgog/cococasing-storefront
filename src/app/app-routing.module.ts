@@ -8,9 +8,11 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
 import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
+import { ProductPageComponent } from './product-page/product-page.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, pathMatch: 'full' },
+  { path: 'old-products', component: ProductPageComponent },
   {
     path: 'products',
     children: [
@@ -25,7 +27,7 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: ':product/:variation',
+        path: ':product/:variant',
         component: ProductPageNewComponent,
       },
     ],
