@@ -15,6 +15,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class LocationService {
+  private static readonly OneHourInMilliseconds = 60 * 60 * 1000;
   private static readonly CountryCodeKey = 'country_code';
 
   private currencySubject = new BehaviorSubject<string>('');
@@ -79,7 +80,7 @@ export class LocationService {
     const now = new Date();
     const json = JSON.stringify({
       value: countryCode,
-      expiry: now.getTime(),
+      expiry: now.getTime() + LocationService.OneHourInMilliseconds,
     });
 
     localStorage.setItem(LocationService.CountryCodeKey, json);
