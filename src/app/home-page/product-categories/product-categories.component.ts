@@ -19,7 +19,7 @@ export class ProductCategoriesComponent {
       description:
         'A phone case package that can keep up with your active life.',
       imageUrl: '/assets/img/home-page/product-categories/coco-package.jpg',
-      pageUrl: '/', // TODO: Add link
+      pageUrl: '/products/the-coco-package',
     },
     {
       name: 'The Package',
@@ -31,7 +31,7 @@ export class ProductCategoriesComponent {
       name: 'The Glass Kit',
       description: 'Reinforce your outer structure with the glass kit.',
       imageUrl: '/assets/img/home-page/product-categories/glass-kit.png',
-      pageUrl: '/', // TODO: Add link
+      pageUrl: '/products/the-glass-kit',
     },
     {
       name: 'Cases',
@@ -42,12 +42,12 @@ export class ProductCategoriesComponent {
       name: 'Screen Protectors',
       imageUrl:
         '/assets/img/home-page/product-categories/screen-protectors.png',
-      pageUrl: '/', // TODO: Add link
+      pageUrl: '/products/the-screen-protection',
     },
     {
       name: 'Lenses',
       imageUrl: '/assets/img/home-page/product-categories/lenses.png',
-      pageUrl: '/', // TODO: Add link
+      pageUrl: '/products/the-lens-protection',
     },
   ];
 }

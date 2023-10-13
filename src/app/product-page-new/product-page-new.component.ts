@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShopifyService } from '../services/shopify.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, firstValueFrom, switchMap } from 'rxjs';
+import { Subscription, map, switchMap, tap } from 'rxjs';
 import { LocationService } from '../services/location.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { LocationService } from '../services/location.service';
 })
 export class ProductPageNewComponent implements OnInit, OnDestroy {
   isLoading = true;
-  productSub?: Subscription;
+  subscription?: Subscription;
   product!: any;
   selectedVariant!: any;
   availableSeries: string[] = [];
@@ -28,63 +28,65 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(async (params) => {
-      this.isLoading = true;
+    this.subscription = this.activatedRoute.params
+      .pipe(
+        tap(() => (this.isLoading = true)),
+        switchMap((params) => {
+          const productHandle = params['product'];
+          const variantHandle = params['variant'];
 
-      const countryCode = await firstValueFrom(
-        this.locationService.getTwoLetterCountryCode()
-      );
-
-      const productHandle = params['product'];
-      const variantHandle = params['variant'];
-
-      this.productSub?.unsubscribe();
-      this.productSub = this.locationService
-        .getTwoLetterCountryCode()
-        .pipe(
-          switchMap((countryCode) =>
-            this.shopifyService.fetchProduct(productHandle, countryCode)
-          )
+          return this.locationService.getTwoLetterCountryCode().pipe(
+            map((countryCode) => ({
+              countryCode,
+              productHandle,
+              variantHandle,
+            }))
+          );
+        }),
+        switchMap(({ countryCode, productHandle, variantHandle }) =>
+          this.shopifyService
+            .fetchProduct(productHandle, countryCode)
+            .pipe(map((product) => ({ product, variantHandle })))
         )
-        .subscribe((product: any) => {
-          if (!product) {
-            this.router.navigate(['/not-found']);
-            return;
-          }
+      )
+      .subscribe(({ product, variantHandle }) => {
+        if (
+          !product ||
+          (variantHandle && !product.variantMap.get(variantHandle))
+        ) {
+          this.router.navigate(['/not-found'], { replaceUrl: true });
+          return;
+        }
 
-          if (variantHandle && !product.variantMap.get(variantHandle)) {
-            this.router.navigate(['/not-found']);
-            return;
-          }
+        this.availableSeries = product.optionMap.get('series') || [];
+        this.availableModels = product.optionMap.get('model') || [];
+        this.availableColors = product.optionMap.get('color') || [];
 
-          this.availableSeries = product.optionMap.get('series');
-          this.availableModels = product.optionMap.get('model');
-          this.availableColors = product.optionMap.get('color');
+        this.selectedVariant = product.variantMap.get(variantHandle);
 
-          this.selectedVariant = product.variantMap.get(variantHandle);
+        this.product = product;
 
-          this.product = product;
+        // TODO: Remove
+        this.product.description = this.product.description.substring(0, 100);
 
-          // TODO: Remove
-          this.product.description = this.product.description.substring(0, 100);
+        // TODO: Remove
+        this.product.options = [...this.product.optionMap.entries()];
 
-          // TODO: Remove
-          this.product.options = [...this.product.optionMap.entries()];
+        // TODO: Remove
+        this.product.variants = [...this.product.variantMap.entries()];
 
-          // TODO: Remove
-          this.product.variants = [...this.product.variantMap.entries()];
+        if (!variantHandle) {
+          this.changeVariant(
+            '14',
+            'regular',
+            this.availableColors ? 'orange' : undefined,
+            true
+          );
+          return;
+        }
 
-          if (!variantHandle) {
-            this.changeVariant(
-              '14',
-              'regular',
-              this.availableColors ? 'orange' : undefined
-            );
-          }
-
-          this.isLoading = false;
-        });
-    });
+        this.isLoading = false;
+      });
   }
 
   get selectedSerie(): string {
@@ -100,26 +102,33 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.productSub?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
-  changeVariant(newSerie: string, newModel: string, newColor?: string) {
+  changeVariant(
+    newSerie: string,
+    newModel: string,
+    newColor?: string,
+    redirect = false
+  ) {
     const productHandle = this.activatedRoute.snapshot.params['product'];
-
     const variantHandle = this.buildVariantHandle(newSerie, newModel, newColor);
 
     const url = `/products/${productHandle}/${variantHandle}`;
     const urlTree = this.router.createUrlTree([url]);
 
-    this.location.go(urlTree.toString());
-
-    this.selectedVariant = this.product.variantMap.get(variantHandle);
+    if (redirect) {
+      this.router.navigateByUrl(urlTree, { replaceUrl: true });
+    } else {
+      this.location.go(urlTree.toString());
+      this.selectedVariant = this.product.variantMap.get(variantHandle);
+    }
   }
 
   changeSerie(newSerie: string) {
     const newModel = this.isValidModelForSerie(newSerie, this.selectedModel)
       ? this.selectedModel
-      : 'regular'; // TODO: Can it be said that the regular model is and will always be awailable for each serie?
+      : 'regular';
 
     let newColor: string | undefined;
 
