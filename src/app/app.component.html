@@ -1,6 +1,8 @@
 <!-- TODO: Consider adding Content-Security-Policy -->
 <!-- TODO: Revisit spacings and alignments in the design that might look strange -->
 <!-- TODO: Think about how could h1, h2, ... inherited styles be reset via Tailwind -->
+<app-site-shopping-cart [ngClass]="{ 'hidden': !cartIsVisible }"></app-site-shopping-cart>
+
 <app-site-header></app-site-header>
 
 <div class="bg-white">
@@ -8,4 +10,5 @@
 </div>
 
 <app-site-news-signup></app-site-news-signup>
+
 <app-site-footer></app-site-footer>

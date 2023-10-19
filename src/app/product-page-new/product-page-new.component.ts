@@ -2,8 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShopifyService } from '../services/shopify.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, map, switchMap, tap } from 'rxjs';
+import { Subscription, firstValueFrom, map, switchMap, tap } from 'rxjs';
 import { LocationService } from '../services/location.service';
+import { ShoppingCartService } from '../services/shopping-cart.service';
+import { colorTitleMap } from '../models/new-product.model';
 
 @Component({
   selector: 'app-product-page-new',
@@ -24,8 +26,21 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly shopifyService: ShopifyService,
+    private readonly shoppingCartService: ShoppingCartService,
     private readonly locationService: LocationService
   ) {}
+
+  get selectedSerie(): string {
+    return this.selectedVariant.serie;
+  }
+
+  get selectedModel(): string {
+    return this.selectedVariant.model;
+  }
+
+  get selectedColor(): string | undefined {
+    return this.selectedVariant.color;
+  }
 
   ngOnInit() {
     this.subscription = this.activatedRoute.params
@@ -35,19 +50,10 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
           const productHandle = params['product'];
           const variantHandle = params['variant'];
 
-          return this.locationService.getTwoLetterCountryCode().pipe(
-            map((countryCode) => ({
-              countryCode,
-              productHandle,
-              variantHandle,
-            }))
-          );
-        }),
-        switchMap(({ countryCode, productHandle, variantHandle }) =>
-          this.shopifyService
-            .fetchProduct(productHandle, countryCode)
-            .pipe(map((product) => ({ product, variantHandle })))
-        )
+          return this.shopifyService
+            .fetchProduct(productHandle)
+            .pipe(map((product) => ({ product, variantHandle })));
+        })
       )
       .subscribe(({ product, variantHandle }) => {
         if (
@@ -87,18 +93,6 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
       });
-  }
-
-  get selectedSerie(): string {
-    return this.selectedVariant.serie;
-  }
-
-  get selectedModel(): string {
-    return this.selectedVariant.model;
-  }
-
-  get selectedColor(): string | undefined {
-    return this.selectedVariant.color;
   }
 
   ngOnDestroy() {
@@ -229,21 +223,14 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
   }
 
   getColorTitle(color: string) {
-    switch (color) {
-      case 'orange':
-        return 'Sunset orange';
-      case 'lavender':
-        return 'French lavender';
-      case 'beige':
-        return 'Desert beige';
-      case 'black':
-        return 'Jet black';
-      case 'blue':
-        return 'Midnight blue';
-      case 'green':
-        return 'Forest green';
-      default:
-        return color[0].toUpperCase() + color.substring(1);
-    }
+    return colorTitleMap.get(color);
+  }
+
+  addToCart(variantId: string) {
+    const addItemAndOpenCart$ = this.shoppingCartService
+      .addLineItem(variantId, 1)
+      .pipe(tap(() => this.shoppingCartService.openCart()));
+
+    firstValueFrom(addItemAndOpenCart$);
   }
 }

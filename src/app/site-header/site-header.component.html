@@ -59,8 +59,17 @@
             <input class="grow bg-coco-light-gray rounded-r-2xl !outline-none" type="search" placeholder="Search ..." />
           </form>
 
-          <button class="shrink-0 w-6 lg:w-8 h-6 lg:h-8">
+          <button (click)="openCart()" class="relative shrink-0 w-6 lg:w-8 h-6 lg:h-8">
             <img src="/assets/img/site-header/shopping-bag.svg" alt="Shopping bag" />
+
+            <!-- TODO: Add popping animation to the cart quantity display -->
+            <div *ngIf="cartTotalQuantity"
+              class="absolute top-[-4px] right-[-4px] flex justify-center items-center w-4 h-4 bg-coco-orange rounded-full">
+              <span
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-[0.6rem] font-medium leading-[0.6rem]">
+                {{ cartTotalQuantity }}
+              </span>
+            </div>
           </button>
         </div>
       </div>

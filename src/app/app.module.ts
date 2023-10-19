@@ -42,6 +42,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { GraphQLModule } from './graphql.module';
 import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
+import { SiteShoppingCartComponent } from './site-shopping-cart/site-shopping-cart.component';
+import { LineItemComponent } from './site-shopping-cart/line-item/line-item.component';
 
 const Client = require('shopify-buy');
 
@@ -77,6 +79,8 @@ export const client = Client.buildClient({
     BlogPostPageComponent,
     ErrorPageComponent,
     ProductPageNewComponent,
+    SiteShoppingCartComponent,
+    LineItemComponent,
   ],
   imports: [
     MatExpansionModule,
