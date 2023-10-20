@@ -64,7 +64,6 @@
           </span>
         </div>
 
-        <!-- TODO: Scroll to top on navigation - seems like the scroll of the prev page is preserved -->
         <div>
           <span class="text-coco-dark-gray text-lg font-normal !font-anekb">
             Please take a look at our
@@ -76,45 +75,84 @@
         </div>
 
         <!-- TODO: Go through the input elements and set a reasonable amount of padding - Tailwind resets these -->
-        <form class="flex flex-col gap-y-2 pt-8">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-y-2 pt-8">
           <div class="flex flex-col">
-            <label class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="orderNumber" class="text-coco-dark-gray text-base font-medium !font-anekb">
               Order Number
             </label>
-            <input class="h-9 border border-[#E5E7EB] !outline-none" type="text" />
+
+            <input formControlName="orderNumber" id="orderNumber" type="text"
+              class="form-field h-9 border border-[#E5E7EB] !outline-none" />
+
+            <div class="form-field-error-container"></div>
           </div>
 
           <div class="flex flex-col">
-            <label class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="fullName" class="text-coco-dark-gray text-base font-medium !font-anekb">
               Full Name <span class="text-coco-orange">*</span>
             </label>
-            <input class="h-9 border border-[#E5E7EB] !outline-none" type="text" />
+
+            <input formControlName="fullName" id="fullName" type="text"
+              class="form-field h-9 border border-[#E5E7EB] !outline-none" />
+
+            <div class="form-field-error-container">
+              <span *ngIf="isInvalidTouched('fullName')" class="form-field-error-message">
+                Please enter your full name.
+              </span>
+            </div>
           </div>
 
           <div class="flex flex-col">
-            <label class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="email" class="text-coco-dark-gray text-base font-medium !font-anekb">
               Email Address <span class="text-coco-orange">*</span>
             </label>
-            <input class="h-9 border border-[#E5E7EB] !outline-none" type="email" />
+
+            <input formControlName="email" id="email" type="email"
+              class="form-field h-9 border border-[#E5E7EB] !outline-none" />
+
+            <div class="form-field-error-container">
+              <span *ngIf="isInvalidTouched('email')" class="form-field-error-message">
+                Please enter a valid email address.
+              </span>
+            </div>
           </div>
 
           <div class="flex flex-col">
-            <label class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="phone" class="text-coco-dark-gray text-base font-medium !font-anekb">
               Phone Number
             </label>
-            <input class="h-9 border border-[#E5E7EB] !outline-none" type="tel" />
+
+            <input formControlName="phone" id="phone" type="tel" class="h-9 border border-[#E5E7EB] !outline-none" />
+
+            <div class="form-field-error-container"></div>
           </div>
 
+          <!-- TODO: Should we add a character counter for this textarea? -->
           <div class="flex flex-col">
-            <label class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="body" class="text-coco-dark-gray text-base font-medium !font-anekb">
               Let us know how to help you <span class="text-coco-orange">*</span>
             </label>
-            <textarea class="h-[106px] border border-[#E5E7EB] !outline-none"></textarea>
+
+            <textarea formControlName="body" id="body"
+              class="form-field h-[106px] border border-[#E5E7EB] !outline-none"></textarea>
+
+            <div class="form-field-error-container">
+              <span *ngIf="isInvalidTouched('body')" class="form-field-error-message">
+                Please enter at least {{ bodyMinLength }}, maximum {{ bodyMaxLength }} characters.
+              </span>
+            </div>
           </div>
 
-          <div>
-            <button class="px-6 py-4 bg-coco-orange" type="submit">
-              <span class="text-uppercase text-white text-sm font-semibold !font-anekb">Send</span>
+          <!-- TODO: Add reCAPTCHA -->
+          <div class="pt-2">
+            <button type="submit" [disabled]="!allowSubmit"
+              [ngClass]="[allowSubmit ? '' : 'opacity-50 cursor-not-allowed']" class="px-6 py-4 bg-coco-orange">
+              <span class="text-uppercase text-white text-sm font-semibold !font-anekb">
+                Send
+              </span>
+
+              <app-loading-spinner *ngIf="isSubmitting" color="white" bgClass="bg-coco-orange"
+                [scale]=".5"></app-loading-spinner>
             </button>
           </div>
         </form>

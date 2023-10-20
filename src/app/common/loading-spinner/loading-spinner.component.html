@@ -1,0 +1,9 @@
+<div [ngClass]="[bgClass]" class="absolute top-0 left-0 right-0 bottom-0" #container>
+  <div class="relative w-full h-full">
+    <div class="w-full h-full opacity-50"></div>
+
+    <div *ngIf="diameter" class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
+      <mat-spinner [diameter]="diameter"></mat-spinner>
+    </div>
+  </div>
+</div>

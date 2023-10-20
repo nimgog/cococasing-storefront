@@ -89,3 +89,20 @@ body {
     }
   }
 }
+
+.toast-container {
+  @apply z-[2000] #{!important};
+
+  &.toast-top-center {
+    @apply flex flex-col items-center #{!important};
+
+    .ngx-toastr {
+
+      // 640px is Tailwind's "sm" breakpoint
+      @media screen and (max-width: 639px) {
+        @apply w-screen #{!important};
+      }
+    }
+  }
+
+}

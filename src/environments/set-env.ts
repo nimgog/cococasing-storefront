@@ -15,6 +15,7 @@ const setEnv = () => {
   storeFrontAT: '${process.env['storeFrontAT']}',
   storeFrontApiVersion: '${process.env['storeFrontApiVersion']}',
   storeFrontEndpoint: '${process.env['storeFrontEndpoint']}',
+  formspreeContactEndpoint: '${process.env['formspreeContactEndpoint']}',
   appVersion: '${appVersion}',
   production: true,
 };

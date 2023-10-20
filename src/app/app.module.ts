@@ -44,6 +44,9 @@ import { GraphQLModule } from './graphql.module';
 import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
 import { SiteShoppingCartComponent } from './site-shopping-cart/site-shopping-cart.component';
 import { LineItemComponent } from './site-shopping-cart/line-item/line-item.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
+import { ToastrModule } from 'ngx-toastr';
 
 const Client = require('shopify-buy');
 
@@ -81,6 +84,7 @@ export const client = Client.buildClient({
     ProductPageNewComponent,
     SiteShoppingCartComponent,
     LineItemComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     MatExpansionModule,
@@ -94,6 +98,16 @@ export const client = Client.buildClient({
     BrowserAnimationsModule,
     ScullyLibModule,
     GraphQLModule,
+    ReactiveFormsModule,
+
+    // TODO: Color of the notifications could be unified and aligned with the site design
+    ToastrModule.forRoot({
+      closeButton: true,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+      progressBar: true,
+      maxOpened: 3,
+    }),
   ],
   providers: [
     {
