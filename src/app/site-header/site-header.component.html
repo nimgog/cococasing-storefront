@@ -1,9 +1,8 @@
-<!-- TODO: I think Blog should be added to the header as well -->
-
 <div class="border-b border-[#E5E7EB]">
   <div class="bg-coco-dark-blue">
     <div class="h-11 md:h-5 lg:h-0"></div>
     <div class="flex justify-center align-items-center py-0.5">
+      <!-- TODO: Should we keep this? -->
       <span class="text-white text-uppercase text-[9px] font-roboto leading-[11px] tracking-[0.72px]">
         Free shippings on order over £100!
       </span>
@@ -13,38 +12,43 @@
   <div class="flex justify-center bg-white">
     <div class="grow flex flex-col max-w-centered-content">
       <!-- TODO: Check what's the desired height in the new design: 75 vs 61 px -->
-      <div class="grow flex justify-between align-items-center h-[61px] px-1.5">
-        <button class="lg:hidden">
+      <div class="grow flex justify-between items-center h-[61px] px-1.5">
+        <button (click)="onHamburgerMenuClick()" class="lg:hidden">
           <img src="/assets/img/site-header/hamburger-menu.svg" alt="Menu" />
         </button>
 
-        <div class="shrink-0 flex items-center gap-x-4">
+        <div class="shrink-0 flex items-stretch gap-x-4">
           <a routerLink="/">
             <img src="/assets/img/site-header/coco-logo-dark.svg" alt="Coco Casing logo" />
           </a>
 
-          <div class="hidden lg:flex gap-x-2 text-coco-dark-blue text-[16px] font-medium font-roboto">
-            <a routerLink="/products/the-coco-case">
-              <span class="text-uppercase">iPhone Cases</span>
-            </a>
-
+          <div class="hidden lg:flex items-stretch gap-x-3 text-coco-dark-blue text-[16px] font-medium font-roboto">
+            <ng-container *ngTemplateOutlet="navLink; context: { title: 'Home', link: '/' }"></ng-container>
             <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
 
-            <a routerLink="/products/the-screen-protection">
-              <span class="text-uppercase">Screen & Protection</span>
-            </a>
+            <app-dropdown-menu>
+              <div mainTemplate>
+                <span class="text-uppercase">Products</span>
+              </div>
+
+              <ng-container
+                *ngTemplateOutlet="dropdownLink; context: { title: 'iPhone Cases', link: '/products/the-coco-case' }"></ng-container>
+              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="dropdownLink; context: { title: 'Screen & Protection', link: '/products/the-screen-protection' }"></ng-container>
+              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="dropdownLink; context: { title: 'The Coco Package', link: '/products/the-coco-package' }"></ng-container>
+            </app-dropdown-menu>
 
             <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
-
-            <a routerLink="/products/the-coco-package">
-              <span class="text-uppercase">The Coco Package</span>
-            </a>
-
+            <ng-container *ngTemplateOutlet="navLink; context: { title: 'Blog', link: '/blog' }"></ng-container>
             <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
-
-            <a routerLink="/about">
-              <span class="text-uppercase">About</span>
-            </a>
+            <ng-container *ngTemplateOutlet="navLink; context: { title: 'FAQ', link: '/faq' }"></ng-container>
+            <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
+            <ng-container *ngTemplateOutlet="navLink; context: { title: 'Contact', link: '/contact' }"></ng-container>
+            <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
+            <ng-container *ngTemplateOutlet="navLink; context: { title: 'About Us', link: '/about' }"></ng-container>
           </div>
         </div>
 
@@ -77,8 +81,32 @@
   </div>
 </div>
 
+<ng-template #navLink let-title="title" let-link="link">
+  <a [routerLink]="[link]" class="h-full">
+    <div class="flex items-center h-full">
+      <span class="text-uppercase">
+        {{ title }}
+      </span>
+    </div>
+  </a>
+</ng-template>
+
 <ng-template #navSeparator>
   <div class="hidden lg:flex justify-center items-center pb-0.5">
     <div class="bg-coco-orange w-1 h-1 rounded-full"></div>
   </div>
+</ng-template>
+
+<ng-template #dropdownLink let-title="title" let-link="link">
+  <a [routerLink]="link">
+    <div>
+      <span class="text-uppercase whitespace-nowrap">
+        {{ title }}
+      </span>
+    </div>
+  </a>
+</ng-template>
+
+<ng-template #dropdownSeparator>
+  <div class="w-full h-[1px] bg-gradient-to-r from-coco-orange via-coco-orange to-transparent opacity-50"></div>
 </ng-template>

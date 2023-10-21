@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { Subscription, filter, map } from 'rxjs';
+import { Subscription, distinctUntilChanged, filter, map, skip } from 'rxjs';
 import { ShoppingCartService } from './services/shopping-cart.service';
+import { ScrollBlockerService } from './services/scroll-blocker.service';
 
 @Component({
   selector: 'app-root',
@@ -10,31 +11,52 @@ import { ShoppingCartService } from './services/shopping-cart.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   cartIsVisibleSubscription?: Subscription;
-  useNewLayout = false;
   cartIsVisible = false;
+  drawerIsVisible = false;
 
   constructor(
     private readonly router: Router,
-    private readonly shoppingCartService: ShoppingCartService
+    private readonly shoppingCartService: ShoppingCartService,
+    private readonly scrollBlockerService: ScrollBlockerService
   ) {}
 
   ngOnInit() {
     this.router.events
       .pipe(
-        filter((event) => event instanceof NavigationStart),
+        filter(
+          (event) => event instanceof NavigationStart && this.drawerIsVisible
+        ),
         map((event) => event as NavigationStart)
       )
-      .subscribe(
-        (event) => (this.useNewLayout = !event.url.startsWith('/products'))
-      );
+      .subscribe(() => {
+        this.scrollBlockerService.unblockPageScroll();
+        this.drawerIsVisible = false;
+      });
 
-    this.cartIsVisibleSubscription =
-      this.shoppingCartService.isCartVisible$.subscribe(
-        (cartIsVisible) => (this.cartIsVisible = cartIsVisible)
-      );
+    this.cartIsVisibleSubscription = this.shoppingCartService.isCartVisible$
+      .pipe(distinctUntilChanged(), skip(1))
+      .subscribe((isVisible) => {
+        if (isVisible) {
+          this.scrollBlockerService.blockPageScroll();
+        } else {
+          this.scrollBlockerService.unblockPageScroll();
+        }
+
+        this.cartIsVisible = isVisible;
+      });
   }
 
   ngOnDestroy() {
     this.cartIsVisibleSubscription?.unsubscribe();
+  }
+
+  onHamburgerMenuClick() {
+    this.scrollBlockerService.blockPageScroll();
+    this.drawerIsVisible = true;
+  }
+
+  onDrawerClose() {
+    this.scrollBlockerService.unblockPageScroll();
+    this.drawerIsVisible = false;
   }
 }

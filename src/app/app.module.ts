@@ -13,6 +13,7 @@ import { AccordionComponent } from './accordion/accordion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { ImageSliderComponent } from './product-page/image-slider/image-slider.component';
 import { CustomHammerConfig } from './custom-hammer-config';
@@ -38,7 +39,6 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import { BenefitsSliderComponent } from './about-page/benefits-slider/benefits-slider.component';
 import { BenefitsHighlighterComponent } from './about-page/benefits-highlighter/benefits-highlighter.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
-import { ErrorPageComponent } from './error-page/error-page.component';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { GraphQLModule } from './graphql.module';
 import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
@@ -47,6 +47,8 @@ import { LineItemComponent } from './site-shopping-cart/line-item/line-item.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
 import { ToastrModule } from 'ngx-toastr';
+import { DropdownMenuComponent } from './common/dropdown-menu/dropdown-menu.component';
+import { SiteDrawerComponent } from './site-drawer/site-drawer.component';
 
 const Client = require('shopify-buy');
 
@@ -80,15 +82,17 @@ export const client = Client.buildClient({
     BenefitsSliderComponent,
     BenefitsHighlighterComponent,
     BlogPostPageComponent,
-    ErrorPageComponent,
     ProductPageNewComponent,
     SiteShoppingCartComponent,
     LineItemComponent,
     LoadingSpinnerComponent,
+    DropdownMenuComponent,
+    SiteDrawerComponent,
   ],
   imports: [
     MatExpansionModule,
     MatFormFieldModule,
+    MatIconModule,
     MatProgressSpinnerModule,
     BrowserModule,
     AppRoutingModule,
@@ -117,4 +121,8 @@ export const client = Client.buildClient({
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(matIconRegistry: MatIconRegistry) {
+    matIconRegistry.setDefaultFontSetClass('material-icons-round');
+  }
+}
