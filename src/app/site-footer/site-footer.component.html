@@ -1,13 +1,13 @@
-<div class="flex justify-center px-2 py-8 bg-coco-dark-blue">
+<div class="flex justify-center px-2 py-8 bg-coco-darkest-blue">
   <div class="grow flex flex-col max-w-centered-content">
     <div class="grow flex flex-col sm:flex-row sm:justify-between gap-y-8">
       <div class="grid grid-cols-2 gap-x-20 sm:gap-x-16 lg:gap-x-24 px-2 sm:pr-0 lg:pl-0 pb-8">
         <div class="text-uppercase">
-          <span class="text-[#F9FAFB] text-sm font-medium !font-anekt">
+          <span class="text-coco-off-white text-sm font-medium !font-anekt">
             About
           </span>
 
-          <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#9CA3AF] text-xs font-roboto">
+          <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 textcoco-medium-gray text-xs font-roboto">
             <li>
               <a routerLink="/about" class="whitespace-nowrap">
                 About Coco Casing&trade;
@@ -47,11 +47,11 @@
         </div>
 
         <div class="text-uppercase">
-          <span class=" text-[#F9FAFB] text-sm font-medium !font-anekt">
+          <span class=" text-coco-off-white text-sm font-medium !font-anekt">
             Pages
           </span>
 
-          <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 text-[#9CA3AF] text-xs font-roboto">
+          <ul class="flex flex-col gap-y-1 lg:gap-y-4 lg:pt-4 textcoco-medium-gray text-xs font-roboto">
             <li>
               <a routerLink="/" class="whitespace-nowrap">
                 Home
@@ -80,7 +80,8 @@
       </div>
 
       <div class="grow flex justify-between md:gap-x-10 lg:gap-x-24 px-2 sm:px-0 pb-8">
-        <div class="shrink-0 text-[#9CA3AF] text-uppercase text-xs lg:text-sm font-normal lg:font-medium font-roboto">
+        <div
+          class="shrink-0 textcoco-medium-gray text-uppercase text-xs lg:text-sm font-normal lg:font-medium font-roboto">
           <span class="block whitespace-nowrap">Shadida Trading Company AB</span>
           <span class="block whitespace-nowrap">559356-9345</span>
           <span class="block whitespace-nowrap">Kristianstadsgatan 10</span>
@@ -101,12 +102,12 @@
       </div>
     </div>
 
-    <div class="flex justify-center border-t border-[#E5E7EB] text-white">
+    <div class="flex justify-center border-t border-coco-lighter-gray text-white">
       <div class="flex flex-col">
         <div class="flex justify-center gap-x-2 py-4">
           <img *ngFor="let image of paymentOptionImages" [src]="image.src" [alt]="image.alt" class="w-8 lg:w-9" />
         </div>
-        <span class="block text-center text-[#9CA3AF] text-xs font-medium !font-anekt leading-5">
+        <span class="block text-center textcoco-medium-gray text-xs font-medium !font-anekt leading-5">
           &copy;{{ currentYear }}, Coco-Casing
         </span>
       </div>

@@ -91,7 +91,7 @@ body {
 }
 
 .toast-container {
-  @apply z-[2000] #{!important};
+  @apply z-toast-container #{!important};
 
   &.toast-top-center {
     @apply flex flex-col items-center #{!important};

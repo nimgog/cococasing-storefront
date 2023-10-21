@@ -6,11 +6,11 @@
   <div class="grow flex flex-col justify-between">
     <div class="flex justify-between items-between">
       <div class="flex flex-col">
-        <span class="text-uppercase text-coco-dark-gray text-sm	font-semibold !font-anekt">
+        <span class="text-uppercase text-coco-slate-gray text-sm	font-semibold !font-anekt">
           {{ lineItem.product.title }}
         </span>
 
-        <span class="text-coco-dark-gray text-xs font-normal !font-anekb tracking-[.6px]">
+        <span class="text-coco-slate-gray text-xs font-normal !font-anekb tracking-[.6px]">
           {{ lineItem.product.subtitle }}
         </span>
       </div>
@@ -28,7 +28,7 @@
 
     <div class="flex justify-between pb-6">
       <div class="w-[88px]">
-        <div class="flex p-0.5 border border-[#E5E7EB] rounded-full">
+        <div class="flex p-0.5 border border-coco-lighter-gray rounded-full">
           <button (click)="decreaseQuantity()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M18 12H6" stroke="#F97316" stroke-linecap="round" stroke-linejoin="round" />
@@ -36,7 +36,7 @@
           </button>
 
           <div class="grow flex justify-center items-center">
-            <span class="w-full text-center text-coco-dark-gray text-sm font-normal !font-anekb leading-[16px]">
+            <span class="w-full text-center text-coco-slate-gray text-sm font-normal !font-anekb leading-[16px]">
               {{ lineItem.quantity }}
             </span>
           </div>
@@ -51,7 +51,7 @@
       </div>
 
       <div class="flex items-end">
-        <span class="text-uppercase text-coco-dark-gray text-base font-medium !font-anekb">
+        <span class="text-uppercase text-coco-slate-gray text-base font-medium !font-anekb">
           {{ lineItem.cost.totalAmount.amount }} {{ lineItem.cost.totalAmount.currencyCode }}
         </span>
       </div>

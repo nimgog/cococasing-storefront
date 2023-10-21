@@ -9,16 +9,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'coco-dark-blue': '#030712',
-        'coco-dark-gray': '#374151',
-        'coco-light-gray': '#F3F4F6',
-        'coco-orange': '#F97316',
-        'coco-case-orange': '#FEA92A',
-        'coco-case-lavender': '#33418D',
         'coco-case-beige': '#D9CEAA',
         'coco-case-black': '#000000',
         'coco-case-blue': '#33418D',
         'coco-case-green': '#415035',
+        'coco-case-lavender': '#33418D',
+        'coco-case-orange': '#FEA92A',
+
+        'coco-orange': '#F97316',
+        'coco-red': '#DC2626',
+
+        'coco-dark-blue': '#111827',
+        'coco-darkest-blue': '#030712',
+        'coco-grayish-blue': '#3F3F46',
+
+        'coco-light-gray': '#F3F4F6',
+        'coco-light-medium-gray': '#D1D5DB',
+        'coco-lighter-gray': '#E5E7EB',
+        'coco-medium-gray': '#9CA3AF',
+        'coco-off-white': '#F9FAFB',
+        'coco-slate-gray': '#374151',
       },
       fontFamily: {
         anekb: ['"Anek Bangla"', 'sans-serif'],
@@ -32,6 +42,13 @@ module.exports = {
         'blog-content': '1040px',
         'centered-content': '1280px',
         'widened-content': '1440px',
+      },
+      zIndex: {
+        'product-slider-arrow': '100',
+        'dropdown-menu': '500',
+        'mobile-drawer': '1000',
+        'shopping-cart': '1000',
+        'toast-container': '2000',
       },
     },
   },

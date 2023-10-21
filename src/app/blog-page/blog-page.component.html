@@ -9,12 +9,12 @@
     <div class="flex">
       <!-- TODO: Animate "tab switching" -->
       <div *ngFor="let routeTab of routeTabs; let i = index"
-        [ngClass]="[routeTab.category === currentCategory ? 'border-coco-orange' : 'border-[#D1D5DB]', i > 0 ? 'lg:pl-4' : '']"
+        [ngClass]="[routeTab.category === currentCategory ? 'border-coco-orange' : 'border-coco-light-medium-gray', i > 0 ? 'lg:pl-4' : '']"
         class="w-1/4 lg:w-[168px] border-b">
         <!-- <a [routerLink]="routeTab.route"> -->
         <button (click)="changeCategory(routeTab.category)">
           <span
-            [ngClass]="[routeTab.category === currentCategory ? 'text-[#111827] font-semibold' : 'text-[#6B7280] font-light']"
+            [ngClass]="[routeTab.category === currentCategory ? 'text-coco-dark-blue font-semibold' : 'text-[#6B7280] font-light']"
             class="text-uppercase text-sm lg:text-3xl !font-anekt leading-[24px]">
             {{ routeTab.title }}
           </span>
@@ -22,7 +22,7 @@
         <!-- </a> -->
       </div>
 
-      <div class="grow hidden lg:block border-b border-[#D1D5DB]"></div>
+      <div class="grow hidden lg:block border-b border-coco-light-medium-gray"></div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-6 lg:gap-x-0.5 gap-y-2 pt-6 lg:pt-12">
@@ -66,7 +66,7 @@
 
     <!-- TODO: Animate loading -->
     <div *ngIf="hasMorePosts" class="flex justify-center pt-10">
-      <button class="px-6 py-4 bg-[#111827] rounded-lg" [disabled]="!hasMorePosts" (click)="loadMorePosts()">
+      <button class="px-6 py-4 bg-coco-dark-blue rounded-lg" [disabled]="!hasMorePosts" (click)="loadMorePosts()">
         <span class="text-uppercase text-white text-sm font-semibold !font-anekb">
           View More
         </span>

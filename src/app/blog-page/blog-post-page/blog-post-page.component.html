@@ -9,8 +9,8 @@
     </div>
 
     <div class="flex flex-col items-center max-w-blog-content px-4 pt-8 lg:pt-36 pb-10 lg:pb-28">
-      <div *ngIf="blogPost" class="w-full flex flex-col gap-y-8 border-b border-[#D1D5DB]">
-        <span class="text-uppercase text-coco-dark-gray text-lg lg:text-5xl font-bold !font-anekt lg:leading-[48px]">
+      <div *ngIf="blogPost" class="w-full flex flex-col gap-y-8 border-b border-coco-light-medium-gray">
+        <span class="text-uppercase text-coco-slate-gray text-lg lg:text-5xl font-bold !font-anekt lg:leading-[48px]">
           {{ blogPost.title }}
         </span>
 
@@ -20,7 +20,7 @@
               <img src="/assets/img/blog-page/blog-post-page/author.svg" alt="Author" />
             </div>
 
-            <span class="text-coco-dark-gray text-sm lg:text-base font-medium !font-anekb">
+            <span class="text-coco-slate-gray text-sm lg:text-base font-medium !font-anekb">
               {{ blogPost.author }}
             </span>
           </div>
@@ -31,7 +31,7 @@
             </div>
 
             <span
-              class="text-uppercase text-coco-dark-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
+              class="text-uppercase text-coco-slate-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
               {{ blogPost.date | date }}
             </span>
           </div>
@@ -45,7 +45,7 @@
       <!-- TODO: Maybe check the previous page in the history to decide if nav back should happen to -->
       <!-- all categories or a specific (current post's category) one -->
       <div>
-        <button routerLink="/blog" class="px-6 py-4 bg-[#111827] rounded-lg">
+        <button routerLink="/blog" class="px-6 py-4 bg-coco-dark-blue rounded-lg">
           <span class="text-uppercase text-white text-sm font-semibold !font-anekb">
             Return to blog
           </span>

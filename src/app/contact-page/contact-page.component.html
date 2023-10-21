@@ -7,8 +7,8 @@
 
 <div class="flex justify-center px-4 py-10 lg:py-28">
   <div class="flex flex-col max-w-centered-content">
-    <div class="py-1 border-b border-[#E5E7EB]">
-      <span class="text-uppercase text-coco-dark-gray text-lg lg:text-3xl font-medium !font-anekt">
+    <div class="py-1 border-b border-coco-lighter-gray">
+      <span class="text-uppercase text-coco-slate-gray text-lg lg:text-3xl font-medium !font-anekt">
         Any Questions?
       </span>
     </div>
@@ -16,18 +16,18 @@
     <div class="flex flex-col lg:flex-row gap-x-8 gap-y-10 pt-8 lg:pt-14 lg:pb-4">
       <div class="flex flex-col gap-y-8 lg:w-1/2">
         <div class="grow flex flex-col gap-y-2">
-          <span class="text-coco-dark-gray text-lg lg:text-2xl font-medium !font-anekt">
+          <span class="text-coco-slate-gray text-lg lg:text-2xl font-medium !font-anekt">
             How can we be of assistance?
           </span>
 
-          <span class="text-coco-dark-gray text-base font-normal !font-anekb">
+          <span class="text-coco-slate-gray text-base font-normal !font-anekb">
             If you have any questions about a Coco-Casing product, or anything we can be assistance of, please do reach
             out. We do our best to get back to you within 24 hours on workdays.
           </span>
         </div>
 
         <!-- TODO: If we want symmetricity, lets throw away the anekt font -->
-        <div class="flex gap-x-2 lg:gap-x-8 p-4 lg:p-8 bg-[#111827] rounded-lg text-white">
+        <div class="flex gap-x-2 lg:gap-x-8 p-4 lg:p-8 bg-coco-dark-blue rounded-lg text-white">
           <div class="flex justify-start lg:justify-center items-center w-1/2">
             <span class="lg:text-center text-base font-medium !font-anekb">Workdays</span>
           </div>
@@ -38,7 +38,7 @@
           </div>
         </div>
 
-        <div class="p-2 bg-[#F9FAFB] rounded">
+        <div class="p-2 bg-coco-off-white rounded">
           <div class="flex flex-col lg:flex-row lg:gap-x-8 gap-y-8 p-2 border border-black rounded bg-white">
             <div>
               <iframe class="w-full h-[168px] lg:h-[282px]"
@@ -46,7 +46,7 @@
                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
 
-            <div class="flex flex-col lg:justify-center text-coco-dark-gray text-sm lg:text-base font-normal">
+            <div class="flex flex-col lg:justify-center text-coco-slate-gray text-sm lg:text-base font-normal">
               <span class="whitespace-nowrap !font-anekb">Shadida Trading Company AB</span>
               <span class="whitespace-nowrap !font-anekb">559356-9345</span>
               <span class="whitespace-nowrap !font-anekb">Kristianstadsgatan 10</span>
@@ -57,15 +57,15 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-y-2 lg:w-1/2 px-2 py-6 lg:p-8 bg-[#F9FAFB]">
+      <div class="flex flex-col gap-y-2 lg:w-1/2 px-2 py-6 lg:p-8 bg-coco-off-white">
         <div>
-          <span class="text-uppercase text-coco-dark-gray text-2xl font-medium !font-anekt">
+          <span class="text-uppercase text-coco-slate-gray text-2xl font-medium !font-anekt">
             Submit A Ticket
           </span>
         </div>
 
         <div>
-          <span class="text-coco-dark-gray text-lg font-normal !font-anekb">
+          <span class="text-coco-slate-gray text-lg font-normal !font-anekb">
             Please take a look at our
             <a routerLink="/faq">
               <span class="text-coco-orange font-semibold !font-anekb">FAQs</span>
@@ -77,23 +77,23 @@
         <!-- TODO: Go through the input elements and set a reasonable amount of padding - Tailwind resets these -->
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-y-2 pt-8">
           <div class="flex flex-col">
-            <label for="orderNumber" class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="orderNumber" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Order Number
             </label>
 
             <input formControlName="orderNumber" id="orderNumber" type="text"
-              class="form-field h-9 border border-[#E5E7EB] !outline-none" />
+              class="form-field h-9 border border-coco-lighter-gray !outline-none" />
 
             <div class="form-field-error-container"></div>
           </div>
 
           <div class="flex flex-col">
-            <label for="fullName" class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="fullName" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Full Name <span class="text-coco-orange">*</span>
             </label>
 
             <input formControlName="fullName" id="fullName" type="text"
-              class="form-field h-9 border border-[#E5E7EB] !outline-none" />
+              class="form-field h-9 border border-coco-lighter-gray !outline-none" />
 
             <div class="form-field-error-container">
               <span *ngIf="isInvalidTouched('fullName')" class="form-field-error-message">
@@ -103,12 +103,12 @@
           </div>
 
           <div class="flex flex-col">
-            <label for="email" class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="email" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Email Address <span class="text-coco-orange">*</span>
             </label>
 
             <input formControlName="email" id="email" type="email"
-              class="form-field h-9 border border-[#E5E7EB] !outline-none" />
+              class="form-field h-9 border border-coco-lighter-gray !outline-none" />
 
             <div class="form-field-error-container">
               <span *ngIf="isInvalidTouched('email')" class="form-field-error-message">
@@ -118,23 +118,24 @@
           </div>
 
           <div class="flex flex-col">
-            <label for="phone" class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="phone" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Phone Number
             </label>
 
-            <input formControlName="phone" id="phone" type="tel" class="h-9 border border-[#E5E7EB] !outline-none" />
+            <input formControlName="phone" id="phone" type="tel"
+              class="h-9 border border-coco-lighter-gray !outline-none" />
 
             <div class="form-field-error-container"></div>
           </div>
 
           <!-- TODO: Should we add a character counter for this textarea? -->
           <div class="flex flex-col">
-            <label for="body" class="text-coco-dark-gray text-base font-medium !font-anekb">
+            <label for="body" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Let us know how to help you <span class="text-coco-orange">*</span>
             </label>
 
             <textarea formControlName="body" id="body"
-              class="form-field h-[106px] border border-[#E5E7EB] !outline-none"></textarea>
+              class="form-field h-[106px] border border-coco-lighter-gray !outline-none"></textarea>
 
             <div class="form-field-error-container">
               <span *ngIf="isInvalidTouched('body')" class="form-field-error-message">

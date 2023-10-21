@@ -7,7 +7,7 @@
 <!-- TODO: Should this whole section trigger the navigation, or just the arrow click? -->
 <div class="flex justify-center lg:mt-8 lg:mb-28">
   <div
-    class="relative grow flex justify-center lg:justify-between items-center max-w-centered-content mb-13 p-2 lg:px-8 lg:py-10 bg-coco-dark-blue lg:bg-[linear-gradient(0deg,rgba(3,7,18,0.7),rgba(3,7,18,0.7)),url('/assets/img/contact-page/page-banner.jpg')] lg:bg-cover lg:bg-center lg:bg-no-repeat">
+    class="relative grow flex justify-center lg:justify-between items-center max-w-centered-content mb-13 p-2 lg:px-8 lg:py-10 bg-coco-darkest-blue lg:bg-[linear-gradient(0deg,rgba(3,7,18,0.7),rgba(3,7,18,0.7)),url('/assets/img/contact-page/page-banner.jpg')] lg:bg-cover lg:bg-center lg:bg-no-repeat">
     <div class="flex flex-col justify-center px-8">
       <span
         class="text-uppercase text-white text-base lg:text-5xl font-medium !font-anekt leading-[18px] lg:leading-[48px]">
@@ -31,7 +31,7 @@
       <button class="shrink-0" type="submit">
         <img src="/assets/img/faq-page/search.svg" alt="Search" />
       </button>
-      <input class="grow text-sm font-light !font-anekb placeholder-[#111827] !outline-none" type="search"
+      <input class="grow text-sm font-light !font-anekb placeholder-coco-dark-blue !outline-none" type="search"
         placeholder="Search ..." />
     </form>
   </div>
@@ -57,7 +57,7 @@
           class="flex flex-col lg:flex-row gap-x-8 gap-y-8 w-full">
           <div *ngFor="let topic of section.topics"
             class="lg:w-full lg:flex-initial flex flex-col gap-y-2 lg:gap-y-4 lg:px-4 lg:pt-2 lg:pb-4">
-            <span class="text-uppercase text-coco-dark-gray text-sm lg:text-xl font-medium !font-anekt leading-6">
+            <span class="text-uppercase text-coco-slate-gray text-sm lg:text-xl font-medium !font-anekt leading-6">
               {{ topic.title }}
             </span>
 
@@ -66,7 +66,7 @@
               [ngClass]="[isScenarioExpanded(scenario) ? 'border-coco-orange' : 'border-[E5E7EB]']"
               class="flex flex-col lg:gap-y-1 mx-1 py-3 lg:py-4 border-b">
               <div (click)="toggleScenario(scenario)" class="flex justify-between items-center">
-                <span class="text-coco-dark-gray text-sm lg:text-base font-medium !font-anekb">
+                <span class="text-coco-slate-gray text-sm lg:text-base font-medium !font-anekb">
                   {{ scenario.title }}
                 </span>
 
@@ -80,7 +80,7 @@
 
               <div [ngClass]="{ 'hidden': !isScenarioExpanded(scenario) }" class="px-1 py-4 lg:pb-2">
                 <!-- TODO: Render body as HTML if needed -->
-                <p class="text-coco-dark-gray text-sm font-normal !font-anekb">
+                <p class="text-coco-slate-gray text-sm font-normal !font-anekb">
                   {{ scenario.body }}
                 </p>
               </div>

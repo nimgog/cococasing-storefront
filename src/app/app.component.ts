@@ -4,6 +4,7 @@ import { Subscription, distinctUntilChanged, filter, map, skip } from 'rxjs';
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { ScrollBlockerService } from './services/scroll-blocker.service';
 
+// TODO: Upgrade to Angular 16
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
