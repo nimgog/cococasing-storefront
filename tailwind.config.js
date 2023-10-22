@@ -21,7 +21,6 @@ module.exports = {
 
         'coco-dark-blue': '#111827',
         'coco-darkest-blue': '#030712',
-        'coco-grayish-blue': '#3F3F46',
 
         'coco-light-gray': '#F3F4F6',
         'coco-light-medium-gray': '#D1D5DB',
