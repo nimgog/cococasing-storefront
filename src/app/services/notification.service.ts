@@ -2,15 +2,22 @@ import { Injectable } from '@angular/core';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
 import { Notification } from '../models/notification';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type NotificationConfig = Partial<IndividualConfig<any>>;
+
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static readonly DefaultSuccessConfig: Partial<IndividualConfig<any>> =
-    {
-      timeOut: 3000,
-    };
+  private static readonly DefaultSuccessConfig: NotificationConfig = {
+    timeOut: 3000,
+  };
+
+  private static readonly DefaultInfoConfig: NotificationConfig = {
+    timeOut: 3000,
+  };
+
+  private static readonly DefaultErrorConfig: NotificationConfig = {};
 
   constructor(private readonly toastrService: ToastrService) {}
 
@@ -21,11 +28,17 @@ export class NotificationService {
     });
   }
 
+  showInfoMessage(notification: Notification) {
+    this.toastrService.info(notification.message, notification.title, {
+      ...NotificationService.DefaultInfoConfig,
+      ...(notification.config || {}),
+    });
+  }
+
   showErrorMessage(notification: Notification) {
-    this.toastrService.error(
-      notification.message,
-      notification.title,
-      notification.config
-    );
+    this.toastrService.error(notification.message, notification.title, {
+      ...NotificationService.DefaultErrorConfig,
+      ...(notification.config || {}),
+    });
   }
 }
