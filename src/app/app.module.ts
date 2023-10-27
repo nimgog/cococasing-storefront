@@ -17,7 +17,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { ImageSliderComponent } from './product-page/image-slider/image-slider.component';
 import { CustomHammerConfig } from './custom-hammer-config';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -98,6 +98,7 @@ export const client = Client.buildClient({
     AppRoutingModule,
     HammerModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     NgxImageZoomModule,
     BrowserAnimationsModule,
     ScullyLibModule,
