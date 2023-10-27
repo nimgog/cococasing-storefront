@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../services/notification.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-contact-page',
@@ -64,6 +65,7 @@ export class ContactPageComponent implements OnInit {
       .post(environment.formspreeContactEndpoint, formData, {
         headers: new HttpHeaders().set('Accept', 'application/json'),
       })
+      .pipe(finalize(() => (this.isSubmitting = false)))
       .subscribe({
         next: () => {
           this.contactForm.reset();
@@ -79,7 +81,6 @@ export class ContactPageComponent implements OnInit {
             message: 'Please try again later.',
           });
         },
-        complete: () => (this.isSubmitting = false),
       });
   }
 }
