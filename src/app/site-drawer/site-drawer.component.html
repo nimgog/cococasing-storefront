@@ -1,3 +1,6 @@
+<!-- TODO: Collapse font-roboto into !font-anekb, maybe also replace font-anekt -->
+<!-- TODO: If anekb is ok to be the only font, configure it globally -->
+
 <div class="fixed flex w-full h-screen z-mobile-drawer">
   <div class="grow shrink-0 top-0 right-0 flex flex-col w-full max-w-[400px] bg-white">
     <div class="relative flex justify-center items-center p-4 border-b border-coco-lighter-gray">
@@ -65,7 +68,7 @@
 </div>
 
 <ng-template #menuItem let-title="title" let-link="link">
-  <a [routerLink]="link">
+  <a (click)="closeDrawer()" [routerLink]="link">
     <span class="text-uppercase text-lg font-roboto">
       {{ title }}
     </span>
@@ -74,8 +77,8 @@
 
 <ng-template #submenuItem let-title="title" let-link="link">
   <div class="px-8">
-    <a [routerLink]="link">
-      <span class="text-uppercase text-sm font-medium">
+    <a (click)="closeDrawer()" [routerLink]="link">
+      <span class="text-uppercase text-sm font-medium font-roboto">
         {{ title }}
       </span>
     </a>

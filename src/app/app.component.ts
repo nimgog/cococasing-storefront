@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { Subscription, distinctUntilChanged, filter, map, skip } from 'rxjs';
+import { Subscription, distinctUntilChanged, skip } from 'rxjs';
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { ScrollBlockerService } from './services/scroll-blocker.service';
 
@@ -22,17 +22,12 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.router.events
-      .pipe(
-        filter(
-          (event) => event instanceof NavigationStart && this.drawerIsVisible
-        ),
-        map((event) => event as NavigationStart)
-      )
-      .subscribe(() => {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart && this.drawerIsVisible) {
         this.scrollBlockerService.unblockPageScroll();
         this.drawerIsVisible = false;
-      });
+      }
+    });
 
     this.cartIsVisibleSubscription = this.shoppingCartService.isCartVisible$
       .pipe(distinctUntilChanged(), skip(1))
