@@ -16,6 +16,7 @@ const setEnv = () => {
   storeFrontApiVersion: '${process.env['storeFrontApiVersion']}',
   storeFrontEndpoint: '${process.env['storeFrontEndpoint']}',
   formspreeContactEndpoint: '${process.env['formspreeContactEndpoint']}',
+  mailChimpNewsletterEndpoint: '${process.env['mailChimpNewsletterEndpoint']}',
   appVersion: '${appVersion}',
   production: true,
 };
