@@ -11,11 +11,12 @@ import { finalize } from 'rxjs';
   styleUrls: ['./contact-page.component.scss'],
 })
 export class ContactPageComponent implements OnInit {
-  readonly bodyMinLength = 80;
-  readonly bodyMaxLength = 1000;
+  readonly messageMinLength = 80;
+  readonly messageMaxLength = 1000;
 
   contactForm!: FormGroup;
   isSubmitting = false;
+  turnstileSiteKey = environment.turnstileSiteKey;
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -30,13 +31,17 @@ export class ContactPageComponent implements OnInit {
     this.contactForm = new FormGroup({
       orderNumber: new FormControl(null),
       fullName: new FormControl(null, Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      phone: new FormControl(null),
-      body: new FormControl(null, [
+      emailAddress: new FormControl(null, [
         Validators.required,
-        Validators.minLength(this.bodyMinLength),
-        Validators.maxLength(this.bodyMaxLength),
+        Validators.email,
       ]),
+      phoneNumber: new FormControl(null),
+      message: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(this.messageMinLength),
+        Validators.maxLength(this.messageMaxLength),
+      ]),
+      turnstileToken: new FormControl(null, Validators.required),
     });
   }
 
@@ -45,7 +50,6 @@ export class ContactPageComponent implements OnInit {
     return control ? !control.valid && control.touched : false;
   }
 
-  // TODO: Swap out the Formspree form endpoint
   onSubmit() {
     if (!this.allowSubmit) {
       return;
@@ -53,16 +57,8 @@ export class ContactPageComponent implements OnInit {
 
     this.isSubmitting = true;
 
-    const formData = Object.entries(this.contactForm.value).reduce(
-      (result, entry) => {
-        result.append(entry[0], entry[1] as string);
-        return result;
-      },
-      new FormData()
-    );
-
     this.httpClient
-      .post(environment.formspreeContactEndpoint, formData, {
+      .post(environment.contactWorkerEndpoint, this.contactForm.value, {
         headers: new HttpHeaders().set('Accept', 'application/json'),
       })
       .pipe(finalize(() => (this.isSubmitting = false)))
@@ -77,7 +73,7 @@ export class ContactPageComponent implements OnInit {
         },
         error: () => {
           this.notificationService.showErrorMessage({
-            title: 'Request sending failed',
+            title: 'Failed to send request',
             message: 'Please try again later.',
           });
         },

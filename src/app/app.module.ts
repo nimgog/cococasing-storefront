@@ -49,6 +49,7 @@ import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinne
 import { ToastrModule } from 'ngx-toastr';
 import { DropdownMenuComponent } from './common/dropdown-menu/dropdown-menu.component';
 import { SiteDrawerComponent } from './site-drawer/site-drawer.component';
+import { NgxTurnstileFormsModule, NgxTurnstileModule } from 'ngx-turnstile';
 
 const Client = require('shopify-buy');
 
@@ -104,6 +105,8 @@ export const client = Client.buildClient({
     ScullyLibModule,
     GraphQLModule,
     ReactiveFormsModule,
+    NgxTurnstileModule,
+    NgxTurnstileFormsModule,
 
     // TODO: Color of the notifications could be unified and aligned with the site design
     ToastrModule.forRoot({

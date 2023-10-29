@@ -41,6 +41,7 @@
     "hammerjs": "^2.0.8",
     "ngx-image-zoom": "^2.1.0",
     "ngx-toastr": "^16.2.0",
+    "ngx-turnstile": "^0.0.7",
     "rxjs": "~7.5.0",
     "shopify-buy": "^2.20.1",
     "ts-node": "^10.9.1",

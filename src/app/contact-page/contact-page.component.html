@@ -103,48 +103,49 @@
           </div>
 
           <div class="flex flex-col">
-            <label for="email" class="text-coco-slate-gray text-base font-medium !font-anekb">
+            <label for="emailAddress" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Email Address <span class="text-coco-orange">*</span>
             </label>
 
-            <input formControlName="email" id="email" type="email"
+            <input formControlName="emailAddress" id="emailAddress" type="email"
               class="form-field h-9 border border-coco-lighter-gray !outline-none" />
 
             <div class="form-field-error-container">
-              <span *ngIf="isInvalidTouched('email')" class="form-field-error-message">
+              <span *ngIf="isInvalidTouched('emailAddress')" class="form-field-error-message">
                 Please enter a valid email address.
               </span>
             </div>
           </div>
 
           <div class="flex flex-col">
-            <label for="phone" class="text-coco-slate-gray text-base font-medium !font-anekb">
+            <label for="phoneNumber" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Phone Number
             </label>
 
-            <input formControlName="phone" id="phone" type="tel"
+            <input formControlName="phoneNumber" id="phoneNumber" type="tel"
               class="h-9 border border-coco-lighter-gray !outline-none" />
 
             <div class="form-field-error-container"></div>
           </div>
 
           <!-- TODO: Should we add a character counter for this textarea? -->
-          <div class="flex flex-col">
-            <label for="body" class="text-coco-slate-gray text-base font-medium !font-anekb">
+          <div class="flex flex-col pb-2">
+            <label for="message" class="text-coco-slate-gray text-base font-medium !font-anekb">
               Let us know how to help you <span class="text-coco-orange">*</span>
             </label>
 
-            <textarea formControlName="body" id="body"
+            <textarea formControlName="message" id="message"
               class="form-field h-[106px] border border-coco-lighter-gray !outline-none"></textarea>
 
             <div class="form-field-error-container">
-              <span *ngIf="isInvalidTouched('body')" class="form-field-error-message">
-                Please enter at least {{ bodyMinLength }}, maximum {{ bodyMaxLength }} characters.
+              <span *ngIf="isInvalidTouched('message')" class="form-field-error-message">
+                Please enter at least {{ messageMinLength }}, maximum {{ messageMaxLength }} characters.
               </span>
             </div>
           </div>
 
-          <!-- TODO: Add reCAPTCHA -->
+          <ngx-turnstile formControlName="turnstileToken" [siteKey]="turnstileSiteKey" theme="light"></ngx-turnstile>
+
           <div class="pt-2">
             <button type="submit" [disabled]="!allowSubmit"
               [ngClass]="[allowSubmit ? '' : 'opacity-50 cursor-not-allowed']" class="px-6 py-4 bg-coco-orange">
