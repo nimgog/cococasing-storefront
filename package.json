@@ -13,7 +13,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "blog:serve": "concurrently \"npm run blog:watch\" \"npm run scully:serve\"",
-    "blog:watch": "chokidar \"blog/**/*\" -c \"npx scully --scanRoutes\" --initial"
+    "blog:watch": "chokidar \"blog/**/*\" -c \"npx scully --scanRoutes\" --initial",
+    "gql:fetch": "ts-node codegen/fetch-shopify-schema.ts",
+    "gql:generate": "graphql-codegen --config codegen/codegen.ts"
   },
   "dependencies": {
     "@angular/animations": "^15.2.9",
@@ -57,6 +59,10 @@
     "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "^15.2.9",
     "@angular/compiler-cli": "^15.2.9",
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/hammerjs": "^2.0.41",
     "@types/jasmine": "~3.10.0",
