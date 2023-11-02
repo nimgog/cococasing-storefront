@@ -1,10 +1,10 @@
-query fetchFreeShippingProduct($handle: String!, $countryCode: CountryCode!)
+query FreeShippingProduct($handle: String!, $countryCode: CountryCode!)
 @inContext(country: $countryCode) {
   product(handle: $handle) {
     priceRange {
       minVariantPrice {
-        amount
         currencyCode
+        amount
       }
     }
   }

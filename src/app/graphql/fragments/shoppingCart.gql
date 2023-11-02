@@ -1,0 +1,39 @@
+# TODO: Consider adding pagination later - tough 250 line items should be more than enough
+fragment ShoppingCart on Cart {
+  id
+  checkoutUrl
+  lines(first: 250) {
+    nodes {
+      id
+      merchandise {
+        ... on ProductVariant {
+          id
+          image {
+            url(transform: { maxWidth: 120, maxHeight: 120 })
+          }
+          product {
+            title
+          }
+          selectedOptions {
+            name
+            value
+          }
+        }
+      }
+      cost {
+        totalAmount {
+          amount
+          currencyCode
+        }
+      }
+      quantity
+    }
+  }
+  cost {
+    totalAmount {
+      amount
+      currencyCode
+    }
+  }
+  totalQuantity
+}

@@ -8004,13 +8004,151 @@ export enum WeightUnit {
   Pounds = 'POUNDS'
 }
 
-export const FetchFreeShippingProduct = gql`
-    query fetchFreeShippingProduct($handle: String!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
+export const ShoppingCartFragmentDoc = gql`
+    fragment ShoppingCart on Cart {
+  id
+  checkoutUrl
+  lines(first: 250) {
+    nodes {
+      id
+      merchandise {
+        ... on ProductVariant {
+          id
+          image {
+            url(transform: {maxWidth: 120, maxHeight: 120})
+          }
+          product {
+            title
+          }
+          selectedOptions {
+            name
+            value
+          }
+        }
+      }
+      cost {
+        totalAmount {
+          amount
+          currencyCode
+        }
+      }
+      quantity
+    }
+  }
+  cost {
+    totalAmount {
+      amount
+      currencyCode
+    }
+  }
+  totalQuantity
+}
+    `;
+export const AddLineItem = gql`
+    mutation AddLineItem($cartId: ID!, $variantId: ID!) {
+  cartLinesAdd(cartId: $cartId, lines: {merchandiseId: $variantId}) {
+    cart {
+      ...ShoppingCart
+    }
+  }
+}
+    ${ShoppingCartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: GraphQLModule
+  })
+  export class AddLineItemGQL extends Apollo.Mutation<AddLineItemMutation, AddLineItemMutationVariables> {
+    override document = AddLineItem;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateCart = gql`
+    mutation CreateCart($variantId: ID!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
+  cartCreate(input: {lines: {merchandiseId: $variantId, quantity: 1}}) {
+    cart {
+      ...ShoppingCart
+    }
+  }
+}
+    ${ShoppingCartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: GraphQLModule
+  })
+  export class CreateCartGQL extends Apollo.Mutation<CreateCartMutation, CreateCartMutationVariables> {
+    override document = CreateCart;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RemoveLineItem = gql`
+    mutation RemoveLineItem($cartId: ID!, $itemId: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $itemId) {
+    cart {
+      ...ShoppingCart
+    }
+  }
+}
+    ${ShoppingCartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: GraphQLModule
+  })
+  export class RemoveLineItemGQL extends Apollo.Mutation<RemoveLineItemMutation, RemoveLineItemMutationVariables> {
+    override document = RemoveLineItem;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SetLineItemQuantity = gql`
+    mutation SetLineItemQuantity($cartId: ID!, $itemId: ID!, $quantity: Int!) {
+  cartLinesUpdate(cartId: $cartId, lines: {id: $itemId, quantity: $quantity}) {
+    cart {
+      ...ShoppingCart
+    }
+  }
+}
+    ${ShoppingCartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: GraphQLModule
+  })
+  export class SetLineItemQuantityGQL extends Apollo.Mutation<SetLineItemQuantityMutation, SetLineItemQuantityMutationVariables> {
+    override document = SetLineItemQuantity;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const Cart = gql`
+    query Cart($cartId: ID!) {
+  cart(id: $cartId) {
+    ...ShoppingCart
+  }
+}
+    ${ShoppingCartFragmentDoc}`;
+
+  @Injectable({
+    providedIn: GraphQLModule
+  })
+  export class CartGQL extends Apollo.Query<CartQuery, CartQueryVariables> {
+    override document = Cart;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const FreeShippingProduct = gql`
+    query FreeShippingProduct($handle: String!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
   product(handle: $handle) {
     priceRange {
       minVariantPrice {
-        amount
         currencyCode
+        amount
       }
     }
   }
@@ -8020,17 +8158,116 @@ export const FetchFreeShippingProduct = gql`
   @Injectable({
     providedIn: GraphQLModule
   })
-  export class FetchFreeShippingProductGQL extends Apollo.Query<FetchFreeShippingProductQuery, FetchFreeShippingProductQueryVariables> {
-    override document = FetchFreeShippingProduct;
+  export class FreeShippingProductGQL extends Apollo.Query<FreeShippingProductQuery, FreeShippingProductQueryVariables> {
+    override document = FreeShippingProduct;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
-export type FetchFreeShippingProductQueryVariables = Exact<{
+export const Product = gql`
+    query Product($handle: String!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
+  product(handle: $handle) {
+    title
+    description
+    options {
+      name
+      values
+    }
+    media(first: 250) {
+      nodes {
+        mediaContentType
+        previewImage {
+          url
+          altText
+        }
+      }
+    }
+    variants(first: 250) {
+      nodes {
+        id
+        selectedOptions {
+          name
+          value
+        }
+        price {
+          amount
+          currencyCode
+        }
+        image {
+          url
+          altText
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: GraphQLModule
+  })
+  export class ProductGQL extends Apollo.Query<ProductQuery, ProductQueryVariables> {
+    override document = Product;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export type ShoppingCartFragment = { __typename?: 'Cart', id: string, checkoutUrl: any, totalQuantity: number, lines: { __typename?: 'BaseCartLineConnection', nodes: Array<{ __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | { __typename?: 'ComponentizableCartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> }, cost: { __typename?: 'CartCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } };
+
+export type AddLineItemMutationVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+  variantId: Scalars['ID']['input'];
+}>;
+
+
+export type AddLineItemMutation = { __typename?: 'Mutation', cartLinesAdd?: { __typename?: 'CartLinesAddPayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, totalQuantity: number, lines: { __typename?: 'BaseCartLineConnection', nodes: Array<{ __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | { __typename?: 'ComponentizableCartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> }, cost: { __typename?: 'CartCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null } | null };
+
+export type CreateCartMutationVariables = Exact<{
+  variantId: Scalars['ID']['input'];
+  countryCode: CountryCode;
+}>;
+
+
+export type CreateCartMutation = { __typename?: 'Mutation', cartCreate?: { __typename?: 'CartCreatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, totalQuantity: number, lines: { __typename?: 'BaseCartLineConnection', nodes: Array<{ __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | { __typename?: 'ComponentizableCartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> }, cost: { __typename?: 'CartCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null } | null };
+
+export type RemoveLineItemMutationVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+  itemId: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+}>;
+
+
+export type RemoveLineItemMutation = { __typename?: 'Mutation', cartLinesRemove?: { __typename?: 'CartLinesRemovePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, totalQuantity: number, lines: { __typename?: 'BaseCartLineConnection', nodes: Array<{ __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | { __typename?: 'ComponentizableCartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> }, cost: { __typename?: 'CartCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null } | null };
+
+export type SetLineItemQuantityMutationVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+  itemId: Scalars['ID']['input'];
+  quantity: Scalars['Int']['input'];
+}>;
+
+
+export type SetLineItemQuantityMutation = { __typename?: 'Mutation', cartLinesUpdate?: { __typename?: 'CartLinesUpdatePayload', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, totalQuantity: number, lines: { __typename?: 'BaseCartLineConnection', nodes: Array<{ __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | { __typename?: 'ComponentizableCartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> }, cost: { __typename?: 'CartCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null } | null };
+
+export type CartQueryVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+}>;
+
+
+export type CartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, totalQuantity: number, lines: { __typename?: 'BaseCartLineConnection', nodes: Array<{ __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | { __typename?: 'ComponentizableCartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', title: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> }, cost: { __typename?: 'CartCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
+
+export type FreeShippingProductQueryVariables = Exact<{
   handle: Scalars['String']['input'];
   countryCode: CountryCode;
 }>;
 
 
-export type FetchFreeShippingProductQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
+export type FreeShippingProductQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', currencyCode: CurrencyCode, amount: any } } } | null };
+
+export type ProductQueryVariables = Exact<{
+  handle: Scalars['String']['input'];
+  countryCode: CountryCode;
+}>;
+
+
+export type ProductQuery = { __typename?: 'QueryRoot', product?: { __typename?: 'Product', title: string, description: string, options: Array<{ __typename?: 'ProductOption', name: string, values: Array<string> }>, media: { __typename?: 'MediaConnection', nodes: Array<{ __typename?: 'ExternalVideo', mediaContentType: MediaContentType, previewImage?: { __typename?: 'Image', url: any, altText?: string | null } | null } | { __typename?: 'MediaImage', mediaContentType: MediaContentType, previewImage?: { __typename?: 'Image', url: any, altText?: string | null } | null } | { __typename?: 'Model3d', mediaContentType: MediaContentType, previewImage?: { __typename?: 'Image', url: any, altText?: string | null } | null } | { __typename?: 'Video', mediaContentType: MediaContentType, previewImage?: { __typename?: 'Image', url: any, altText?: string | null } | null }> }, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, price: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode }, image?: { __typename?: 'Image', url: any, altText?: string | null } | null }> } } | null };
