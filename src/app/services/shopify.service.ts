@@ -1,9 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
-import { Observable, map, mergeMap, of, switchMap, tap } from 'rxjs';
-import { colorTitleMap } from '../models/new-product.model';
+import { Apollo, TypedDocumentNode, gql } from 'apollo-angular';
+import {
+  Observable,
+  catchError,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
+import {
+  Price,
+  colorSlugMap,
+  colorTitleMap,
+} from '../models/new-product.model';
 import { LocationService } from './location.service';
+import { LocalStorageService } from './local-storage.service';
+
+const productBundles = ['the-coco-package', 'the-glass-kit', 'the-package'];
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +26,117 @@ import { LocationService } from './location.service';
 export class ShopifyService {
   constructor(
     private readonly shopifyGraphQL: Apollo,
-    private readonly locationService: LocationService
+    private readonly locationService: LocationService,
+    private readonly localStorageService: LocalStorageService
   ) {}
+
+  fetchProductBundle(
+    query: TypedDocumentNode<unknown, unknown>,
+    productHandle: string
+  ) {
+    return this.locationService.getTwoLetterCountryCode().pipe(
+      switchMap((countryCode) =>
+        this.shopifyGraphQL
+          .query<any>({
+            query,
+            variables: { handle: productHandle, countryCode },
+          })
+          .pipe(
+            mergeMap((response) => {
+              if (
+                !response.data?.product ||
+                response.error ||
+                response.errors?.length
+              ) {
+                return of(null);
+              }
+
+              return of(response.data.product).pipe(
+                map((product) => {
+                  const media = product.media.nodes.map(
+                    (mediaNode: any) => mediaNode.previewImage
+                  );
+
+                  const optionMap = new Map<string, string[]>(
+                    product.options.map((option: any) => [
+                      option.name.toLowerCase(),
+                      option.values.map((value: string) =>
+                        value.toLowerCase().replace(' ', '-')
+                      ),
+                    ])
+                  );
+
+                  const getVariantInfo = (theVariant: any) => {
+                    const serie = theVariant.selectedOptions
+                      .find(
+                        (option: any) => option.name.toLowerCase() === 'series'
+                      )
+                      ?.value.toLowerCase();
+
+                    let variantHandle = `iphone-${serie}`;
+
+                    const model = theVariant.selectedOptions
+                      .find(
+                        (option: any) => option.name.toLowerCase() === 'model'
+                      )
+                      ?.value.toLowerCase()
+                      .replace(' ', '-');
+
+                    if (model !== 'regular') {
+                      variantHandle += `-${model}`;
+                    }
+
+                    const color = theVariant.selectedOptions
+                      .find(
+                        (option: any) => option.name.toLowerCase() === 'color'
+                      )
+                      ?.value.toLowerCase();
+
+                    if (color) {
+                      variantHandle += `-${colorSlugMap.get(color)}`;
+                    }
+
+                    return {
+                      handle: variantHandle,
+                      serie,
+                      model,
+                      color,
+                    };
+                  };
+
+                  const variantMap = new Map<string, any>(
+                    product.variants.nodes.map((variant: any) => {
+                      const { handle, serie, model, color } =
+                        getVariantInfo(variant);
+
+                      return [
+                        handle,
+                        {
+                          id: variant.id,
+                          serie,
+                          model,
+                          color,
+                          price: variant.price,
+                          image: variant.image,
+                        },
+                      ];
+                    })
+                  );
+
+                  return {
+                    title: product.title,
+                    description: product.description,
+                    media,
+                    optionMap,
+                    variantMap,
+                  };
+                })
+              );
+            })
+          )
+      )
+    );
+  }
 
   fetchProduct(productHandle: string) {
     const query = gql`
@@ -54,6 +178,10 @@ export class ShopifyService {
         }
       }
     `;
+
+    if (this.isBundle(productHandle)) {
+      return this.fetchProductBundle(query, productHandle);
+    }
 
     return this.locationService.getTwoLetterCountryCode().pipe(
       switchMap((countryCode) =>
@@ -114,17 +242,7 @@ export class ShopifyService {
                       ?.value.toLowerCase();
 
                     if (color) {
-                      // TODO: Extract this
-                      const fullColorNameLookup = new Map<string, string>([
-                        ['beige', 'desert-beige'],
-                        ['black', 'jet-black'],
-                        ['blue', 'midnight-blue'],
-                        ['green', 'forest-green'],
-                        ['lavender', 'french-lavender'],
-                        ['orange', 'sunset-orange'],
-                      ]);
-
-                      variantHandle += `-${fullColorNameLookup.get(color)}`;
+                      variantHandle += `-${colorSlugMap.get(color)}`;
                     }
 
                     return {
@@ -368,5 +486,76 @@ export class ShopifyService {
           return mappedCart;
         })
       );
+  }
+
+  private isBundle(productHandle: string) {
+    return productBundles.includes(productHandle);
+  }
+
+  fetchFreeShippingThreshold(): Observable<Price | null> {
+    const query = gql`
+      query fetchFreeShippingProduct(
+        $handle: String!
+        $countryCode: CountryCode!
+      ) @inContext(country: $countryCode) {
+        product(handle: $handle) {
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
+    `;
+
+    const freeShippingThreshold = this.localStorageService.get<Price>(
+      'free_shipping_threshold'
+    );
+
+    if (freeShippingThreshold) {
+      return of(freeShippingThreshold);
+    }
+
+    return this.locationService.getTwoLetterCountryCode().pipe(
+      switchMap((countryCode) =>
+        this.shopifyGraphQL
+          .query<any>({
+            query,
+            variables: {
+              handle: 'dummy-product-free-shipping-at-20',
+              countryCode,
+            },
+          })
+          .pipe(
+            switchMap((response) => {
+              if (
+                !response.data?.product ||
+                response.error ||
+                response.errors?.length
+              ) {
+                return of(null);
+              }
+
+              return of(response.data.product);
+            }),
+            map(
+              (product: any) =>
+                product.priceRange.minVariantPrice as {
+                  amount: string;
+                  currencyCode: string;
+                }
+            ),
+            map(
+              ({ amount, currencyCode }) =>
+                <Price>{ amount: parseFloat(amount), currencyCode }
+            ),
+            tap((threshold) =>
+              this.localStorageService.set('free_shipping_threshold', threshold)
+            ),
+            catchError(() => of(null))
+          )
+      )
+    );
   }
 }

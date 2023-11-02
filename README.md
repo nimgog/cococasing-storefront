@@ -4,6 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+For development, set the `turnstileSiteKey` environment variable to any one of the test sitekeys from the [Testing](https://developers.cloudflare.com/turnstile/reference/testing) page of Turnstile docs.
+
 Run `npx scully --scanRoutes` to initiate static site rendering. The build artifacts will be stored in the `dist/static` directory.
 
 Run `npx scully serve` to run the Scully static server. This is needed for getting the content for the blog posts.
