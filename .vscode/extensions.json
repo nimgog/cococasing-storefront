@@ -1,4 +1,16 @@
 {
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
-  "recommendations": ["angular.ng-template"]
+  "recommendations": [
+    "angular.ng-template",
+
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+
+    "apollographql.vscode-apollo",
+    "graphql.vscode-graphql",
+    "graphql.vscode-graphql-syntax",
+
+    "wayou.vscode-todo-highlight"
+  ]
 }
