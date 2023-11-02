@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// TODO: Add/improve error handling
+
 import { Injectable } from '@angular/core';
 import { Apollo, TypedDocumentNode, gql } from 'apollo-angular';
 import {
@@ -8,6 +12,7 @@ import {
   mergeMap,
   of,
   switchMap,
+  take,
   tap,
 } from 'rxjs';
 import {
@@ -17,6 +22,7 @@ import {
 } from '../models/new-product.model';
 import { LocationService } from './location.service';
 import { LocalStorageService } from './local-storage.service';
+import { FetchFreeShippingProductGQL, Product } from '../graphql/types';
 
 const productBundles = ['the-coco-package', 'the-glass-kit', 'the-package'];
 
@@ -27,7 +33,8 @@ export class ShopifyService {
   constructor(
     private readonly shopifyGraphQL: Apollo,
     private readonly locationService: LocationService,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
+    private readonly fetchFreeShippingProductGQL: FetchFreeShippingProductGQL
   ) {}
 
   fetchProductBundle(
@@ -493,25 +500,10 @@ export class ShopifyService {
   }
 
   fetchFreeShippingThreshold(): Observable<Price | null> {
-    const query = gql`
-      query fetchFreeShippingProduct(
-        $handle: String!
-        $countryCode: CountryCode!
-      ) @inContext(country: $countryCode) {
-        product(handle: $handle) {
-          priceRange {
-            minVariantPrice {
-              amount
-              currencyCode
-            }
-          }
-        }
-      }
-    `;
+    const localStorageKey = 'free_shipping_threshold';
 
-    const freeShippingThreshold = this.localStorageService.get<Price>(
-      'free_shipping_threshold'
-    );
+    const freeShippingThreshold =
+      this.localStorageService.get<Price>(localStorageKey);
 
     if (freeShippingThreshold) {
       return of(freeShippingThreshold);
@@ -519,39 +511,33 @@ export class ShopifyService {
 
     return this.locationService.getTwoLetterCountryCode().pipe(
       switchMap((countryCode) =>
-        this.shopifyGraphQL
-          .query<any>({
-            query,
-            variables: {
-              handle: 'dummy-product-free-shipping-at-20',
-              countryCode,
-            },
+        this.fetchFreeShippingProductGQL
+          .fetch({
+            handle: 'dummy-product-free-shipping-at-20',
+            countryCode,
           })
           .pipe(
             switchMap((response) => {
-              if (
-                !response.data?.product ||
-                response.error ||
-                response.errors?.length
-              ) {
-                return of(null);
+              if (response.error || response.errors) {
+                return of(null).pipe(take(1));
+              }
+
+              if (!response.data.product) {
+                return of(null).pipe(take(1));
               }
 
               return of(response.data.product);
             }),
-            map(
-              (product: any) =>
-                product.priceRange.minVariantPrice as {
-                  amount: string;
-                  currencyCode: string;
-                }
-            ),
-            map(
-              ({ amount, currencyCode }) =>
-                <Price>{ amount: parseFloat(amount), currencyCode }
-            ),
+            map((product) => {
+              const price = product!.priceRange.minVariantPrice;
+
+              return <Price>{
+                amount: parseFloat(price.amount),
+                currencyCode: price.currencyCode,
+              };
+            }),
             tap((threshold) =>
-              this.localStorageService.set('free_shipping_threshold', threshold)
+              this.localStorageService.set(localStorageKey, threshold)
             ),
             catchError(() => of(null))
           )
