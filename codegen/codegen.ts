@@ -4,12 +4,7 @@ import * as path from 'path';
 const config: CodegenConfig = {
   overwrite: true,
   schema: path.join(__dirname, 'shopify-schema.json'),
-  documents: [
-    'src/app/graphql/fragments/**/*.gql',
-    'src/app/graphql/mutations/**/*.gql',
-    'src/app/graphql/queries/**/*.gql',
-    'src/app/graphql/subscriptions/**/*.gql',
-  ],
+  documents: 'src/app/graphql/**/*.gql',
   generates: {
     'src/app/graphql/types/index.ts': {
       plugins: [
