@@ -13,7 +13,6 @@ const setEnv = () => {
   const envConfigFile = `export const environment = {
   ipapiKey: '${process.env['ipapiKey']}',
   storeFrontAT: '${process.env['storeFrontAT']}',
-  storeFrontApiVersion: '${process.env['storeFrontApiVersion']}',
   storeFrontEndpoint: '${process.env['storeFrontEndpoint']}',
   contactWorkerEndpoint: '${process.env['contactWorkerEndpoint']}',
   turnstileSiteKey: '${process.env['turnstileSiteKey']}',
