@@ -1,10 +1,10 @@
 <div class="border-b border-coco-lighter-gray">
-  <div class="bg-coco-darkest-blue">
+  <!-- TODO: Either ignore this from SSG or fix the locale to i.e. "SE" when SSG is running -->
+  <div *ngIf="freeShippingThreshold" class="bg-coco-darkest-blue">
     <div class="h-11 md:h-5 lg:h-0"></div>
     <div class="flex justify-center align-items-center py-0.5">
-      <!-- TODO: Should we keep this? -->
       <span class="text-white text-uppercase text-[9px] font-roboto leading-[11px] tracking-[0.72px]">
-        Free shippings on order over £100!
+        Free shippings on order over {{ freeShippingThreshold }}!
       </span>
     </div>
   </div>

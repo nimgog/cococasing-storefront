@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { Subscription } from 'rxjs';
+import { ShopifyService } from '../services/shopify.service';
 
 @Component({
   selector: 'app-site-header',
@@ -20,16 +21,32 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
   cartSub?: Subscription;
   cartTotalQuantity = 0;
 
-  constructor(private readonly shoppingCartService: ShoppingCartService) {}
+  freeShippingSub?: Subscription;
+  freeShippingThreshold: string | null = null;
+
+  constructor(
+    private readonly shoppingCartService: ShoppingCartService,
+    private readonly shopifyService: ShopifyService
+  ) {}
 
   ngOnInit() {
     this.cartSub = this.shoppingCartService.cart$.subscribe(
       (cart) => (this.cartTotalQuantity = cart?.totalQuantity || 0)
     );
+
+    this.freeShippingSub = this.shopifyService
+      .fetchFreeShippingThreshold()
+      .subscribe(
+        (threshold) =>
+          (this.freeShippingThreshold = threshold
+            ? `${threshold.amount} ${threshold.currencyCode}`
+            : null)
+      );
   }
 
   ngOnDestroy() {
     this.cartSub?.unsubscribe();
+    this.freeShippingSub?.unsubscribe();
   }
 
   openCart() {
