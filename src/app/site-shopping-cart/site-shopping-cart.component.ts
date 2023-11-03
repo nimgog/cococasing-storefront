@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
+import { ShoppingCart } from '../models/shopping-cart.model';
 
 @Component({
   selector: 'app-site-shopping-cart',
@@ -11,7 +12,7 @@ import { ViewportScroller } from '@angular/common';
 })
 export class SiteShoppingCartComponent implements OnInit, OnDestroy {
   cartSub?: Subscription;
-  cart?: any;
+  cart: ShoppingCart | null = null;
 
   constructor(
     private readonly router: Router,
