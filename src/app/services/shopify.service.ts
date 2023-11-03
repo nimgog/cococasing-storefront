@@ -12,7 +12,7 @@ import {
   tap,
 } from 'rxjs';
 import {
-  Price,
+  Money,
   colorSlugMap,
   colorTitleMap,
 } from '../models/new-product.model';
@@ -26,7 +26,11 @@ import {
   ProductGQL,
   RemoveLineItemGQL,
   SetLineItemQuantityGQL,
+  ShoppingCartFragment,
 } from '../graphql/types';
+import { LineItem, ShoppingCart } from '../models/shopping-cart.model';
+import { NotificationService } from './notification.service';
+import { catchAndReportError } from '../utils/catch-and-report-error.operator';
 
 const productBundles = ['the-coco-package', 'the-glass-kit', 'the-package'];
 
@@ -38,6 +42,7 @@ export class ShopifyService {
   constructor(
     private readonly locationService: LocationService,
     private readonly localStorageService: LocalStorageService,
+    private readonly notificationService: NotificationService,
     private readonly freeShippingProductGQL: FreeShippingProductGQL,
     private readonly addLineItemGQL: AddLineItemGQL,
     private readonly removeLineItemGQL: RemoveLineItemGQL,
@@ -143,7 +148,8 @@ export class ShopifyService {
             );
           })
         )
-      )
+      ),
+      catchAndReportError(this.notificationService)
     );
   }
 
@@ -247,7 +253,8 @@ export class ShopifyService {
             );
           })
         )
-      )
+      ),
+      catchAndReportError(this.notificationService)
     );
   }
 
@@ -259,103 +266,117 @@ export class ShopifyService {
             variantId,
             countryCode,
           })
-          .pipe(this.mapCart('cartCreate'))
-      )
+          .pipe(
+            map((response) => this.mapCart(response.data?.cartCreate?.cart))
+          )
+      ),
+      catchAndReportError(this.notificationService)
     );
   }
 
   fetchCart(cartId: string) {
-    return this.cartGQL.fetch({ cartId }).pipe(this.mapCart());
+    return this.cartGQL.fetch({ cartId }).pipe(
+      map((response) => response.data?.cart),
+      map((cart) => (cart ? this.mapCart(cart) : null)),
+      catchAndReportError(this.notificationService)
+    );
   }
 
   addLineItem(cartId: string, variantId: string) {
-    return this.addLineItemGQL
-      .mutate({ cartId, variantId })
-      .pipe(this.mapCart('cartLinesAdd'));
-  }
-
-  removeLineItem(cartId: string, itemId: string) {
-    return this.removeLineItemGQL
-      .mutate({ cartId, itemId })
-      .pipe(this.mapCart('cartLinesRemove'));
+    return this.addLineItemGQL.mutate({ cartId, variantId }).pipe(
+      map((response) => this.mapCart(response.data?.cartLinesAdd?.cart)),
+      catchAndReportError(this.notificationService)
+    );
   }
 
   setLineItemQuantity(cartId: string, itemId: string, quantity: number) {
     return this.setLineItemQuantityGQL
       .mutate({ cartId, itemId, quantity })
       .pipe(
-        tap((cart) => console.log(cart)),
-        this.mapCart('cartLinesUpdate')
+        map((response) => this.mapCart(response.data?.cartLinesUpdate?.cart)),
+        catchAndReportError(this.notificationService)
       );
   }
 
-  private mapCart(operationName?: string) {
-    return (source: Observable<any>): Observable<any> =>
-      source.pipe(
-        map((response) => {
-          const data = (response.data as any) || {};
-          const cartParent = operationName ? data[operationName] : data;
+  removeLineItem(cartId: string, itemId: string) {
+    return this.removeLineItemGQL.mutate({ cartId, itemId }).pipe(
+      map((response) => this.mapCart(response.data?.cartLinesRemove?.cart)),
+      catchAndReportError(this.notificationService)
+    );
+  }
 
-          return cartParent?.cart;
-        }),
-        map((cart: any) => {
-          if (!cart) {
-            return null;
-          }
+  private mapCart(
+    cartFragment: ShoppingCartFragment | null | undefined
+  ): ShoppingCart {
+    if (!cartFragment) {
+      throw new Error('Failed to map cart as it was unavailable');
+    }
 
-          const mappedCart = {
-            ...cart,
-            lines: cart.lines.nodes.map((lineItem: any) => {
-              let productTitle: string = lineItem.merchandise.product.title;
-              const selectedOptions = lineItem.merchandise.selectedOptions;
+    // TODO: Revisit this for correct title-subtitle mapping once other products are being handled, too
+    const lines: LineItem[] = cartFragment.lines.nodes.map((lineItem) => {
+      const { merchandise } = lineItem;
+      const selectedOptions = merchandise.selectedOptions;
+      let productTitle = merchandise.product.title;
 
-              const serie = selectedOptions.find(
-                (option: any) => option.name.toLowerCase() === 'series'
-              ).value;
+      const serie = selectedOptions.find(
+        (option) => option.name.toLowerCase() === 'series'
+      )?.value;
 
-              productTitle += ` iPhone ${serie}`;
+      productTitle += ` iPhone ${serie}`;
 
-              const model = selectedOptions.find(
-                (option: any) => option.name.toLowerCase() === 'model'
-              ).value;
+      const model = selectedOptions.find(
+        (option) => option.name.toLowerCase() === 'model'
+      )?.value;
 
-              if (model.toLowerCase() !== 'regular') {
-                productTitle += ` ${model}`;
-              }
+      if (model && model.toLowerCase() !== 'regular') {
+        productTitle += ` ${model}`;
+      }
 
-              const color = selectedOptions
-                .find((option: any) => option.name.toLowerCase() === 'color')
-                ?.value.toLowerCase();
+      const color = selectedOptions
+        .find((option) => option.name.toLowerCase() === 'color')
+        ?.value.toLowerCase();
 
-              const productSubtitle = colorTitleMap.get(color);
+      const productSubtitle = color ? colorTitleMap.get(color) : '';
 
-              return {
-                ...lineItem,
-                product: {
-                  ...lineItem.merchandise,
-                  title: productTitle,
-                  subtitle: productSubtitle,
-                  product: undefined,
-                },
-                merchandise: undefined,
-              };
-            }),
-          };
+      return <LineItem>{
+        id: lineItem.id,
+        product: {
+          id: merchandise.id,
+          title: productTitle,
+          subtitle: productSubtitle,
+          imageUrl: merchandise.image?.url,
+        },
+        totalCost: {
+          amount: parseFloat(lineItem.cost.totalAmount.amount),
+          currencyCode: lineItem.cost.totalAmount.currencyCode,
+        },
+        quantity: lineItem.quantity,
+      };
+    });
 
-          return mappedCart;
-        })
-      );
+    const cart: ShoppingCart = {
+      id: cartFragment.id,
+      checkoutUrl: cartFragment.checkoutUrl,
+      lines,
+      totalCost: {
+        amount: parseFloat(cartFragment.cost.totalAmount.amount),
+        currencyCode: cartFragment.cost.totalAmount.currencyCode,
+      },
+      totalQuantity: cartFragment.totalQuantity,
+    };
+
+    return cart;
   }
 
   private isBundle(productHandle: string) {
     return productBundles.includes(productHandle);
   }
 
-  fetchFreeShippingThreshold(): Observable<Price | null> {
+  fetchFreeShippingThreshold(): Observable<Money | null> {
     const localStorageKey = 'free_shipping_threshold';
 
     const freeShippingThreshold =
-      this.localStorageService.get<Price>(localStorageKey);
+      this.localStorageService.get<Money>(localStorageKey);
 
     if (freeShippingThreshold) {
       return of(freeShippingThreshold);
@@ -383,7 +404,7 @@ export class ShopifyService {
             map((product) => {
               const price = product!.priceRange.minVariantPrice;
 
-              return <Price>{
+              return <Money>{
                 amount: parseFloat(price.amount),
                 currencyCode: price.currencyCode,
               };
@@ -393,7 +414,8 @@ export class ShopifyService {
             ),
             catchError(() => of(null))
           )
-      )
+      ),
+      catchAndReportError(this.notificationService)
     );
   }
 }

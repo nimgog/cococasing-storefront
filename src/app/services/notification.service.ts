@@ -41,4 +41,11 @@ export class NotificationService {
       ...(notification.config || {}),
     });
   }
+
+  showUnknownErrorMessage() {
+    this.showErrorMessage({
+      title: 'Something went wrong',
+      message: 'Please refresh the page and try again.',
+    });
+  }
 }

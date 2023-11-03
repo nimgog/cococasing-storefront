@@ -1,6 +1,7 @@
 <div class="flex gap-x-8">
   <div class="w-[120px] h-[120px]">
-    <img [src]="lineItem.product.image.url" [alt]="lineItem.name + lineItem.description" class="object-contain" />
+    <img [src]="lineItem.product.imageUrl" [alt]="lineItem.product.title + ' - ' + lineItem.product.subtitle"
+      class="object-contain" />
   </div>
 
   <div class="grow flex flex-col justify-between">
@@ -52,7 +53,7 @@
 
       <div class="flex items-end">
         <span class="text-uppercase text-coco-slate-gray text-base font-medium !font-anekb">
-          {{ lineItem.cost.totalAmount.amount }} {{ lineItem.cost.totalAmount.currencyCode }}
+          {{ lineItem.totalCost.amount }} {{ lineItem.totalCost.currencyCode }}
         </span>
       </div>
     </div>

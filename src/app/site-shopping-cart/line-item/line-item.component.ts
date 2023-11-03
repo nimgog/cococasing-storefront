@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription, switchMap } from 'rxjs';
+import { LineItem } from 'src/app/models/shopping-cart.model';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class LineItemComponent implements OnInit, OnDestroy {
   private updateQuantitySub?: Subscription;
 
   @Input()
-  lineItem: any;
+  lineItem!: LineItem;
 
   constructor(private readonly shoppingCartService: ShoppingCartService) {}
 

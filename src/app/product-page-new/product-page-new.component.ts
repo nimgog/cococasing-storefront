@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShopifyService } from '../services/shopify.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, firstValueFrom, map, switchMap, tap } from 'rxjs';
-import { LocationService } from '../services/location.service';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { colorTitleMap } from '../models/new-product.model';
 
@@ -26,8 +25,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly shopifyService: ShopifyService,
-    private readonly shoppingCartService: ShoppingCartService,
-    private readonly locationService: LocationService
+    private readonly shoppingCartService: ShoppingCartService
   ) {}
 
   get selectedSerie(): string {
@@ -228,7 +226,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
 
   addToCart(variantId: string) {
     const addItemAndOpenCart$ = this.shoppingCartService
-      .addLineItem(variantId, 1)
+      .addLineItem(variantId)
       .pipe(tap(() => this.shoppingCartService.openCart()));
 
     firstValueFrom(addItemAndOpenCart$);

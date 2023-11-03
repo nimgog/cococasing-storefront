@@ -15,7 +15,8 @@
       </button>
     </div>
 
-    <div *ngIf="cart?.lines?.length else emptyCart" class="grow flex flex-col justify-between px-4 pb-2.5">
+    <div *ngIf="cart && cart.lines && cart.lines.length else emptyCart"
+      class="grow flex flex-col justify-between px-4 pb-2.5">
       <ul class="grow basis-0 overflow-y-auto no-scrollbar">
         <li *ngFor="let lineItem of cart.lines; let i = index"
           [ngClass]="[i === cart.lines.length - 1 ? '' : 'border-b border-coco-lighter-gray']" class="pt-4">
@@ -31,7 +32,7 @@
             </span>
 
             <span class="text-uppercase text-coco-slate-gray text-sm font-semibold !font-anekt">
-              {{ cart.cost.totalAmount.amount }} {{ cart.cost.totalAmount.currencyCode }}
+              {{ cart.totalCost.amount }} {{ cart.totalCost.currencyCode }}
             </span>
           </div>
 

@@ -1,4 +1,4 @@
-export type Price = {
+export type Money = {
   amount: number;
   currencyCode: string;
 };
