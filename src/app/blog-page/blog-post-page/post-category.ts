@@ -1,1 +1,1 @@
-export type PostCategory = 'lifestyle' | 'training' | 'update';
+export type PostCategory = 'lifestyle' | 'training' | 'update' | 'environment';

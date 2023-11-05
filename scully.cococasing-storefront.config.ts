@@ -5,15 +5,15 @@ import { blogPostRouterPlugin } from './scully/plugins/blog-post-router.plugin';
 import { productRouterPlugin } from './scully/plugins/product-router.plugin';
 
 const routes: RouteConfig = {
-  '/products/:product': {
-    type: productRouterPlugin,
-  },
-  '/products/:product/:variant': {
-    type: productRouterPlugin,
-  },
+  // '/products/:product': {
+  //   type: productRouterPlugin,
+  // },
+  // '/products/:product/:variant': {
+  //   type: productRouterPlugin,
+  // },
   '/blog/:category': {
     type: blogPostRouterPlugin,
-    categories: ['lifestyle', 'training', 'update'],
+    categories: ['lifestyle', 'training', 'update', 'environment'],
   },
   '/blog/:category/:slug': {
     type: 'contentFolder',
