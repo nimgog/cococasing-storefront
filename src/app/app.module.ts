@@ -50,6 +50,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { DropdownMenuComponent } from './common/dropdown-menu/dropdown-menu.component';
 import { SiteDrawerComponent } from './site-drawer/site-drawer.component';
 import { NgxTurnstileFormsModule, NgxTurnstileModule } from 'ngx-turnstile';
+import { ReplacePipe } from './common/utils/replace.pipe';
+import { SerieCasePipe } from './common/utils/seriecase.pipe';
 
 const Client = require('shopify-buy');
 
@@ -89,6 +91,8 @@ export const client = Client.buildClient({
     LoadingSpinnerComponent,
     DropdownMenuComponent,
     SiteDrawerComponent,
+    ReplacePipe,
+    SerieCasePipe,
   ],
   imports: [
     MatExpansionModule,
@@ -108,7 +112,6 @@ export const client = Client.buildClient({
     NgxTurnstileModule,
     NgxTurnstileFormsModule,
 
-    // TODO: Color of the notifications could be unified and aligned with the site design
     ToastrModule.forRoot({
       closeButton: true,
       positionClass: 'toast-top-center',

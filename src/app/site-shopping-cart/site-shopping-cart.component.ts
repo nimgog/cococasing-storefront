@@ -11,7 +11,7 @@ import { ShoppingCart } from '../models/shopping-cart.model';
   styleUrls: ['./site-shopping-cart.component.scss'],
 })
 export class SiteShoppingCartComponent implements OnInit, OnDestroy {
-  cartSub?: Subscription;
+  cartSub!: Subscription;
   cart: ShoppingCart | null = null;
 
   constructor(
@@ -27,7 +27,7 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.cartSub?.unsubscribe();
+    this.cartSub.unsubscribe();
   }
 
   closeCart() {

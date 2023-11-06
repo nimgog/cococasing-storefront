@@ -1,35 +1,32 @@
-query Product($handle: String!, $countryCode: CountryCode!)
-@inContext(country: $countryCode) {
-  product(handle: $handle) {
-    title
-    description
-    options {
-      name
-      values
-    }
-    media(first: 250) {
+# TODO: Consider involving pagination
+
+query Product($collectionHandle: String!) {
+  collection(handle: $collectionHandle) {
+    products(first: 250) {
       nodes {
-        mediaContentType
-        previewImage {
-          url
-          altText
+        handle
+        images(first: 250) {
+          nodes {
+            url
+            altText
+          }
         }
-      }
-    }
-    variants(first: 250) {
-      nodes {
-        id
-        selectedOptions {
+        options {
           name
-          value
+          values
         }
-        price {
-          amount
-          currencyCode
-        }
-        image {
-          url
-          altText
+        variants(first: 250) {
+          nodes {
+            id
+            selectedOptions {
+              name
+              value
+            }
+            price {
+              amount
+              currencyCode
+            }
+          }
         }
       }
     }
