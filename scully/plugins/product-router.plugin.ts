@@ -4,9 +4,10 @@ import { firstValueFrom, from, map } from 'rxjs';
 import { HandledRoute, registerPlugin } from '@scullyio/scully';
 import { environment } from '../../src/environments/environment';
 
+// TODO: Align this with the latest product variant representation!
+
 export const productRouterPlugin = 'productRouterPlugin';
 
-// TODO: Extract
 const fullColorNameLookup = new Map<string, string>([
   ['beige', 'desert-beige'],
   ['black', 'jet-black'],
@@ -86,7 +87,7 @@ const fetchAllProductRoutes = (apolloClient: ApolloClient<any>) => {
           ) => {
             const key = option.name.toLowerCase();
             const values = option.values.map((value: string) =>
-              value.toLowerCase().replace(' ', '-')
+              value.toLowerCase().replaceAll(' ', '-')
             );
 
             prevMap.set(key, values);
@@ -101,7 +102,7 @@ const fetchAllProductRoutes = (apolloClient: ApolloClient<any>) => {
             const variantOptionValues = variant.title
               .split('/')
               .map((optionValue: string) =>
-                optionValue.trim().toLowerCase().replace(' ', '-')
+                optionValue.trim().toLowerCase().replaceAll(' ', '-')
               ) as string[];
 
             const serie = variantOptionValues.find((optionValue) =>

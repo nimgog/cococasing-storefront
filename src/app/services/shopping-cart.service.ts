@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, of, switchMap, tap } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Subscription, of, switchMap, tap } from 'rxjs';
 import { ShopifyService } from './shopify.service';
 import { LocalStorageService } from './local-storage.service';
 import { ShoppingCart } from '../models/shopping-cart.model';
@@ -8,15 +8,25 @@ import { NotificationService } from './notification.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ShoppingCartService {
+export class ShoppingCartService implements OnDestroy {
   private readonly cartIsVisibleSubject = new BehaviorSubject(false);
   private readonly cartSubject = new BehaviorSubject<ShoppingCart | null>(null);
+  private readonly productPriceRefreshSignalSub!: Subscription;
 
   constructor(
     private readonly shopifyService: ShopifyService,
     private readonly localStorageService: LocalStorageService,
     private readonly notificationService: NotificationService
-  ) {}
+  ) {
+    this.productPriceRefreshSignalSub =
+      this.shopifyService.productPriceRefreshSignal$.subscribe(() =>
+        this.cartSubject.next(null)
+      );
+  }
+
+  ngOnDestroy() {
+    this.productPriceRefreshSignalSub.unsubscribe();
+  }
 
   get isCartVisible$() {
     return this.cartIsVisibleSubject.asObservable();

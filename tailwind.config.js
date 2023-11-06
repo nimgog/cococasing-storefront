@@ -9,12 +9,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'coco-case-beige': '#D9CEAA',
-        'coco-case-black': '#000000',
-        'coco-case-blue': '#33418D',
-        'coco-case-green': '#415035',
-        'coco-case-lavender': '#33418D',
-        'coco-case-orange': '#FEA92A',
+        'coco-case-desert-beige': '#D9CEAA',
+        'coco-case-forest-green': '#415035',
+        'coco-case-french-lavender': '#B38ED9',
+        'coco-case-jet-black': '#000000',
+        'coco-case-midnight-blue': '#33418D',
+        'coco-case-sunset-orange': '#FEA92A',
 
         'coco-orange': '#F97316',
         'coco-red': '#DC2626',

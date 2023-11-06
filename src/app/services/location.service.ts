@@ -12,6 +12,7 @@ import {
 import { environment } from '../../environments/environment';
 import { LocalStorageService } from './local-storage.service';
 
+// TODO: Find a country with EUR and use it when Scully renders the pages
 @Injectable({
   providedIn: 'root',
 })

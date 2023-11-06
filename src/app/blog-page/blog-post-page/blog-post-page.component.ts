@@ -29,9 +29,7 @@ export class BlogPostPageComponent implements OnInit, OnDestroy {
     this.currentPostSub = this.scully
       .getCurrent()
       .pipe(
-        catchError((error) => {
-          // TODO: handle errors - navigate to show modal
-          console.log(error);
+        catchError(() => {
           return EMPTY;
         })
       )

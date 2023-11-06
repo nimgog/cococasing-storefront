@@ -1,20 +1,23 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import { Injectable } from '@angular/core';
 import {
   Observable,
   catchError,
+  interval,
   map,
-  mergeMap,
   of,
+  share,
   switchMap,
   take,
   tap,
 } from 'rxjs';
 import {
   Money,
-  colorSlugMap,
-  colorTitleMap,
+  Product,
+  ProductVariant,
+  expectedProductOptions,
+  productColors,
+  productTiers,
 } from '../models/new-product.model';
 import { LocationService } from './location.service';
 import { LocalStorageService } from './local-storage.service';
@@ -30,15 +33,21 @@ import {
 } from '../graphql/types';
 import { LineItem, ShoppingCart } from '../models/shopping-cart.model';
 import { NotificationService } from './notification.service';
-import { catchAndReportError } from '../utils/catch-and-report-error.operator';
+import { catchAndReportError } from '../common/utils/catch-and-report-error.operator';
 
-const productBundles = ['the-coco-package', 'the-glass-kit', 'the-package'];
-
-// TODO: Add/improve error handling
 @Injectable({
   providedIn: 'root',
 })
 export class ShopifyService {
+  private static readonly ProductPriceRefreshIntervalInMins = 10;
+
+  private readonly _productPriceRefreshSignal$ = interval(
+    ShopifyService.ProductPriceRefreshIntervalInMins * 60 * 1000
+  ).pipe(
+    share(),
+    map(() => undefined)
+  );
+
   constructor(
     private readonly locationService: LocationService,
     private readonly localStorageService: LocalStorageService,
@@ -52,210 +61,103 @@ export class ShopifyService {
     private readonly productGQL: ProductGQL
   ) {}
 
-  fetchProductBundle(productHandle: string) {
-    return this.locationService.getTwoLetterCountryCode().pipe(
-      switchMap((countryCode) =>
-        this.productGQL.fetch({ handle: productHandle, countryCode }).pipe(
-          mergeMap((response) => {
-            if (
-              !response.data?.product ||
-              response.error ||
-              response.errors?.length
-            ) {
-              return of(null);
-            }
-
-            return of(response.data.product).pipe(
-              map((product) => {
-                const media = product.media.nodes.map(
-                  (mediaNode: any) => mediaNode.previewImage
-                );
-
-                const optionMap = new Map<string, string[]>(
-                  product.options.map((option: any) => [
-                    option.name.toLowerCase(),
-                    option.values.map((value: string) =>
-                      value.toLowerCase().replace(' ', '-')
-                    ),
-                  ])
-                );
-
-                const getVariantInfo = (theVariant: any) => {
-                  const serie = theVariant.selectedOptions
-                    .find(
-                      (option: any) => option.name.toLowerCase() === 'series'
-                    )
-                    ?.value.toLowerCase();
-
-                  let variantHandle = `iphone-${serie}`;
-
-                  const model = theVariant.selectedOptions
-                    .find(
-                      (option: any) => option.name.toLowerCase() === 'model'
-                    )
-                    ?.value.toLowerCase()
-                    .replace(' ', '-');
-
-                  if (model !== 'regular') {
-                    variantHandle += `-${model}`;
-                  }
-
-                  const color = theVariant.selectedOptions
-                    .find(
-                      (option: any) => option.name.toLowerCase() === 'color'
-                    )
-                    ?.value.toLowerCase();
-
-                  if (color) {
-                    variantHandle += `-${colorSlugMap.get(color)}`;
-                  }
-
-                  return {
-                    handle: variantHandle,
-                    serie,
-                    model,
-                    color,
-                  };
-                };
-
-                const variantMap = new Map<string, any>(
-                  product.variants.nodes.map((variant: any) => {
-                    const { handle, serie, model, color } =
-                      getVariantInfo(variant);
-
-                    return [
-                      handle,
-                      {
-                        id: variant.id,
-                        serie,
-                        model,
-                        color,
-                        price: variant.price,
-                        image: variant.image,
-                      },
-                    ];
-                  })
-                );
-
-                return {
-                  title: product.title,
-                  description: product.description,
-                  media,
-                  optionMap,
-                  variantMap,
-                };
-              })
-            );
-          })
-        )
-      ),
-      catchAndReportError(this.notificationService)
-    );
+  get productPriceRefreshSignal$() {
+    return this._productPriceRefreshSignal$;
   }
 
-  fetchProduct(productHandle: string) {
-    if (this.isBundle(productHandle)) {
-      return this.fetchProductBundle(productHandle);
-    }
+  fetchProduct(productSlug: string) {
+    // const expectedOptions = expectedProductOptions.get(productSlug)!;
 
-    return this.locationService.getTwoLetterCountryCode().pipe(
-      switchMap((countryCode) =>
-        this.productGQL.fetch({ handle: productHandle, countryCode }).pipe(
-          mergeMap((response) => {
-            if (
-              !response.data?.product ||
-              response.error ||
-              response.errors?.length
-            ) {
-              return of(null);
-            }
+    // TODO: Determine observable type
+    // if (!expectedOptions) {
+    //   return catchAndReportError(this.notificationService)
+    // }
 
-            return of(response.data.product).pipe(
-              map((product) => {
-                const media = product.media.nodes.map(
-                  (mediaNode: any) => mediaNode.previewImage
-                );
-
-                const optionMap = new Map<string, string[]>(
-                  product.options.map((option: any) => [
-                    option.name.toLowerCase(),
-                    option.values.map((value: string) =>
-                      value.toLowerCase().replace(' ', '-')
-                    ),
-                  ])
-                );
-
-                const getVariantInfo = (theVariant: any) => {
-                  const serie = theVariant.selectedOptions
-                    .find(
-                      (option: any) => option.name.toLowerCase() === 'series'
-                    )
-                    ?.value.toLowerCase();
-
-                  let variantHandle = `iphone-${serie}`;
-
-                  const model = theVariant.selectedOptions
-                    .find(
-                      (option: any) => option.name.toLowerCase() === 'model'
-                    )
-                    ?.value.toLowerCase()
-                    .replace(' ', '-');
-
-                  if (model !== 'regular') {
-                    variantHandle += `-${model}`;
-                  }
-
-                  const color = theVariant.selectedOptions
-                    .find(
-                      (option: any) => option.name.toLowerCase() === 'color'
-                    )
-                    ?.value.toLowerCase();
-
-                  if (color) {
-                    variantHandle += `-${colorSlugMap.get(color)}`;
-                  }
-
-                  return {
-                    handle: variantHandle,
-                    serie,
-                    model,
-                    color,
-                  };
-                };
-
-                const variantMap = new Map<string, any>(
-                  product.variants.nodes.map((variant: any) => {
-                    const { handle, serie, model, color } =
-                      getVariantInfo(variant);
-
-                    return [
-                      handle,
-                      {
-                        id: variant.id,
-                        serie,
-                        model,
-                        color,
-                        price: variant.price,
-                        image: variant.image,
-                      },
-                    ];
-                  })
-                );
-
-                return {
-                  title: product.title,
-                  description: product.description,
-                  media,
-                  optionMap,
-                  variantMap,
-                };
-              })
+    return this.productGQL
+      .fetch({ collectionHandle: `new-${productSlug}` })
+      .pipe(
+        map((response) => {
+          if (
+            !response.data?.collection?.products.nodes.length ||
+            response.error ||
+            response.errors?.length
+          ) {
+            throw new Error(
+              `Shopify request failed: ${JSON.stringify(response)}`
             );
-          })
-        )
-      ),
-      catchAndReportError(this.notificationService)
-    );
+          }
+
+          return response.data.collection.products.nodes;
+        }),
+        map((shopifyProducts) => {
+          const variants = shopifyProducts.flatMap((shopifyProduct) => {
+            const { serie, color, tier } = this.parseProductVariantAttributes(
+              productSlug,
+              shopifyProduct.handle
+            );
+
+            const validShopifyProductVariants =
+              shopifyProduct.variants.nodes.filter((shopifyProductVariant) => {
+                const selectedModels = shopifyProductVariant.selectedOptions
+                  .filter((option) =>
+                    option.name.toLocaleLowerCase().includes('model')
+                  )
+                  .map((option) => option.value);
+
+                return selectedModels.every(
+                  (model) => model === selectedModels[0]
+                );
+              });
+
+            const productVariants = validShopifyProductVariants.map(
+              (shopifyProductVariant) => {
+                const modelTitle =
+                  shopifyProductVariant.selectedOptions.find((option) =>
+                    option.name.toLowerCase().includes('model')
+                  )?.value || '';
+
+                let model = modelTitle
+                  .replaceAll(' ', '-')
+                  .toLowerCase()
+                  .replace(`iphone-${serie}`, '');
+
+                if (model.startsWith('-')) {
+                  model = model.substring(1);
+                }
+
+                const slug = `iphone-${serie}${model ? `-${model}` : ''}${
+                  color ? `-${color}` : ''
+                }${tier ? `-${tier}` : ''}`;
+
+                return <ProductVariant>{
+                  id: shopifyProductVariant.id,
+                  slug,
+                  serie,
+                  model: model || 'regular',
+                  color,
+                  tier,
+                  images: shopifyProduct.images.nodes.map((shopifyImage) => ({
+                    url: shopifyImage.url,
+                    altText: shopifyImage.altText || undefined,
+                  })),
+                  price: {
+                    amount: shopifyProductVariant.price.amount,
+                    currencyCode: shopifyProductVariant.price.currencyCode,
+                  },
+                };
+              }
+            );
+
+            return productVariants;
+          });
+
+          return <Product>{
+            slug: productSlug,
+            variants,
+          };
+        }),
+        catchAndReportError(this.notificationService)
+      );
   }
 
   createCart(variantId: string) {
@@ -305,73 +207,6 @@ export class ShopifyService {
     );
   }
 
-  private mapCart(
-    cartFragment: ShoppingCartFragment | null | undefined
-  ): ShoppingCart {
-    if (!cartFragment) {
-      throw new Error('Failed to map cart as it was unavailable');
-    }
-
-    // TODO: Revisit this for correct title-subtitle mapping once other products are being handled, too
-    const lines: LineItem[] = cartFragment.lines.nodes.map((lineItem) => {
-      const { merchandise } = lineItem;
-      const selectedOptions = merchandise.selectedOptions;
-      let productTitle = merchandise.product.title;
-
-      const serie = selectedOptions.find(
-        (option) => option.name.toLowerCase() === 'series'
-      )?.value;
-
-      productTitle += ` iPhone ${serie}`;
-
-      const model = selectedOptions.find(
-        (option) => option.name.toLowerCase() === 'model'
-      )?.value;
-
-      if (model && model.toLowerCase() !== 'regular') {
-        productTitle += ` ${model}`;
-      }
-
-      const color = selectedOptions
-        .find((option) => option.name.toLowerCase() === 'color')
-        ?.value.toLowerCase();
-
-      const productSubtitle = color ? colorTitleMap.get(color) : '';
-
-      return <LineItem>{
-        id: lineItem.id,
-        product: {
-          id: merchandise.id,
-          title: productTitle,
-          subtitle: productSubtitle,
-          imageUrl: merchandise.image?.url,
-        },
-        totalCost: {
-          amount: parseFloat(lineItem.cost.totalAmount.amount),
-          currencyCode: lineItem.cost.totalAmount.currencyCode,
-        },
-        quantity: lineItem.quantity,
-      };
-    });
-
-    const cart: ShoppingCart = {
-      id: cartFragment.id,
-      checkoutUrl: cartFragment.checkoutUrl,
-      lines,
-      totalCost: {
-        amount: parseFloat(cartFragment.cost.totalAmount.amount),
-        currencyCode: cartFragment.cost.totalAmount.currencyCode,
-      },
-      totalQuantity: cartFragment.totalQuantity,
-    };
-
-    return cart;
-  }
-
-  private isBundle(productHandle: string) {
-    return productBundles.includes(productHandle);
-  }
-
   fetchFreeShippingThreshold(): Observable<Money | null> {
     const localStorageKey = 'free_shipping_threshold';
 
@@ -417,5 +252,137 @@ export class ShopifyService {
       ),
       catchAndReportError(this.notificationService)
     );
+  }
+
+  private mapCart(
+    cartFragment: ShoppingCartFragment | null | undefined
+  ): ShoppingCart {
+    if (!cartFragment) {
+      throw new Error('Failed to map cart as it was unavailable');
+    }
+
+    const lines: LineItem[] = cartFragment.lines.nodes.map((lineItem) => {
+      const {
+        merchandise: {
+          id: productId,
+          product,
+          selectedOptions,
+          image: productImage,
+        },
+      } = lineItem;
+
+      const allProductSlugs = [...expectedProductOptions.keys()];
+      const productSlug = allProductSlugs.find((slug) =>
+        product.handle.includes(slug)
+      );
+
+      if (!productSlug) {
+        throw new Error('Unrecognizable product handle: ' + product.handle);
+      }
+
+      const { serie, color, tier } = this.parseProductVariantAttributes(
+        productSlug,
+        product.handle
+      );
+
+      let model = selectedOptions
+        .find((option) => option.name.toLowerCase().includes('model'))
+        ?.value.replaceAll(' ', '-')
+        .toLocaleLowerCase()
+        .replace(`iphone-${serie}`, '');
+
+      if (model?.startsWith('-')) {
+        model = model.substring(1);
+      }
+
+      const subtitleParts = [];
+
+      if (color) {
+        subtitleParts.push(color);
+      }
+
+      if (tier) {
+        subtitleParts.push(tier);
+      }
+
+      return <LineItem>{
+        id: lineItem.id,
+        product: {
+          id: productId,
+          title: `${productSlug}-iphone-${serie}${model ? `-${model}` : ''}`,
+          subtitle: subtitleParts.join('-'),
+          imageUrl: productImage?.url,
+        },
+        totalCost: {
+          amount: parseFloat(lineItem.cost.totalAmount.amount),
+          currencyCode: lineItem.cost.totalAmount.currencyCode,
+        },
+        quantity: lineItem.quantity,
+      };
+    });
+
+    const cart: ShoppingCart = {
+      id: cartFragment.id,
+      checkoutUrl: cartFragment.checkoutUrl,
+      lines,
+      totalCost: {
+        amount: parseFloat(cartFragment.cost.totalAmount.amount),
+        currencyCode: cartFragment.cost.totalAmount.currencyCode,
+      },
+      totalQuantity: cartFragment.totalQuantity,
+    };
+
+    return cart;
+  }
+
+  private parseProductVariantAttributes(
+    productSlug: string,
+    productHandle: string
+  ) {
+    const expectedOptions = expectedProductOptions.get(productSlug);
+
+    if (!expectedOptions) {
+      throw new Error(`Unrecognizable product handle: ${productHandle}`);
+    }
+
+    const handleWithoutProductSlug = productHandle.replace(
+      `${productSlug}-`,
+      ''
+    );
+
+    const handleParts = handleWithoutProductSlug.split('-');
+
+    if (handleParts.length < 2 || handleParts[0] !== 'iphone') {
+      throw new Error(`Unexpected product handle format: ${productHandle}`);
+    }
+
+    let serie = handleParts[1];
+
+    let handleRemainder = handleWithoutProductSlug.replace(
+      `iphone-${serie}`,
+      ''
+    );
+
+    let color: string | undefined = undefined;
+
+    if (expectedOptions.includes('color')) {
+      color = productColors.find((productColor) =>
+        handleRemainder.includes(productColor)
+      )!;
+      handleRemainder = handleRemainder.replace(color, '');
+    }
+
+    let tier: string | undefined = undefined;
+
+    if (expectedOptions.includes('tier')) {
+      tier = productTiers.find((productTier) =>
+        handleRemainder.includes(productTier)
+      )!;
+      handleRemainder = handleRemainder.replace(tier, '');
+    }
+
+    serie += handleRemainder.substring(0, handleRemainder.length - 1);
+
+    return { serie, color, tier };
   }
 }

@@ -16,6 +16,14 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
       ),
     }),
     cache: new InMemoryCache(),
+    defaultOptions: {
+      query: {
+        fetchPolicy: 'no-cache', // Remove this and specify caching options on a query level if needed
+      },
+      mutate: {
+        fetchPolicy: 'no-cache',
+      },
+    },
   };
 }
 

@@ -12,7 +12,7 @@ fragment ShoppingCart on Cart {
             url(transform: { maxWidth: 120, maxHeight: 120 })
           }
           product {
-            title
+            handle
           }
           selectedOptions {
             name

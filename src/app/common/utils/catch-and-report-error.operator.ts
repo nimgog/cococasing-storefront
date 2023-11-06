@@ -1,5 +1,5 @@
 import { Observable, catchError, throwError } from 'rxjs';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../../services/notification.service';
 
 export function catchAndReportError<T>(
   notificationService: NotificationService

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "importHelpers": false,
-    "lib": ["ES2019", "dom"],
+    "lib": ["ES2019", "ES2021.String", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
