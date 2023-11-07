@@ -12,28 +12,28 @@ export class AboutPageComponent {
     {
       title: 'Free & Easy Returns',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mus mauris vitae ultricies leo integer malesuada nunc vel.',
+        'Not delighted with your purchase? Return it for free, without any hassle.',
       imageUrl: '/assets/img/about-page/benefits/free-and-easy-returns.svg',
       learnMoreUrl: '/',
     },
     {
-      title: 'Worldwide Shipping',
+      title: 'We ship across Europe',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mus mauris vitae ultricies leo integer malesuada nunc vel.',
+        "Wherever you are, we're just a click away. Enjoy our international shipping to 27 destinations.",
       imageUrl: '/assets/img/about-page/benefits/worldwide-shipping.svg',
       learnMoreUrl: '/',
     },
     {
-      title: '60 Days Return',
+      title: '30 Days Return',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mus mauris vitae ultricies leo integer malesuada nunc vel.',
+        'Shop with confidence knowing you have 30 days to return your purchase if it’s not a perfect fit.',
       imageUrl: '/assets/img/about-page/benefits/60-days-return.svg',
       learnMoreUrl: '/',
     },
     {
       title: 'Quality Tested',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mus mauris vitae ultricies leo integer malesuada nunc vel.',
+        'Peace of mind comes with every purchase, thanks to our comprehensive quality testing procedures.',
       imageUrl: '/assets/img/about-page/benefits/quality-tested.svg',
       learnMoreUrl: '/',
     },

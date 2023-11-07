@@ -31,6 +31,7 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     { title: 'Lifestyle', category: 'lifestyle' },
     { title: 'Training', category: 'training' },
     { title: 'Update', category: 'update' },
+    { title: 'Environment', category: 'environment' },
   ];
 
   constructor(
@@ -160,6 +161,8 @@ export class BlogPageComponent implements OnInit, OnDestroy {
         return '#0E73B9';
       case 'update':
         return '#F97316';
+      case 'environment':
+        return '#A3CB38';
     }
   }
 }

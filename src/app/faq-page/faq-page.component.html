@@ -80,8 +80,7 @@
 
               <div [ngClass]="{ 'hidden': !isScenarioExpanded(scenario) }" class="px-1 py-4 lg:pb-2">
                 <!-- TODO: Render body as HTML if needed -->
-                <p class="text-coco-slate-gray text-sm font-normal !font-anekb">
-                  {{ scenario.body }}
+                <p class="text-coco-slate-gray text-sm font-normal !font-anekb" [innerHTML]="scenario.body">
                 </p>
               </div>
             </div>
