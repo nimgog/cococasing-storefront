@@ -1,31 +1,28 @@
-import { Component } from '@angular/core';
-import { FeaturedProduct } from './featured-product';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { FeaturedProduct } from '../models/new-product.model';
+import { ShopifyService } from '../services/shopify.service';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
-export class HomePageComponent {
-  firstSliderProduct: FeaturedProduct = {
-    id: 'first',
-    name: 'Forest Green',
-    description: 'A green guard for your gadget',
-    imageUrl: '/assets/img/home-page/forest-green-case.png',
-    price: 599,
-    devisa: 'SEK',
-  };
+export class HomePageComponent implements OnInit, OnDestroy {
+  featuredProductsSub!: Subscription;
+  featuredProducts: FeaturedProduct[] = [];
 
-  secondSliderProduct: FeaturedProduct = {
-    id: 'second',
-    name: 'French Lavender',
-    description: 'A lavender haven for you',
-    imageUrl: '/assets/img/home-page/french-lavender-case.png',
-    discount: {
-      discountPercent: 30,
-      oldPrice: 599,
-    },
-    price: 499,
-    devisa: 'SEK',
-  };
+  constructor(private readonly shopifyService: ShopifyService) {}
+
+  ngOnInit() {
+    this.featuredProductsSub = this.shopifyService
+      .fetchFeaturedProducts()
+      .subscribe(
+        (featuredProducts) => (this.featuredProducts = featuredProducts)
+      );
+  }
+
+  ngOnDestroy() {
+    this.featuredProductsSub.unsubscribe();
+  }
 }

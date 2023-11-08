@@ -20,8 +20,8 @@
 
     <div class="grow flex justify-center h-[288px]">
       <img *ngFor="let product of products; let i = index" [@slideAnimation]="i - currentProductIndex"
-        [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="object-contain" [src]="product.imageUrl"
-        [alt]="product.name" />
+        [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="object-contain" [src]="product.image.url"
+        [alt]="product.image.altText || product.title" />
     </div>
 
     <!-- <button (click)="showNextProduct()" [ngClass]="{ hidden: hideSlideArrows || !rightControlEnabled }"
@@ -40,22 +40,32 @@
     <div *ngFor="let product of products; let i = index"
       [@fadeAnimation]="i === currentProductIndex ? 'shown' : 'hidden'"
       [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="flex flex-col items-center pb-2">
-      <span class="text-white text-uppercase text-[14px] font-medium !font-anekt leading-[20px] tracking-[1.4px]">
-        {{ product.name }}
+      <span
+        class="text-center text-white text-uppercase text-[14px] font-medium !font-anekt leading-[20px] tracking-[1.4px]">
+        {{ product.title }}
       </span>
-      <span class="pt-1 pb-2 text-coco-lighter-gray text-[12px] font-roboto leading-[16px] tracking-[1.2px]">
+      <span
+        class="pt-1 pb-2 text-center text-coco-lighter-gray text-[12px] font-roboto leading-[16px] tracking-[1.2px]">
         {{ product.description }}
       </span>
-      <span class="text-white text-uppercase text-[14px] font-semibold !font-anekt leading-[20px] tracking-[1.4px]">
-        {{ product.price }} {{ product.devisa }}
-      </span>
+      <div class="flex gap-x-2">
+        <span *ngIf="product.originalPrice"
+          class="text-uppercase text-coco-red text-xs font-normal !font-anekt leading-5 tracking-[1.2px] line-through decoration-1">{{
+          product.originalPrice.amount
+          }} {{ product.originalPrice.currencyCode }}</span>
+        <span class="text-uppercase text-white text-sm font-semibold !font-anekt tracking-[1.4px]">{{
+          product.price.amount }} {{ product.price.currencyCode
+          }}</span>
+      </div>
     </div>
   </div>
 
   <div>
-    <button class="bg-coco-orange w-[143px] h-[34px] px-8 py-1 rounded">
+    <button
+      [routerLink]="['/products', products[currentProductIndex].productSlug, products[currentProductIndex].variantSlug]"
+      role="link" class="bg-coco-orange w-[143px] h-[34px] px-8 py-1 rounded">
       <span class="text-white text-uppercase text-[14px] font-semibold !font-anekb">
-        Add to cart
+        Shop Now
       </span>
     </button>
   </div>

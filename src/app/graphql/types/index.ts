@@ -8142,9 +8142,44 @@ export const Cart = gql`
       super(apollo);
     }
   }
+export const FeaturedProducts = gql`
+    query FeaturedProducts($countryCode: CountryCode!) @inContext(country: $countryCode) {
+  collection(handle: "frontpage") {
+    products(first: 2) {
+      nodes {
+        handle
+        title
+        description
+        featuredImage {
+          url
+          altText
+        }
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+        tags
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: GraphQLModule
+  })
+  export class FeaturedProductsGQL extends Apollo.Query<FeaturedProductsQuery, FeaturedProductsQueryVariables> {
+    override document = FeaturedProducts;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const FreeShippingProduct = gql`
-    query FreeShippingProduct($handle: String!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
-  product(handle: $handle) {
+    query FreeShippingProduct($countryCode: CountryCode!) @inContext(country: $countryCode) {
+  product(handle: "dummy-product-free-shipping-at-20") {
     priceRange {
       minVariantPrice {
         currencyCode
@@ -8166,7 +8201,7 @@ export const FreeShippingProduct = gql`
     }
   }
 export const Product = gql`
-    query Product($collectionHandle: String!) {
+    query Product($collectionHandle: String!, $countryCode: CountryCode!) @inContext(country: $countryCode) {
   collection(handle: $collectionHandle) {
     products(first: 250) {
       nodes {
@@ -8252,8 +8287,14 @@ export type CartQueryVariables = Exact<{
 
 export type CartQuery = { __typename?: 'QueryRoot', cart?: { __typename?: 'Cart', id: string, checkoutUrl: any, totalQuantity: number, lines: { __typename?: 'BaseCartLineConnection', nodes: Array<{ __typename?: 'CartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', handle: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | { __typename?: 'ComponentizableCartLine', id: string, quantity: number, merchandise: { __typename?: 'ProductVariant', id: string, image?: { __typename?: 'Image', url: any } | null, product: { __typename?: 'Product', handle: string }, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }> }, cost: { __typename?: 'CartLineCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> }, cost: { __typename?: 'CartCost', totalAmount: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } } | null };
 
+export type FeaturedProductsQueryVariables = Exact<{
+  countryCode: CountryCode;
+}>;
+
+
+export type FeaturedProductsQuery = { __typename?: 'QueryRoot', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', handle: string, title: string, description: string, tags: Array<string>, featuredImage?: { __typename?: 'Image', url: any, altText?: string | null } | null, priceRange: { __typename?: 'ProductPriceRange', minVariantPrice: { __typename?: 'MoneyV2', amount: any, currencyCode: CurrencyCode } } }> } } | null };
+
 export type FreeShippingProductQueryVariables = Exact<{
-  handle: Scalars['String']['input'];
   countryCode: CountryCode;
 }>;
 
@@ -8262,6 +8303,7 @@ export type FreeShippingProductQuery = { __typename?: 'QueryRoot', product?: { _
 
 export type ProductQueryVariables = Exact<{
   collectionHandle: Scalars['String']['input'];
+  countryCode: CountryCode;
 }>;
 
 

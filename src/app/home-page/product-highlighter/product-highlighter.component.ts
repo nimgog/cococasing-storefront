@@ -1,39 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FeaturedProduct } from '../featured-product';
+import { Component, Input } from '@angular/core';
+import { FeaturedProduct } from 'src/app/models/new-product.model';
 
 @Component({
   selector: 'app-product-highlighter',
   templateUrl: './product-highlighter.component.html',
   styleUrls: ['./product-highlighter.component.scss'],
 })
-export class ProductHighlighterComponent implements OnInit {
+export class ProductHighlighterComponent {
   @Input()
-  firstProduct!: FeaturedProduct;
-
-  @Input()
-  secondProduct!: FeaturedProduct;
-
-  products!: FeaturedProduct[];
-
-  ngOnInit(): void {
-    if (!this.firstProduct) {
-      throw new Error('The first product must be provided.');
-    }
-
-    if (!this.secondProduct) {
-      throw new Error('The second product must be provided.');
-    }
-
-    this.products = [this.firstProduct, this.secondProduct];
-  }
+  products: FeaturedProduct[] = [];
 
   isNewProduct(product: FeaturedProduct) {
-    return !product.discount;
+    return !product.originalPrice;
   }
 
   getProductAnnouncement(product: FeaturedProduct) {
-    return !product.discount
-      ? 'New in'
-      : `${product.discount.discountPercent}% sale`;
+    return this.isNewProduct(product)
+      ? 'New In'
+      : `${product.discountPercent}% Sale`;
   }
 }

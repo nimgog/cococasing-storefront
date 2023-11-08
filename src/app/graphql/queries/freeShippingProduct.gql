@@ -1,6 +1,6 @@
-query FreeShippingProduct($handle: String!, $countryCode: CountryCode!)
+query FreeShippingProduct($countryCode: CountryCode!)
 @inContext(country: $countryCode) {
-  product(handle: $handle) {
+  product(handle: "dummy-product-free-shipping-at-20") {
     priceRange {
       minVariantPrice {
         currencyCode

@@ -51,3 +51,16 @@ export type ProductVariant = {
   images: Image[];
   price: Money;
 };
+
+export const discountedProductTagPrefix = 'sale-';
+
+export type FeaturedProduct = {
+  productSlug: string;
+  variantSlug: string;
+  title: string;
+  description: string;
+  image: Image;
+  price: Money;
+  originalPrice?: Money;
+  discountPercent?: number;
+};

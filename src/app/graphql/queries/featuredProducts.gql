@@ -1,0 +1,23 @@
+query FeaturedProducts($countryCode: CountryCode!)
+@inContext(country: $countryCode) {
+  collection(handle: "frontpage") {
+    products(first: 2) {
+      nodes {
+        handle
+        title
+        description
+        featuredImage {
+          url
+          altText
+        }
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+        tags
+      }
+    }
+  }
+}

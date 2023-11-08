@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   Observable,
   catchError,
+  concatMap,
   interval,
   map,
   of,
@@ -12,9 +13,11 @@ import {
   tap,
 } from 'rxjs';
 import {
+  FeaturedProduct,
   Money,
   Product,
   ProductVariant,
+  discountedProductTagPrefix,
   expectedProductOptions,
   productColors,
   productTiers,
@@ -25,6 +28,7 @@ import {
   AddLineItemGQL,
   CartGQL,
   CreateCartGQL,
+  FeaturedProductsGQL,
   FreeShippingProductGQL,
   ProductGQL,
   RemoveLineItemGQL,
@@ -58,7 +62,8 @@ export class ShopifyService {
     private readonly cartGQL: CartGQL,
     private readonly createCartGQL: CreateCartGQL,
     private readonly setLineItemQuantityGQL: SetLineItemQuantityGQL,
-    private readonly productGQL: ProductGQL
+    private readonly productGQL: ProductGQL,
+    private readonly featuredProductsGQL: FeaturedProductsGQL
   ) {}
 
   get productPriceRefreshSignal$() {
@@ -73,91 +78,95 @@ export class ShopifyService {
     //   return catchAndReportError(this.notificationService)
     // }
 
-    return this.productGQL
-      .fetch({ collectionHandle: `new-${productSlug}` })
-      .pipe(
-        map((response) => {
-          if (
-            !response.data?.collection?.products.nodes.length ||
-            response.error ||
-            response.errors?.length
-          ) {
-            throw new Error(
-              `Shopify request failed: ${JSON.stringify(response)}`
-            );
-          }
+    return this.locationService.getTwoLetterCountryCode().pipe(
+      switchMap((countryCode) =>
+        this.productGQL.fetch({
+          collectionHandle: `new-${productSlug}`,
+          countryCode,
+        })
+      ),
+      map((response) => {
+        if (
+          !response.data?.collection?.products.nodes.length ||
+          response.error ||
+          response.errors?.length
+        ) {
+          throw new Error(
+            `Shopify request failed: ${JSON.stringify(response)}`
+          );
+        }
 
-          return response.data.collection.products.nodes;
-        }),
-        map((shopifyProducts) => {
-          const variants = shopifyProducts.flatMap((shopifyProduct) => {
-            const { serie, color, tier } = this.parseProductVariantAttributes(
-              productSlug,
-              shopifyProduct.handle
-            );
+        return response.data.collection.products.nodes;
+      }),
+      map((shopifyProducts) => {
+        const variants = shopifyProducts.flatMap((shopifyProduct) => {
+          const { serie, color, tier } = this.parseProductVariantAttributes(
+            productSlug,
+            shopifyProduct.handle
+          );
 
-            const validShopifyProductVariants =
-              shopifyProduct.variants.nodes.filter((shopifyProductVariant) => {
-                const selectedModels = shopifyProductVariant.selectedOptions
-                  .filter((option) =>
-                    option.name.toLocaleLowerCase().includes('model')
-                  )
-                  .map((option) => option.value);
+          const validShopifyProductVariants =
+            shopifyProduct.variants.nodes.filter((shopifyProductVariant) => {
+              const selectedModels = shopifyProductVariant.selectedOptions
+                .filter((option) =>
+                  option.name.toLocaleLowerCase().includes('model')
+                )
+                .map((option) => option.value);
 
-                return selectedModels.every(
-                  (model) => model === selectedModels[0]
-                );
-              });
+              return selectedModels.every(
+                (model) => model === selectedModels[0]
+              );
+            });
 
-            const productVariants = validShopifyProductVariants.map(
-              (shopifyProductVariant) => {
-                const modelTitle =
-                  shopifyProductVariant.selectedOptions.find((option) =>
-                    option.name.toLowerCase().includes('model')
-                  )?.value || '';
+          const productVariants = validShopifyProductVariants.map(
+            (shopifyProductVariant) => {
+              const modelTitle =
+                shopifyProductVariant.selectedOptions.find((option) =>
+                  option.name.toLowerCase().includes('model')
+                )?.value || '';
 
-                let model = modelTitle
-                  .replaceAll(' ', '-')
-                  .toLowerCase()
-                  .replace(`iphone-${serie}`, '');
+              let model = modelTitle
+                .replaceAll(' ', '-')
+                .toLowerCase()
+                .replace(`iphone-${serie}`, '');
 
-                if (model.startsWith('-')) {
-                  model = model.substring(1);
-                }
-
-                const slug = `iphone-${serie}${model ? `-${model}` : ''}${
-                  color ? `-${color}` : ''
-                }${tier ? `-${tier}` : ''}`;
-
-                return <ProductVariant>{
-                  id: shopifyProductVariant.id,
-                  slug,
-                  serie,
-                  model: model || 'regular',
-                  color,
-                  tier,
-                  images: shopifyProduct.images.nodes.map((shopifyImage) => ({
-                    url: shopifyImage.url,
-                    altText: shopifyImage.altText || undefined,
-                  })),
-                  price: {
-                    amount: shopifyProductVariant.price.amount,
-                    currencyCode: shopifyProductVariant.price.currencyCode,
-                  },
-                };
+              if (model.startsWith('-')) {
+                model = model.substring(1);
               }
-            );
 
-            return productVariants;
-          });
+              const slug = `iphone-${serie}${model ? `-${model}` : ''}${
+                color ? `-${color}` : ''
+              }${tier ? `-${tier}` : ''}`;
 
-          return <Product>{
-            slug: productSlug,
-            variants,
-          };
-        }),
-        catchAndReportError(this.notificationService)
-      );
+              return <ProductVariant>{
+                id: shopifyProductVariant.id,
+                slug,
+                serie,
+                model: model || 'regular',
+                color,
+                tier,
+                images: shopifyProduct.images.nodes.map((shopifyImage) => ({
+                  url: shopifyImage.url,
+                  altText: shopifyImage.altText || undefined,
+                })),
+                price: {
+                  amount: shopifyProductVariant.price.amount,
+                  currencyCode: shopifyProductVariant.price.currencyCode,
+                },
+              };
+            }
+          );
+
+          return productVariants;
+        });
+
+        return <Product>{
+          slug: productSlug,
+          variants,
+        };
+      }),
+      catchAndReportError(this.notificationService)
+    );
   }
 
   createCart(variantId: string) {
@@ -219,38 +228,105 @@ export class ShopifyService {
 
     return this.locationService.getTwoLetterCountryCode().pipe(
       switchMap((countryCode) =>
-        this.freeShippingProductGQL
-          .fetch({
-            handle: 'dummy-product-free-shipping-at-20',
-            countryCode,
-          })
-          .pipe(
-            switchMap((response) => {
-              if (response.error || response.errors) {
-                return of(null).pipe(take(1));
-              }
+        this.freeShippingProductGQL.fetch({ countryCode }).pipe(
+          concatMap((response) => {
+            if (response.error || response.errors) {
+              return of(null).pipe(take(1));
+            }
 
-              if (!response.data.product) {
-                return of(null).pipe(take(1));
-              }
+            if (!response.data.product) {
+              return of(null).pipe(take(1));
+            }
 
-              return of(response.data.product);
-            }),
-            map((product) => {
-              const price = product!.priceRange.minVariantPrice;
+            return of(response.data.product);
+          }),
+          map((shopifyProduct) => {
+            const price = shopifyProduct!.priceRange.minVariantPrice;
 
-              return <Money>{
-                amount: parseFloat(price.amount),
-                currencyCode: price.currencyCode,
-              };
-            }),
-            tap((threshold) =>
-              this.localStorageService.set(localStorageKey, threshold)
-            ),
-            catchError(() => of(null))
-          )
+            return <Money>{
+              amount: parseFloat(price.amount),
+              currencyCode: price.currencyCode,
+            };
+          }),
+          tap((threshold) =>
+            this.localStorageService.set(localStorageKey, threshold)
+          ),
+          catchError(() => of(null))
+        )
       ),
       catchAndReportError(this.notificationService)
+    );
+  }
+
+  fetchFeaturedProducts(): Observable<FeaturedProduct[]> {
+    return this.locationService.getTwoLetterCountryCode().pipe(
+      switchMap((countryCode) =>
+        this.featuredProductsGQL.fetch({ countryCode }).pipe(
+          map((response) => {
+            if (
+              !response.data?.collection?.products.nodes.length ||
+              response.error ||
+              response.errors?.length
+            ) {
+              throw new Error(
+                `Shopify request failed: ${JSON.stringify(response)}`
+              );
+            }
+
+            return response.data.collection.products.nodes;
+          }),
+          map((shopifyFeaturedProducts) =>
+            shopifyFeaturedProducts.map((shopifyFeaturedProduct) => {
+              const handleParts =
+                shopifyFeaturedProduct.handle.split('-iphone-');
+
+              const featuredProduct: FeaturedProduct = {
+                productSlug: handleParts[0],
+                variantSlug: `iphone-${handleParts[1]}`,
+                title: shopifyFeaturedProduct.title,
+                description: shopifyFeaturedProduct.description,
+                image: {
+                  url: shopifyFeaturedProduct.featuredImage?.url,
+                  altText:
+                    shopifyFeaturedProduct.featuredImage?.altText || undefined,
+                },
+                price: {
+                  amount: parseFloat(
+                    shopifyFeaturedProduct.priceRange.minVariantPrice.amount
+                  ),
+                  currencyCode:
+                    shopifyFeaturedProduct.priceRange.minVariantPrice
+                      .currencyCode,
+                },
+              };
+
+              const saleTag = shopifyFeaturedProduct.tags.find((tag) =>
+                tag.toLocaleLowerCase().includes(discountedProductTagPrefix)
+              );
+
+              if (saleTag) {
+                featuredProduct.originalPrice = {
+                  ...featuredProduct.price,
+                };
+
+                featuredProduct.discountPercent = parseFloat(
+                  saleTag.split('-')[1]
+                );
+
+                const remainingPercent =
+                  1 - featuredProduct.discountPercent / 100;
+
+                featuredProduct.price.amount = Math.ceil(
+                  featuredProduct.price.amount * remainingPercent
+                );
+              }
+
+              return featuredProduct;
+            })
+          ),
+          catchAndReportError(this.notificationService)
+        )
+      )
     );
   }
 

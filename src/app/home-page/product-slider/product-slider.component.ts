@@ -5,8 +5,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
-import { FeaturedProduct } from '../featured-product';
+import { Component, Input } from '@angular/core';
+import { FeaturedProduct } from 'src/app/models/new-product.model';
 
 @Component({
   selector: 'app-product-slider',
@@ -44,30 +44,14 @@ import { FeaturedProduct } from '../featured-product';
     ]),
   ],
 })
-export class ProductSliderComponent implements OnInit {
+export class ProductSliderComponent {
   @Input()
-  firstProduct!: FeaturedProduct;
-
-  @Input()
-  secondProduct!: FeaturedProduct;
+  products: FeaturedProduct[] = [];
 
   @Input()
   allowSlideBeyondEnds = true;
 
-  products!: FeaturedProduct[];
   currentProductIndex = 0;
-
-  ngOnInit(): void {
-    if (!this.firstProduct) {
-      throw new Error('The first product must be provided.');
-    }
-
-    if (!this.secondProduct) {
-      throw new Error('The second product must be provided.');
-    }
-
-    this.products = [this.firstProduct, this.secondProduct];
-  }
 
   get leftControlEnabled() {
     return this.allowSlideBeyondEnds || this.currentProductIndex !== 0;
@@ -81,13 +65,13 @@ export class ProductSliderComponent implements OnInit {
   }
 
   isNewProduct(product: FeaturedProduct) {
-    return !product.discount;
+    return !product.originalPrice;
   }
 
   getProductAnnouncement(product: FeaturedProduct) {
-    return !product.discount
-      ? 'New in'
-      : `${product.discount.discountPercent}% sale`;
+    return product.discountPercent
+      ? `${product.discountPercent}% Sale`
+      : 'New In';
   }
 
   showPreviousProduct() {

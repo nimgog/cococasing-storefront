@@ -2,7 +2,7 @@
   <!-- TODO: The div above is shrinked in height below 500px in desktop view, should this be followed? -->
   <div *ngFor="let product of products" class="lg:flex w-1/2 h-[504px] px-4 pt-2 pb-4 bg-coco-darkest-blue rounded-lg">
     <div class="grow hidden lg:flex justify-center items-center">
-      <img class="object-contain" [src]="product.imageUrl" [alt]="product.name" />
+      <img class="object-contain" [src]="product.image.url" [alt]="product.image.altText || product.title" />
     </div>
 
     <div class="flex flex-col items-center gap-y-0.5 h-full">
@@ -15,28 +15,35 @@
       </div>
 
       <div class="flex lg:hidden justify-center h-[288px]">
-        <img class="object-contain" [src]="product.imageUrl" [alt]="product.name" />
+        <img class="object-contain" [src]="product.image.url" [alt]="product.image.altText || product.title" />
       </div>
 
       <div class="grow flex flex-col justify-end lg:justify-center items-center lg:w-[243px] h-full">
         <div class="flex flex-col items-center w-full lg:pt-4 pb-2 lg:border-l lg:border-[#F3F4F6]">
           <span
-            class="text-white text-uppercase text-[14px] lg:text-[18px] font-medium !font-anekt leading-[20px] tracking-[1.4px] lg:tracking-[1.8px]">
-            {{ product.name }}
+            class="text-center text-uppercase text-white text-[14px] lg:text-[18px] font-medium !font-anekt leading-[20px] tracking-[1.4px] lg:tracking-[1.8px]">
+            {{ product.title }}
           </span>
+
           <span
-            class="pt-1 pb-2 lg:pb-2.5 text-coco-lighter-gray text-[12px] font-roboto leading-[16px] tracking-[1.2px]">
+            class="pt-1 pb-2 lg:pb-2.5 text-center text-coco-lighter-gray text-[12px] font-roboto leading-[16px] tracking-[1.2px]">
             {{ product.description }}
           </span>
-          <span
-            class="text-white text-uppercase text-[14px] lg:text-[18px] font-semibold !font-anekt leading-[20px] lg:leading-[28px] tracking-[1.4px] lg:tracking-[1.8px]">
-            {{ product.price }} {{ product.devisa }}
-          </span>
+
+          <div class="flex gap-x-2">
+            <span *ngIf="product.originalPrice"
+              class="text-uppercase text-coco-red text-xs lg:text-base font-normal !font-anekt leading-5 lg:leading-7 tracking-[1.2px] lg:tracking-[1.6px] line-through decoration-1">{{
+              product.originalPrice.amount }} {{ product.originalPrice.currencyCode }}</span>
+            <span
+              class="text-uppercase text-white text-sm lg:text-lg font-semibold !font-anekt tracking-[1.4px] lg:tracking-[1.8px]">{{
+              product.price.amount }} {{ product.price.currencyCode }}</span>
+          </div>
         </div>
 
-        <button class="bg-coco-orange w-[143px] h-[34px] lg:mt-2.5 px-8 py-1 rounded">
+        <button [routerLink]="['/products', product.productSlug, product.variantSlug]" role="link"
+          class="bg-coco-orange w-[143px] h-[34px] lg:mt-2.5 px-8 py-1 rounded">
           <span class="text-white text-uppercase text-[14px] font-semibold !font-anekb">
-            Add to cart
+            Shop Now
           </span>
         </button>
       </div>
