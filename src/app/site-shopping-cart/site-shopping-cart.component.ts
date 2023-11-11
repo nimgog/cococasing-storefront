@@ -4,6 +4,8 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { ShoppingCart } from '../models/shopping-cart.model';
+import { ShopifyService } from '../services/shopify.service';
+import { Money } from '../models/new-product.model';
 
 @Component({
   selector: 'app-site-shopping-cart',
@@ -14,20 +16,41 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
   cartSub!: Subscription;
   cart: ShoppingCart | null = null;
 
+  freeShippingSub!: Subscription;
+  freeShippingThreshold: Money | null = null;
+
   constructor(
     private readonly router: Router,
     private readonly viewportScroller: ViewportScroller,
-    private readonly shoppingCartService: ShoppingCartService
+    private readonly shoppingCartService: ShoppingCartService,
+    private readonly shopifyService: ShopifyService
   ) {}
+
+  get shippingInfo() {
+    if (
+      this.cart &&
+      this.freeShippingThreshold &&
+      this.cart.discountedTotalPrice.amount >= this.freeShippingThreshold.amount
+    ) {
+      return 'Shipping is free.';
+    }
+
+    return 'Shipping calculated at checkout.';
+  }
 
   ngOnInit() {
     this.cartSub = this.shoppingCartService.cart$.subscribe(
       (cart) => (this.cart = cart)
     );
+
+    this.freeShippingSub = this.shopifyService
+      .fetchFreeShippingThreshold()
+      .subscribe((threshold) => (this.freeShippingThreshold = threshold));
   }
 
   ngOnDestroy() {
     this.cartSub.unsubscribe();
+    this.freeShippingSub.unsubscribe();
   }
 
   closeCart() {

@@ -43,9 +43,8 @@
             </div>
           </div>
 
-          <!-- TODO: Nimer: Should I just swap the "Shipping calculated at checkout" part with "Shipping is free", or?  -->
           <span class="text-coco-slate-gray text-xs font-normal !font-anekb">
-            Tax included. Shipping calculated at checkout.
+            Tax included. {{ shippingInfo }}
           </span>
 
           <a [href]="cart.checkoutUrl" rel="noopener noreferrer">
