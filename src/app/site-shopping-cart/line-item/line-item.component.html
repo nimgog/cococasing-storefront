@@ -51,9 +51,14 @@
         </div>
       </div>
 
-      <div class="flex items-end">
+      <div class="flex items-baseline gap-x-2">
+        <span *ngIf="lineItem.originalTotalPrice.amount !== lineItem.discountedTotalPrice.amount"
+          class="text-uppercase text-coco-red text-sm font-normal !font-anekb line-through decoration-1">
+          {{ lineItem.originalTotalPrice.amount }} {{ lineItem.originalTotalPrice.currencyCode }}
+        </span>
+
         <span class="text-uppercase text-coco-slate-gray text-base font-medium !font-anekb">
-          {{ lineItem.totalCost.amount }} {{ lineItem.totalCost.currencyCode }}
+          {{ lineItem.discountedTotalPrice.amount }} {{ lineItem.discountedTotalPrice.currencyCode }}
         </span>
       </div>
     </div>

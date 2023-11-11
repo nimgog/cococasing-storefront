@@ -21,6 +21,10 @@ fragment ShoppingCart on Cart {
         }
       }
       cost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
         totalAmount {
           amount
           currencyCode

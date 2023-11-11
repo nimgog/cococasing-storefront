@@ -31,9 +31,16 @@
               Subtotal ({{ cart.totalQuantity }} items)
             </span>
 
-            <span class="text-uppercase text-coco-slate-gray text-sm font-semibold !font-anekt">
-              {{ cart.totalCost.amount }} {{ cart.totalCost.currencyCode }}
-            </span>
+            <div class="flex items-baseline gap-x-2">
+              <span *ngIf="cart.originalTotalPrice.amount !== cart.discountedTotalPrice.amount"
+                class="text-uppercase text-coco-red text-xs font-medium !font-anekt line-through decoration-1">
+                {{ cart.originalTotalPrice.amount }} {{ cart.originalTotalPrice.currencyCode }}
+              </span>
+
+              <span class="text-uppercase text-coco-slate-gray text-sm font-semibold !font-anekt">
+                {{ cart.discountedTotalPrice.amount }} {{ cart.discountedTotalPrice.currencyCode }}
+              </span>
+            </div>
           </div>
 
           <!-- TODO: Nimer: Should I just swap the "Shipping calculated at checkout" part with "Shipping is free", or?  -->

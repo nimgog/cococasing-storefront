@@ -389,7 +389,11 @@ export class ShopifyService {
           subtitle: subtitleParts.join('-'),
           imageUrl: productImage?.url,
         },
-        totalCost: {
+        originalTotalPrice: {
+          amount: parseFloat(lineItem.cost.subtotalAmount.amount),
+          currencyCode: lineItem.cost.subtotalAmount.currencyCode,
+        },
+        discountedTotalPrice: {
           amount: parseFloat(lineItem.cost.totalAmount.amount),
           currencyCode: lineItem.cost.totalAmount.currencyCode,
         },
@@ -401,7 +405,13 @@ export class ShopifyService {
       id: cartFragment.id,
       checkoutUrl: cartFragment.checkoutUrl,
       lines,
-      totalCost: {
+      originalTotalPrice: {
+        amount: lines
+          .map((lineItem) => lineItem.originalTotalPrice)
+          .reduce((sum, currentPrice) => sum + currentPrice.amount, 0),
+        currencyCode: cartFragment.cost.totalAmount.currencyCode,
+      },
+      discountedTotalPrice: {
         amount: parseFloat(cartFragment.cost.totalAmount.amount),
         currencyCode: cartFragment.cost.totalAmount.currencyCode,
       },
