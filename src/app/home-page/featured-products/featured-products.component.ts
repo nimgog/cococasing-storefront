@@ -9,9 +9,9 @@ import { Component, Input } from '@angular/core';
 import { FeaturedProduct } from 'src/app/models/new-product.model';
 
 @Component({
-  selector: 'app-product-slider',
-  templateUrl: './product-slider.component.html',
-  styleUrls: ['./product-slider.component.scss'],
+  selector: 'app-featured-products',
+  templateUrl: './featured-products.component.html',
+  styleUrls: ['./featured-products.component.scss'],
   animations: [
     trigger('slideAnimation', [
       transition(':increment', [
@@ -44,12 +44,15 @@ import { FeaturedProduct } from 'src/app/models/new-product.model';
     ]),
   ],
 })
-export class ProductSliderComponent {
+export class FeaturedProductsComponent {
   @Input()
   products: FeaturedProduct[] = [];
 
   @Input()
   allowSlideBeyondEnds = true;
+
+  // @Input()
+  // hideArrows = false;
 
   currentProductIndex = 0;
 

@@ -21,7 +21,7 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HomePageComponent } from './home-page/home-page.component';
-import { ProductSliderComponent } from './home-page/product-slider/product-slider.component';
+import { FeaturedProductsComponent } from './home-page/featured-products/featured-products.component';
 import { SiteFooterComponent } from './site-footer/site-footer.component';
 import { InstaGalleryComponent } from './home-page/insta-gallery/insta-gallery.component';
 import { SiteNewsSignupComponent } from './site-news-signup/site-news-signup.component';
@@ -33,7 +33,6 @@ import { BlogPageComponent } from './blog-page/blog-page.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { ProductCategoriesComponent } from './home-page/product-categories/product-categories.component';
-import { ProductHighlighterComponent } from './home-page/product-highlighter/product-highlighter.component';
 import { HeroSectionComponent } from './home-page/hero-section/hero-section.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { BenefitsSliderComponent } from './about-page/benefits-slider/benefits-slider.component';
@@ -67,7 +66,7 @@ export const client = Client.buildClient({
     AccordionComponent,
     ImageSliderComponent,
     HomePageComponent,
-    ProductSliderComponent,
+    FeaturedProductsComponent,
     SiteFooterComponent,
     InstaGalleryComponent,
     SiteNewsSignupComponent,
@@ -79,7 +78,6 @@ export const client = Client.buildClient({
     FaqPageComponent,
     ContactPageComponent,
     ProductCategoriesComponent,
-    ProductHighlighterComponent,
     HeroSectionComponent,
     PageHeaderComponent,
     BenefitsSliderComponent,

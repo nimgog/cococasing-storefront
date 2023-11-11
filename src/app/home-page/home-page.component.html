@@ -17,11 +17,13 @@
       </span>
     </div>
 
-    <div class="pt-8">
-      <app-product-slider class="sm:hidden" [products]="featuredProducts"
-        [allowSlideBeyondEnds]="false"></app-product-slider>
+    <div class="flex gap-x-1 pt-8">
+      <app-featured-products class="sm:hidden grow" [products]="featuredProducts"
+        [allowSlideBeyondEnds]="false"></app-featured-products>
 
-      <app-product-highlighter class="hidden sm:block" [products]="featuredProducts"></app-product-highlighter>
+      <app-featured-products class="hidden sm:block grow" [products]="[featuredProducts[0]]"></app-featured-products>
+
+      <app-featured-products class="hidden sm:block grow" [products]="[featuredProducts[1]]"></app-featured-products>
     </div>
   </div>
 </div>
