@@ -1,6 +1,5 @@
-import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-site-footer',
@@ -43,25 +42,9 @@ export class SiteFooterComponent {
 
   currentYear = new Date().getFullYear();
 
-  constructor(
-    private readonly router: Router,
-    private readonly viewportScroller: ViewportScroller
-  ) {}
+  constructor(private readonly navigationService: NavigationService) {}
 
   navigateToProducts() {
-    const urlTree = this.router.createUrlTree(['/'], { fragment: 'products' });
-
-    if (
-      this.router.isActive(urlTree, {
-        paths: 'exact',
-        fragment: 'exact',
-        matrixParams: 'ignored',
-        queryParams: 'ignored',
-      })
-    ) {
-      this.viewportScroller.scrollToAnchor('products');
-    } else {
-      this.router.navigate(['/'], { fragment: 'products' });
-    }
+    this.navigationService.navigateToProducts();
   }
 }

@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ShoppingCartService } from '../services/shopping-cart.service';
-import { Router } from '@angular/router';
-import { ViewportScroller } from '@angular/common';
+import { NavigationService } from '../services/navigation.service';
 import { ShoppingCart } from '../models/shopping-cart.model';
 import { ShopifyProductService } from '../services/shopify-product.service';
 import { Money } from '../models/new-product.model';
@@ -20,8 +19,7 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
   freeShippingThreshold: Money | null = null;
 
   constructor(
-    private readonly router: Router,
-    private readonly viewportScroller: ViewportScroller,
+    private readonly navigationService: NavigationService,
     private readonly shoppingCartService: ShoppingCartService,
     private readonly shopifyProductService: ShopifyProductService
   ) {}
@@ -59,20 +57,6 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
 
   navigateToProducts() {
     this.closeCart();
-
-    const urlTree = this.router.createUrlTree(['/'], { fragment: 'products' });
-
-    if (
-      this.router.isActive(urlTree, {
-        paths: 'exact',
-        fragment: 'exact',
-        matrixParams: 'ignored',
-        queryParams: 'ignored',
-      })
-    ) {
-      this.viewportScroller.scrollToAnchor('products');
-    } else {
-      this.router.navigate(['/'], { fragment: 'products' });
-    }
+    this.navigationService.navigateToProducts();
   }
 }
