@@ -24,10 +24,15 @@
         </span>
       </button>
 
-      <!-- TODO: Also show compare-at price with strikethrough -->
-      <span>
-        {{ selectedVariant.price.amount | number:'1.0-0' }} {{ selectedVariant.price.currencyCode }}
-      </span>
+      <div>
+        <span *ngIf="selectedVariant.originalPrice" class="text-coco-red line-through decoration-1">
+          {{ selectedVariant.originalPrice.amount }} {{ selectedVariant.originalPrice.currencyCode }}
+        </span>
+
+        <span>
+          {{ selectedVariant.price.amount }} {{ selectedVariant.price.currencyCode }}
+        </span>
+      </div>
     </div>
 
     <div class="flex flex-col gap-y-4 p-2 bg-coco-light-gray rounded">

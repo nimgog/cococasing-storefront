@@ -29,6 +29,7 @@ query Product($collectionHandle: String!, $countryCode: CountryCode!)
             }
           }
         }
+        tags
       }
     }
   }

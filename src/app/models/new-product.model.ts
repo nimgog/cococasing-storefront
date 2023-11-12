@@ -21,7 +21,7 @@ export const defaultProductColor = 'sunset-orange';
 
 export const productTiers = ['standard', 'premium'];
 
-export const defaultProductTier = 'premium'; // TODO: Ask Nimer about this, standard/premium?
+export const defaultProductTier = 'standard';
 
 type ProductOption = 'color' | 'tier';
 
@@ -49,6 +49,7 @@ export type ProductVariant = {
   color?: string;
   tier?: string;
   images: Image[];
+  originalPrice?: Money;
   price: Money;
 };
 

@@ -105,6 +105,10 @@ export class ShopifyService {
             shopifyProduct.handle
           );
 
+          const discountPercent = this.getDiscountPercentFromTags(
+            shopifyProduct.tags
+          );
+
           const validShopifyProductVariants =
             shopifyProduct.variants.nodes.filter((shopifyProductVariant) => {
               const selectedModels = shopifyProductVariant.selectedOptions
@@ -138,7 +142,7 @@ export class ShopifyService {
                 color ? `-${color}` : ''
               }${tier ? `-${tier}` : ''}`;
 
-              return <ProductVariant>{
+              const productVariant: ProductVariant = {
                 id: shopifyProductVariant.id,
                 slug,
                 serie,
@@ -154,6 +158,19 @@ export class ShopifyService {
                   currencyCode: shopifyProductVariant.price.currencyCode,
                 },
               };
+
+              if (discountPercent) {
+                productVariant.originalPrice = {
+                  ...productVariant.price,
+                };
+
+                productVariant.price = this.applyDiscount(
+                  productVariant.price,
+                  discountPercent
+                );
+              }
+
+              return productVariant;
             }
           );
 
@@ -300,17 +317,19 @@ export class ShopifyService {
                 },
               };
 
-              const discountedPrice = this.applyDiscountToPriceIfAny(
-                featuredProduct.price,
+              const discountPercent = this.getDiscountPercentFromTags(
                 shopifyFeaturedProduct.tags
               );
 
-              if (discountedPrice.amount < featuredProduct.price.amount) {
+              if (discountPercent) {
                 featuredProduct.originalPrice = {
                   ...featuredProduct.price,
                 };
 
-                featuredProduct.price = discountedPrice;
+                featuredProduct.price = this.applyDiscount(
+                  featuredProduct.price,
+                  discountPercent
+                );
               }
 
               return featuredProduct;
@@ -478,24 +497,20 @@ export class ShopifyService {
     return { serie, color, tier };
   }
 
-  private applyDiscountToPriceIfAny(
-    originalPrice: Money,
-    productTags: string[]
-  ): Money {
-    const saleTag = productTags.find((tag) =>
+  private getDiscountPercentFromTags(tags: string[]): number | undefined {
+    const saleTag = tags.find((tag) =>
       tag.toLocaleLowerCase().includes(discountedProductTagPrefix)
     );
 
-    if (!saleTag) {
-      return originalPrice;
-    }
+    return saleTag ? parseFloat(saleTag.split('-')[1]) : undefined;
+  }
 
-    const discountPercent = parseFloat(saleTag.split('-')[1]);
+  private applyDiscount(price: Money, discountPercent: number): Money {
     const remainingPercent = 1 - discountPercent / 100;
 
     return {
-      amount: Math.ceil(originalPrice.amount * remainingPercent),
-      currencyCode: originalPrice.currencyCode,
+      amount: Math.ceil(price.amount * remainingPercent),
+      currencyCode: price.currencyCode,
     };
   }
 }
