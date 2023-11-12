@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription, of, switchMap, tap } from 'rxjs';
+import { ShopifyCartService } from './shopify-cart.service';
 import { ShopifyService } from './shopify.service';
 import { LocalStorageService } from './local-storage.service';
 import { ShoppingCart } from '../models/shopping-cart.model';
@@ -14,6 +15,7 @@ export class ShoppingCartService implements OnDestroy {
   private readonly productPriceRefreshSignalSub!: Subscription;
 
   constructor(
+    private readonly shopifyCartService: ShopifyCartService,
     private readonly shopifyService: ShopifyService,
     private readonly localStorageService: LocalStorageService,
     private readonly notificationService: NotificationService
@@ -43,7 +45,7 @@ export class ShoppingCartService implements OnDestroy {
             return of(null);
           }
 
-          return this.shopifyService
+          return this.shopifyCartService
             .fetchCart(cartId)
             .pipe(tap((cart) => this.cartSubject.next(cart)));
         }
@@ -69,7 +71,7 @@ export class ShoppingCartService implements OnDestroy {
             this.localStorageService.get<string>('shopify:cart_id');
 
           if (cartId) {
-            return this.shopifyService.fetchCart(cartId);
+            return this.shopifyCartService.fetchCart(cartId);
           }
         }
 
@@ -77,10 +79,10 @@ export class ShoppingCartService implements OnDestroy {
       }),
       switchMap((cart) => {
         if (cart) {
-          return this.shopifyService.addLineItem(cart.id, variantId);
+          return this.shopifyCartService.addLineItem(cart.id, variantId);
         }
 
-        return this.shopifyService
+        return this.shopifyCartService
           .createCart(variantId)
           .pipe(
             tap((cart) =>
@@ -100,7 +102,7 @@ export class ShoppingCartService implements OnDestroy {
       throw new Error('Could not remove line item - cart is unavailable');
     }
 
-    return this.shopifyService
+    return this.shopifyCartService
       .removeLineItem(cart.id, itemId)
       .pipe(tap((cart) => this.cartSubject.next(cart)));
   }
@@ -117,7 +119,7 @@ export class ShoppingCartService implements OnDestroy {
       throw new Error('Could not remove line item - cart is unavailable');
     }
 
-    return this.shopifyService
+    return this.shopifyCartService
       .setLineItemQuantity(cart.id, itemId, quantity)
       .pipe(tap((cart) => this.cartSubject.next(cart)));
   }
