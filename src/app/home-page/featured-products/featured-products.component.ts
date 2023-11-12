@@ -8,41 +8,41 @@ import {
 import { Component, Input } from '@angular/core';
 import { FeaturedProduct } from 'src/app/models/new-product.model';
 
+const animations = [
+  trigger('slideAnimation', [
+    transition(':increment', [
+      style({ transform: 'translateX(-100%)', opacity: 1 }),
+      animate(
+        '400ms ease-in-out',
+        style({ transform: 'translateX(0%)', opacity: 1 })
+      ),
+    ]),
+    transition(':decrement', [
+      style({ transform: 'translateX(100%)', opacity: 1 }),
+      animate(
+        '400ms ease-in-out',
+        style({ transform: 'translateX(0%)', opacity: 1 })
+      ),
+    ]),
+    transition(':leave', [animate('400ms ease-in-out', style({ opacity: 0 }))]),
+  ]),
+  trigger('fadeAnimation', [
+    state('shown', style({ opacity: 1 })),
+    state('hidden', style({ opacity: 0 })),
+    transition('shown <=> hidden', [animate('400ms ease-in-out')]),
+  ]),
+  trigger('swapColorAnimation', [
+    state('selected', style({ 'background-color': '#F97316' })),
+    state('unselected', style({ 'background-color': '#D9D9D9' })),
+    transition('selected <=> unselected', [animate('400ms ease-in-out')]),
+  ]),
+];
+
 @Component({
   selector: 'app-featured-products',
   templateUrl: './featured-products.component.html',
   styleUrls: ['./featured-products.component.scss'],
-  animations: [
-    trigger('slideAnimation', [
-      transition(':increment', [
-        style({ transform: 'translateX(-100%)', opacity: 1 }),
-        animate(
-          '400ms ease-in-out',
-          style({ transform: 'translateX(0%)', opacity: 1 })
-        ),
-      ]),
-      transition(':decrement', [
-        style({ transform: 'translateX(100%)', opacity: 1 }),
-        animate(
-          '400ms ease-in-out',
-          style({ transform: 'translateX(0%)', opacity: 1 })
-        ),
-      ]),
-      transition(':leave', [
-        animate('400ms ease-in-out', style({ opacity: 0 })),
-      ]),
-    ]),
-    trigger('fadeAnimation', [
-      state('shown', style({ opacity: 1 })),
-      state('hidden', style({ opacity: 0 })),
-      transition('shown <=> hidden', [animate('400ms ease-in-out')]),
-    ]),
-    trigger('swapColorAnimation', [
-      state('selected', style({ 'background-color': '#F97316' })),
-      state('unselected', style({ 'background-color': '#D9D9D9' })),
-      transition('selected <=> unselected', [animate('400ms ease-in-out')]),
-    ]),
-  ],
+  animations,
 })
 export class FeaturedProductsComponent {
   @Input()

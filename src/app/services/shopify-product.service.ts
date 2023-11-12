@@ -36,6 +36,7 @@ import { catchAndReportError } from '../common/utils/catch-and-report-error.oper
   providedIn: 'root',
 })
 export class ShopifyProductService {
+  private static readonly NumberOfFeaturedProducts = 2;
   private static readonly ProductPriceRefreshIntervalInMins = 10;
 
   private readonly _productPriceRefreshSignal$ = interval(
@@ -275,6 +276,12 @@ export class ShopifyProductService {
 
               return featuredProduct;
             })
+          ),
+          map((featuredProducts) =>
+            featuredProducts.slice(
+              0,
+              ShopifyProductService.NumberOfFeaturedProducts
+            )
           ),
           catchAndReportError(this.notificationService)
         )

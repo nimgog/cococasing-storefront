@@ -18,12 +18,11 @@
     </div>
 
     <div class="flex gap-x-1 pt-8">
-      <app-featured-products class="sm:hidden grow" [products]="featuredProducts"
-        [allowSlideBeyondEnds]="false"></app-featured-products>
+      <app-featured-products [products]="featuredProducts" [allowSlideBeyondEnds]="false"
+        class="sm:hidden grow"></app-featured-products>
 
-      <app-featured-products class="hidden sm:block grow" [products]="[featuredProducts[0]]"></app-featured-products>
-
-      <app-featured-products class="hidden sm:block grow" [products]="[featuredProducts[1]]"></app-featured-products>
+      <app-featured-products *ngFor="let product of featuredProducts" [products]="[product]"
+        class="hidden sm:block grow"></app-featured-products>
     </div>
   </div>
 </div>

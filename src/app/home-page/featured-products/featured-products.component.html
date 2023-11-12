@@ -1,4 +1,4 @@
-<div (swipeleft)="showNextProduct()" (swiperight)="showPreviousProduct()"
+<div *ngIf="products.length" (swipeleft)="showNextProduct()" (swiperight)="showPreviousProduct()"
   class="bg-coco-darkest-blue flex flex-col items-center gap-y-0.5 px-4 pt-2 pb-4 rounded-lg">
   <div *ngFor="let product of products; let i = index" [@fadeAnimation]="i === currentProductIndex ? 'shown' : 'hidden'"
     [ngClass]="[
