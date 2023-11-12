@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ShopifyService } from '../services/shopify.service';
+import { ShopifyProductService } from '../services/shopify-product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   Observable,
@@ -44,7 +44,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     private readonly location: Location,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly shopifyService: ShopifyService,
+    private readonly shopifyProductService: ShopifyProductService,
     private readonly shoppingCartService: ShoppingCartService
   ) {}
 
@@ -104,7 +104,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     //     }
 
     this.productPriceRefreshSignalSub =
-      this.shopifyService.productPriceRefreshSignal$
+      this.shopifyProductService.productPriceRefreshSignal$
         .pipe(
           filter(() => !!this.product),
           map(() => ({
@@ -129,7 +129,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     return (source: Observable<{ productSlug: string; variantSlug: string }>) =>
       source.pipe(
         switchMap(({ productSlug, variantSlug }) => {
-          return this.shopifyService
+          return this.shopifyProductService
             .fetchProduct(productSlug)
             .pipe(map((product) => ({ product, variantSlug })));
         }),

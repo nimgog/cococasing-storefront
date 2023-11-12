@@ -4,7 +4,7 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { ShoppingCart } from '../models/shopping-cart.model';
-import { ShopifyService } from '../services/shopify.service';
+import { ShopifyProductService } from '../services/shopify-product.service';
 import { Money } from '../models/new-product.model';
 
 @Component({
@@ -23,7 +23,7 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly viewportScroller: ViewportScroller,
     private readonly shoppingCartService: ShoppingCartService,
-    private readonly shopifyService: ShopifyService
+    private readonly shopifyProductService: ShopifyProductService
   ) {}
 
   get shippingInfo() {
@@ -43,7 +43,7 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
       (cart) => (this.cart = cart)
     );
 
-    this.freeShippingSub = this.shopifyService
+    this.freeShippingSub = this.shopifyProductService
       .fetchFreeShippingThreshold()
       .subscribe((threshold) => (this.freeShippingThreshold = threshold));
   }

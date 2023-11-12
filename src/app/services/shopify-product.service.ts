@@ -35,11 +35,11 @@ import { catchAndReportError } from '../common/utils/catch-and-report-error.oper
 @Injectable({
   providedIn: 'root',
 })
-export class ShopifyService {
+export class ShopifyProductService {
   private static readonly ProductPriceRefreshIntervalInMins = 10;
 
   private readonly _productPriceRefreshSignal$ = interval(
-    ShopifyService.ProductPriceRefreshIntervalInMins * 60 * 1000
+    ShopifyProductService.ProductPriceRefreshIntervalInMins * 60 * 1000
   ).pipe(
     share(),
     map(() => undefined)

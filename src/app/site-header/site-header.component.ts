@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { Subscription } from 'rxjs';
-import { ShopifyService } from '../services/shopify.service';
+import { ShopifyProductService } from '../services/shopify-product.service';
 
 @Component({
   selector: 'app-site-header',
@@ -26,7 +26,7 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly shoppingCartService: ShoppingCartService,
-    private readonly shopifyService: ShopifyService
+    private readonly shopifyProductService: ShopifyProductService
   ) {}
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
       (cart) => (this.cartTotalQuantity = cart?.totalQuantity || 0)
     );
 
-    this.freeShippingSub = this.shopifyService
+    this.freeShippingSub = this.shopifyProductService
       .fetchFreeShippingThreshold()
       .subscribe(
         (threshold) =>

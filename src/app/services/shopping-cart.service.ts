@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription, of, switchMap, tap } from 'rxjs';
 import { ShopifyCartService } from './shopify-cart.service';
-import { ShopifyService } from './shopify.service';
+import { ShopifyProductService } from './shopify-product.service';
 import { LocalStorageService } from './local-storage.service';
 import { ShoppingCart } from '../models/shopping-cart.model';
 import { NotificationService } from './notification.service';
@@ -16,12 +16,12 @@ export class ShoppingCartService implements OnDestroy {
 
   constructor(
     private readonly shopifyCartService: ShopifyCartService,
-    private readonly shopifyService: ShopifyService,
+    private readonly shopifyProductService: ShopifyProductService,
     private readonly localStorageService: LocalStorageService,
     private readonly notificationService: NotificationService
   ) {
     this.productPriceRefreshSignalSub =
-      this.shopifyService.productPriceRefreshSignal$.subscribe(() =>
+      this.shopifyProductService.productPriceRefreshSignal$.subscribe(() =>
         this.cartSubject.next(null)
       );
   }

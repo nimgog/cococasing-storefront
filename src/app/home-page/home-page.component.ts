@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FeaturedProduct } from '../models/new-product.model';
-import { ShopifyService } from '../services/shopify.service';
+import { ShopifyProductService } from '../services/shopify-product.service';
 
 @Component({
   selector: 'app-home-page',
@@ -12,10 +12,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   featuredProductsSub!: Subscription;
   featuredProducts: FeaturedProduct[] = [];
 
-  constructor(private readonly shopifyService: ShopifyService) {}
+  constructor(private readonly shopifyProductService: ShopifyProductService) {}
 
   ngOnInit() {
-    this.featuredProductsSub = this.shopifyService
+    this.featuredProductsSub = this.shopifyProductService
       .fetchFeaturedProducts()
       .subscribe(
         (featuredProducts) => (this.featuredProducts = featuredProducts)

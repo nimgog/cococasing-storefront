@@ -13,7 +13,7 @@ import {
 import { expectedProductOptions } from '../models/new-product.model';
 import { LocationService } from './location.service';
 import { NotificationService } from './notification.service';
-import { ShopifyService } from './shopify.service';
+import { ShopifyProductService } from './shopify-product.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class ShopifyCartService {
   constructor(
     private readonly locationService: LocationService,
     private readonly notificationService: NotificationService,
-    private readonly shopifyService: ShopifyService,
+    private readonly shopifyProductService: ShopifyProductService,
     private readonly addLineItemGQL: AddLineItemGQL,
     private readonly removeLineItemGQL: RemoveLineItemGQL,
     private readonly cartGQL: CartGQL,
@@ -105,7 +105,7 @@ export class ShopifyCartService {
         }
 
         const { serie, color, tier } =
-          this.shopifyService.parseProductVariantAttributes(
+          this.shopifyProductService.parseProductVariantAttributes(
             productSlug,
             product.handle
           );
