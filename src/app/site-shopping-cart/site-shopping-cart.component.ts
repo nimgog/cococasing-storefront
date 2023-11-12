@@ -30,7 +30,7 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
     if (
       this.cart &&
       this.freeShippingThreshold &&
-      this.cart.discountedTotalPrice.amount >= this.freeShippingThreshold.amount
+      this.cart.totalPrice.amount >= this.freeShippingThreshold.amount
     ) {
       return 'Shipping is free.';
     }

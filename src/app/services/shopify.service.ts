@@ -150,7 +150,7 @@ export class ShopifyService {
                   altText: shopifyImage.altText || undefined,
                 })),
                 price: {
-                  amount: shopifyProductVariant.price.amount,
+                  amount: parseFloat(shopifyProductVariant.price.amount),
                   currencyCode: shopifyProductVariant.price.currencyCode,
                 },
               };
@@ -300,25 +300,17 @@ export class ShopifyService {
                 },
               };
 
-              const saleTag = shopifyFeaturedProduct.tags.find((tag) =>
-                tag.toLocaleLowerCase().includes(discountedProductTagPrefix)
+              const discountedPrice = this.applyDiscountToPriceIfAny(
+                featuredProduct.price,
+                shopifyFeaturedProduct.tags
               );
 
-              if (saleTag) {
+              if (discountedPrice.amount < featuredProduct.price.amount) {
                 featuredProduct.originalPrice = {
                   ...featuredProduct.price,
                 };
 
-                featuredProduct.discountPercent = parseFloat(
-                  saleTag.split('-')[1]
-                );
-
-                const remainingPercent =
-                  1 - featuredProduct.discountPercent / 100;
-
-                featuredProduct.price.amount = Math.ceil(
-                  featuredProduct.price.amount * remainingPercent
-                );
+                featuredProduct.price = discountedPrice;
               }
 
               return featuredProduct;
@@ -337,86 +329,100 @@ export class ShopifyService {
       throw new Error('Failed to map cart as it was unavailable');
     }
 
-    const lines: LineItem[] = cartFragment.lines.nodes.map((lineItem) => {
-      const {
-        merchandise: {
-          id: productId,
-          product,
-          selectedOptions,
-          image: productImage,
-        },
-      } = lineItem;
+    const lines: LineItem[] = cartFragment.lines.nodes.map(
+      (shopifyLineItem) => {
+        const {
+          merchandise: {
+            id: productId,
+            product,
+            selectedOptions,
+            image: productImage,
+          },
+        } = shopifyLineItem;
 
-      const allProductSlugs = [...expectedProductOptions.keys()];
-      const productSlug = allProductSlugs.find((slug) =>
-        product.handle.includes(slug)
-      );
+        const allProductSlugs = [...expectedProductOptions.keys()];
+        const productSlug = allProductSlugs.find((slug) =>
+          product.handle.includes(slug)
+        );
 
-      if (!productSlug) {
-        throw new Error('Unrecognizable product handle: ' + product.handle);
+        if (!productSlug) {
+          throw new Error('Unrecognizable product handle: ' + product.handle);
+        }
+
+        const { serie, color, tier } = this.parseProductVariantAttributes(
+          productSlug,
+          product.handle
+        );
+
+        let model = selectedOptions
+          .find((option) => option.name.toLowerCase().includes('model'))
+          ?.value.replaceAll(' ', '-')
+          .toLocaleLowerCase()
+          .replace(`iphone-${serie}`, '');
+
+        if (model?.startsWith('-')) {
+          model = model.substring(1);
+        }
+
+        const subtitleParts = [];
+
+        if (color) {
+          subtitleParts.push(color);
+        }
+
+        if (tier) {
+          subtitleParts.push(tier);
+        }
+
+        const lineItem: LineItem = {
+          id: shopifyLineItem.id,
+          product: {
+            id: productId,
+            title: `${productSlug}-iphone-${serie}${model ? `-${model}` : ''}`,
+            subtitle: subtitleParts.join('-'),
+            imageUrl: productImage?.url,
+          },
+          totalPrice: {
+            amount: parseFloat(shopifyLineItem.cost.totalAmount.amount),
+            currencyCode: shopifyLineItem.cost.totalAmount.currencyCode,
+          },
+          quantity: shopifyLineItem.quantity,
+        };
+
+        const lineItemOriginalTotalPrice = {
+          amount: parseFloat(shopifyLineItem.cost.subtotalAmount.amount),
+          currencyCode: shopifyLineItem.cost.subtotalAmount.currencyCode,
+        };
+
+        if (lineItem.totalPrice.amount < lineItemOriginalTotalPrice.amount) {
+          lineItem.originalTotalPrice = lineItemOriginalTotalPrice;
+        }
+
+        return lineItem;
       }
-
-      const { serie, color, tier } = this.parseProductVariantAttributes(
-        productSlug,
-        product.handle
-      );
-
-      let model = selectedOptions
-        .find((option) => option.name.toLowerCase().includes('model'))
-        ?.value.replaceAll(' ', '-')
-        .toLocaleLowerCase()
-        .replace(`iphone-${serie}`, '');
-
-      if (model?.startsWith('-')) {
-        model = model.substring(1);
-      }
-
-      const subtitleParts = [];
-
-      if (color) {
-        subtitleParts.push(color);
-      }
-
-      if (tier) {
-        subtitleParts.push(tier);
-      }
-
-      return <LineItem>{
-        id: lineItem.id,
-        product: {
-          id: productId,
-          title: `${productSlug}-iphone-${serie}${model ? `-${model}` : ''}`,
-          subtitle: subtitleParts.join('-'),
-          imageUrl: productImage?.url,
-        },
-        originalTotalPrice: {
-          amount: parseFloat(lineItem.cost.subtotalAmount.amount),
-          currencyCode: lineItem.cost.subtotalAmount.currencyCode,
-        },
-        discountedTotalPrice: {
-          amount: parseFloat(lineItem.cost.totalAmount.amount),
-          currencyCode: lineItem.cost.totalAmount.currencyCode,
-        },
-        quantity: lineItem.quantity,
-      };
-    });
+    );
 
     const cart: ShoppingCart = {
       id: cartFragment.id,
       checkoutUrl: cartFragment.checkoutUrl,
       lines,
-      originalTotalPrice: {
-        amount: lines
-          .map((lineItem) => lineItem.originalTotalPrice)
-          .reduce((sum, currentPrice) => sum + currentPrice.amount, 0),
-        currencyCode: cartFragment.cost.totalAmount.currencyCode,
-      },
-      discountedTotalPrice: {
+      totalPrice: {
         amount: parseFloat(cartFragment.cost.totalAmount.amount),
         currencyCode: cartFragment.cost.totalAmount.currencyCode,
       },
       totalQuantity: cartFragment.totalQuantity,
     };
+
+    const cartOriginalTotalPrice = {
+      amount: lines
+        .map((lineItem) => lineItem.originalTotalPrice || lineItem.totalPrice)
+        .reduce((sum, currentPrice) => sum + currentPrice.amount, 0),
+      currencyCode: cartFragment.cost.totalAmount.currencyCode,
+    };
+
+    if (cart.totalPrice.amount < cartOriginalTotalPrice.amount) {
+      cart.originalTotalPrice = cartOriginalTotalPrice;
+    }
 
     return cart;
   }
@@ -470,5 +476,26 @@ export class ShopifyService {
     serie += handleRemainder.substring(0, handleRemainder.length - 1);
 
     return { serie, color, tier };
+  }
+
+  private applyDiscountToPriceIfAny(
+    originalPrice: Money,
+    productTags: string[]
+  ): Money {
+    const saleTag = productTags.find((tag) =>
+      tag.toLocaleLowerCase().includes(discountedProductTagPrefix)
+    );
+
+    if (!saleTag) {
+      return originalPrice;
+    }
+
+    const discountPercent = parseFloat(saleTag.split('-')[1]);
+    const remainingPercent = 1 - discountPercent / 100;
+
+    return {
+      amount: Math.ceil(originalPrice.amount * remainingPercent),
+      currencyCode: originalPrice.currencyCode,
+    };
   }
 }

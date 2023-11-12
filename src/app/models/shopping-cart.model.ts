@@ -4,8 +4,8 @@ export type ShoppingCart = {
   id: string;
   checkoutUrl: string;
   lines: LineItem[];
-  originalTotalPrice: Money;
-  discountedTotalPrice: Money;
+  originalTotalPrice?: Money;
+  totalPrice: Money;
   totalQuantity: number;
 };
 
@@ -17,7 +17,7 @@ export type LineItem = {
     subtitle: string;
     imageUrl: string;
   };
-  originalTotalPrice: Money;
-  discountedTotalPrice: Money;
+  originalTotalPrice?: Money;
+  totalPrice: Money;
   quantity: number;
 };

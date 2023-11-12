@@ -32,13 +32,13 @@
             </span>
 
             <div class="flex items-baseline gap-x-2">
-              <span *ngIf="cart.originalTotalPrice.amount !== cart.discountedTotalPrice.amount"
+              <span *ngIf="cart.originalTotalPrice"
                 class="text-uppercase text-coco-red text-xs font-medium !font-anekt line-through decoration-1">
                 {{ cart.originalTotalPrice.amount }} {{ cart.originalTotalPrice.currencyCode }}
               </span>
 
               <span class="text-uppercase text-coco-slate-gray text-sm font-semibold !font-anekt">
-                {{ cart.discountedTotalPrice.amount }} {{ cart.discountedTotalPrice.currencyCode }}
+                {{ cart.totalPrice.amount }} {{ cart.totalPrice.currencyCode }}
               </span>
             </div>
           </div>
