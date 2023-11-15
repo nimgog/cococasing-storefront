@@ -32,13 +32,19 @@
               </div>
 
               <ng-container
-                *ngTemplateOutlet="dropdownLink; context: { title: 'iPhone Cases', link: '/products/the-coco-case' }"></ng-container>
-              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
-              <ng-container
-                *ngTemplateOutlet="dropdownLink; context: { title: 'Screen & Protection', link: '/products/the-screen-protection' }"></ng-container>
-              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
-              <ng-container
                 *ngTemplateOutlet="dropdownLink; context: { title: 'The Coco Package', link: '/products/the-coco-package' }"></ng-container>
+              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="dropdownLink; context: { title: 'The Package', link: '/products/the-package' }"></ng-container>
+              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="dropdownLink; context: { title: 'The Coco Case', link: '/products/the-coco-case' }"></ng-container>
+              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="dropdownLink; context: { title: 'The Screen Protection', link: '/products/the-screen-protection' }"></ng-container>
+              <ng-container *ngTemplateOutlet="dropdownSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="dropdownLink; context: { title: 'The Lens Protection', link: '/products/the-lens-protection' }"></ng-container>
             </app-dropdown-menu>
 
             <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
