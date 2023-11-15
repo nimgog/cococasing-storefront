@@ -10,7 +10,7 @@
       <!-- TODO: Animate "tab switching" -->
       <div *ngFor="let routeTab of routeTabs; let i = index"
         [ngClass]="[routeTab.category === currentCategory ? 'border-coco-orange' : 'border-coco-light-medium-gray', i > 0 ? 'lg:pl-4' : '']"
-        class="w-1/4 lg:w-[168px] border-b">
+        class="w-full lg:w-auto lg:min-w-[168px] border-b">
         <!-- <a [routerLink]="routeTab.route"> -->
         <button (click)="changeCategory(routeTab.category)">
           <span

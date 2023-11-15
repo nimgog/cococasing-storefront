@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "scully": "npx scully --scanRoutes",
+    "scully": "npx scully --scanRoutes --noPrompt",
     "scully:serve": "npx scully serve",
     "config": "ts-node src/environments/set-env.ts",
     "watch": "ng build --watch --configuration development",
