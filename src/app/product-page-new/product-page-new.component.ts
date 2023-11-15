@@ -2,7 +2,7 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ShopifyProductService } from '../services/shopify-product.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   Observable,
   Subscription,
@@ -17,9 +17,16 @@ import {
   Product,
   ProductVariant,
   defaultProductColor,
+  defaultProductModel,
+  defaultProductSerie,
   defaultProductTier,
   expectedProductOptions,
+  productColors,
+  productModels,
+  productSeries,
+  productTiers,
 } from '../models/new-product.model';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-product-page-new',
@@ -32,7 +39,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
 
   // TODO: Create a loading indicator
   isLoading = true;
-  product?: Product;
+  product!: Product;
   selectedVariant!: ProductVariant;
 
   availableSeries: string[] = [];
@@ -42,7 +49,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly location: Location,
-    private readonly router: Router,
+    private readonly navigationService: NavigationService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly shopifyProductService: ShopifyProductService,
     private readonly shoppingCartService: ShoppingCartService
@@ -67,54 +74,36 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.productSub = this.activatedRoute.params
       .pipe(
+        tap(() => (this.isLoading = true)),
         map((params) => ({
           productSlug: (params['product'] as string)?.toLocaleLowerCase(),
           variantSlug: (params['variant'] as string)?.toLocaleLowerCase(),
         })),
-        tap(() => (this.isLoading = true)),
         tap(({ productSlug }) => {
           if (!productSlug || !expectedProductOptions.has(productSlug)) {
-            this.router.navigate(['/not-found'], { replaceUrl: true });
+            this.navigationService.navigateToProducts();
             return;
           }
         }),
-        // TODO: Fallback to default variant slug
-        this.fetchProductAndSelectedVariantBySlug(),
-        tap(({ variant }) => {
-          // TODO: Set default variant instead
-          if (!variant) {
-            this.router.navigate(['/not-found'], { replaceUrl: true });
-            return;
-          }
-        }),
-        tap(() => (this.isLoading = false))
+        this.fetchProductAndVariantBySlug()
       )
-      .subscribe(({ product, variant }) =>
-        this.useProductAndSelectedVariant(product, variant!)
-      );
-
-    //     if (!variantHandle) {
-    //       this.changeVariant(
-    //         '14',
-    //         'regular',
-    //         this.availableColors ? 'orange' : undefined,
-    //         true
-    //       );
-    //       return;
-    //     }
+      .subscribe(({ product, variant }) => {
+        this.setProductAndSelectedVariant(product, variant);
+        this.isLoading = false;
+      });
 
     this.productPriceRefreshSignalSub =
       this.shopifyProductService.productPriceRefreshSignal$
         .pipe(
-          filter(() => !!this.product),
+          filter(() => !this.isLoading),
           map(() => ({
-            productSlug: this.product!.slug,
+            productSlug: this.product.slug,
             variantSlug: this.selectedVariant.slug,
           })),
-          this.fetchProductAndSelectedVariantBySlug()
+          this.fetchProductAndVariantBySlug()
         )
         .subscribe(({ product, variant }) =>
-          this.useProductAndSelectedVariant(product, variant!)
+          this.setProductAndSelectedVariant(product, variant)
         );
   }
 
@@ -123,10 +112,12 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     this.productPriceRefreshSignalSub.unsubscribe();
   }
 
-  fetchProductAndSelectedVariantBySlug(): (
-    source: Observable<{ productSlug: string; variantSlug: string }>
+  fetchProductAndVariantBySlug(): (
+    source: Observable<{ productSlug: string; variantSlug?: string }>
   ) => Observable<{ product: Product; variant?: ProductVariant }> {
-    return (source: Observable<{ productSlug: string; variantSlug: string }>) =>
+    return (
+      source: Observable<{ productSlug: string; variantSlug?: string }>
+    ) =>
       source.pipe(
         switchMap(({ productSlug, variantSlug }) => {
           return this.shopifyProductService
@@ -142,9 +133,14 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
       );
   }
 
-  useProductAndSelectedVariant(product: Product, variant: ProductVariant) {
+  setProductAndSelectedVariant(product: Product, variant?: ProductVariant) {
     this.product = product;
-    this.selectedVariant = variant!;
+
+    if (variant) {
+      this.selectedVariant = variant;
+    } else {
+      this.selectDefaultVariant(product);
+    }
 
     const availableSeries = new Set<string>();
     const availableModels = new Set<string>();
@@ -164,10 +160,47 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.availableSeries = [...availableSeries];
-    this.availableModels = [...availableModels];
-    this.availableColors = [...availableColors];
-    this.availableTiers = [...availableTiers];
+    this.availableSeries = productSeries.filter((serie) =>
+      availableSeries.has(serie)
+    );
+    this.availableModels = productModels.filter((model) =>
+      availableModels.has(model)
+    );
+    this.availableColors = productColors.filter((color) =>
+      availableColors.has(color)
+    );
+    this.availableTiers = productTiers.filter((tier) =>
+      availableSeries.has(tier)
+    );
+  }
+
+  selectDefaultVariant(product: Product) {
+    const expectedOptions = expectedProductOptions.get(product.slug)!;
+
+    const filterColor = expectedOptions.some((option) => option === 'color')
+      ? defaultProductColor
+      : undefined;
+
+    const filterTier = expectedOptions.some((option) => option === 'tier')
+      ? defaultProductTier
+      : undefined;
+
+    const defaultVariant =
+      product.variants.find(
+        (variant) =>
+          variant.serie === defaultProductSerie &&
+          variant.model === defaultProductModel &&
+          variant.color === filterColor &&
+          variant.tier === filterTier
+      ) || product.variants[0]; // Fallback to the first variant should be impossible
+
+    this.changeVariant(
+      defaultVariant.serie,
+      defaultVariant.model,
+      defaultVariant.color,
+      defaultVariant.tier,
+      true
+    );
   }
 
   changeVariant(
@@ -177,7 +210,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     newTier?: string,
     redirect = false
   ) {
-    const newVariant = this.product!.variants.find(
+    const newVariant = this.product.variants.find(
       (variant) =>
         variant.serie === newSerie &&
         variant.model === newModel &&
@@ -185,15 +218,15 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
         variant.tier === newTier
     )!;
 
-    const url = `/products/${this.product!.slug}/${newVariant.slug}`;
-    const urlTree = this.router.createUrlTree([url]);
+    const url = `/products/${this.product.slug}/${newVariant.slug}`;
 
     if (redirect) {
-      this.router.navigateByUrl(urlTree, { replaceUrl: true });
+      this.location.replaceState(url);
     } else {
-      this.location.go(urlTree.toString());
-      this.selectedVariant = newVariant;
+      this.location.go(url);
     }
+
+    this.selectedVariant = newVariant;
   }
 
   changeSerie(newSerie: string) {
@@ -291,7 +324,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
   }
 
   isValidModelForSerie(serie: string, model: string) {
-    return this.product!.variants.some(
+    return this.product.variants.some(
       (variant) => variant.serie === serie && variant.model === model
     );
   }
@@ -311,7 +344,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
     color?: string,
     tier?: string
   ) {
-    return this.product!.variants.some(
+    return this.product.variants.some(
       (variant) =>
         variant.serie === serie &&
         variant.model === model &&

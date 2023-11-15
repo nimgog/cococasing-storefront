@@ -8,19 +8,31 @@ export type Money = {
   currencyCode: string;
 };
 
-export const productColors = [
-  'desert-beige',
-  'forest-green',
-  'french-lavender',
-  'jet-black',
-  'midnight-blue',
-  'sunset-orange',
+export const productSeries = [
+  '8-se',
+  'x',
+  'xr',
+  'xs',
+  'xs-max',
+  '11',
+  '12',
+  '13',
+  '14',
 ];
-
-export const defaultProductColor = 'sunset-orange';
-
+export const productModels = ['mini', 'regular', 'plus', 'pro', 'pro-max'];
+export const productColors = [
+  'sunset-orange',
+  'french-lavender',
+  'desert-beige',
+  'midnight-blue',
+  'jet-black',
+  'forest-green',
+];
 export const productTiers = ['standard', 'premium'];
 
+export const defaultProductSerie = '14';
+export const defaultProductModel = 'regular';
+export const defaultProductColor = 'sunset-orange';
 export const defaultProductTier = 'standard';
 
 type ProductOption = 'color' | 'tier';

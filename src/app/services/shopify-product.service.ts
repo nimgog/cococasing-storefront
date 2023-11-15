@@ -59,14 +59,7 @@ export class ShopifyProductService {
     return this._productPriceRefreshSignal$;
   }
 
-  fetchProduct(productSlug: string) {
-    // const expectedOptions = expectedProductOptions.get(productSlug)!;
-
-    // TODO: Determine observable type
-    // if (!expectedOptions) {
-    //   return catchAndReportError(this.notificationService)
-    // }
-
+  fetchProduct(productSlug: string): Observable<Product> {
     return this.locationService.getTwoLetterCountryCode().pipe(
       switchMap((countryCode) =>
         this.productGQL.fetch({

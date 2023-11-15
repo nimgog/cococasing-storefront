@@ -1,5 +1,5 @@
 <!-- TODO: Should the NEW / DISCOUNTED highlights be added to this page as well? -->
-<div *ngIf="product" class="flex flex-col items-center gap-y-8">
+<div *ngIf="!isLoading" class="flex flex-col items-center gap-y-8">
   <div>
     <span>{{ product.slug | replace:'-':' ' | titlecase }}</span>
   </div>
