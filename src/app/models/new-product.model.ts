@@ -33,7 +33,7 @@ export const productTiers = ['standard', 'premium'];
 export const defaultProductSerie = '14';
 export const defaultProductModel = 'regular';
 export const defaultProductColor = 'sunset-orange';
-export const defaultProductTier = 'standard';
+export const defaultProductTier = 'premium';
 
 type ProductOption = 'color' | 'tier';
 
