@@ -170,7 +170,7 @@ export class ProductPageNewComponent implements OnInit, OnDestroy {
       availableColors.has(color)
     );
     this.availableTiers = productTiers.filter((tier) =>
-      availableSeries.has(tier)
+      availableTiers.has(tier)
     );
   }
 
