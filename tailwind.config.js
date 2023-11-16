@@ -4,7 +4,7 @@ module.exports = {
   content: [
     'src/app/**/*.{html,ts}',
     '!src/app/accordion/**/*.{html,ts}',
-    '!src/app/product-page/**/*.{html,ts}',
+    '!src/app/product-page-old/**/*.{html,ts}',
   ],
   theme: {
     extend: {
