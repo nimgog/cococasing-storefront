@@ -8,14 +8,14 @@ import {
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductPageComponent } from './product-page/product-page.component';
+import { ProductPageOldComponent } from './product-page-old/product-page-old.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
-import { ImageSliderComponent } from './product-page/image-slider/image-slider.component';
+import { ImageSliderComponent } from './product-page-old/image-slider/image-slider.component';
 import { CustomHammerConfig } from './custom-hammer-config';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -40,7 +40,7 @@ import { BenefitsHighlighterComponent } from './about-page/benefits-highlighter/
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { GraphQLModule } from './graphql.module';
-import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
+import { ProductPageComponent } from './product-page/product-page.component';
 import { SiteShoppingCartComponent } from './site-shopping-cart/site-shopping-cart.component';
 import { LineItemComponent } from './site-shopping-cart/line-item/line-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -62,7 +62,7 @@ export const client = Client.buildClient({
 @NgModule({
   declarations: [
     AppComponent,
-    ProductPageComponent,
+    ProductPageOldComponent,
     AccordionComponent,
     ImageSliderComponent,
     HomePageComponent,
@@ -83,7 +83,7 @@ export const client = Client.buildClient({
     BenefitsSliderComponent,
     BenefitsHighlighterComponent,
     BlogPostPageComponent,
-    ProductPageNewComponent,
+    ProductPageComponent,
     SiteShoppingCartComponent,
     LineItemComponent,
     LoadingSpinnerComponent,

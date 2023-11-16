@@ -7,12 +7,12 @@ import { BlogPageComponent } from './blog-page/blog-page.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
-import { ProductPageNewComponent } from './product-page-new/product-page-new.component';
 import { ProductPageComponent } from './product-page/product-page.component';
+import { ProductPageOldComponent } from './product-page-old/product-page-old.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, pathMatch: 'full' },
-  { path: 'old-products', component: ProductPageComponent },
+  { path: 'products-old', component: ProductPageOldComponent },
   {
     path: 'products',
     children: [
@@ -23,12 +23,12 @@ const routes: Routes = [
       },
       {
         path: ':product',
-        component: ProductPageNewComponent,
+        component: ProductPageComponent,
         pathMatch: 'full',
       },
       {
         path: ':product/:variant',
-        component: ProductPageNewComponent,
+        component: ProductPageComponent,
       },
     ],
   },
