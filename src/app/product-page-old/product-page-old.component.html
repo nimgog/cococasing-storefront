@@ -35,7 +35,7 @@
     <div *ngIf="!isMobile">
       <div class="inner-container">
         <div>
-          <h3 class="text-header m-0">{{ product?.title }}</h3>
+          <h3 class="text-header m-0">{{ product.title }}</h3>
           <p class="text-description m-0">
             Ultra thin, extremely enduring. Your 360° protection, with full style.
           </p>
@@ -118,7 +118,7 @@
       <div class="inner-container my-4">
         <h3 class="text-header m-0">Learn more & FAQ</h3>
         <p class="text-description m-0">
-          {{ product?.description }}
+          {{ product.description }}
         </p>
         <div class="my-2">
           <app-accordion title="What's included?"
@@ -210,7 +210,7 @@
     <ng-container *ngIf="isMobile">
       <div class="inner-container" *ngIf="tab === 'selection'; else info">
         <div>
-          <h3 class="text-header m-0">{{ product?.title }}</h3>
+          <h3 class="text-header m-0">{{ product.title }}</h3>
           <p class="text-description m-0">
             Ultra thin, extremely enduring. Your 360° protection, with full style.
           </p>
@@ -302,7 +302,7 @@
         <div class="inner-container" *ngIf="tab === 'info'; else about">
           <h3 class="text-header m-0">Learn more & FAQ</h3>
           <p class="text-description m-0">
-            {{ product?.description }}
+            {{ product.description }}
           </p>
           <div class="my-2">
             <app-accordion title="What's included?"

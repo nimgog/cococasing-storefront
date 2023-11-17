@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Component,
   HostListener,
@@ -95,7 +96,7 @@ export class ProductPageOldComponent implements OnInit, OnDestroy {
         this.onOptionChange();
         this.loaded = true;
       })
-      .catch((error: string) => {
+      .catch(() => {
         //
       });
   }
