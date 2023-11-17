@@ -1,107 +1,63 @@
-<!-- TODO: Should the NEW / DISCOUNTED highlights be added to this page as well? -->
-<div *ngIf="!isLoading" class="flex flex-col items-center gap-y-8">
-  <div>
-    <span>{{ product.slug | replace:'-':' ' | titlecase }}</span>
-  </div>
-
-  <div>
-    <!-- TODO: Fetch description -->
-    <!-- <p>{{ product.description }}</p> -->
-  </div>
-
-  <div class="flex">
-    <!-- TODO: Include other variant-specific and -unspecific images -->
-    <div *ngFor="let image of selectedVariant.images">
-      <img [src]="image.url" [alt]="image.altText" class="max-h-[700px]" />
+<div *ngIf="!isLoading" class="pb-8">
+  <div class="flex flex-col items-center gap-y-8 px-2 pt-10 pb-10">
+    <div>
+      <span class="text-uppercase text-coco-dark-blue text-2xl font-bold !font-anekt">
+        {{ product.slug | replace:'-':' ' | titlecase }}
+      </span>
     </div>
-  </div>
 
-  <div class="flex flex-col gap-y-10 py-10">
-    <div class="flex justify-center items-center gap-x-10">
-      <button (click)="addToCart()" class="px-4 py-2 bg-coco-orange text-white border rounded shadow">
-        <span>
-          Add to Cart
-        </span>
-      </button>
+    <div>
+      <p class="text-coco-slate-gray text-base font-medium !font-anekb">
+        {{ product.description }}
+      </p>
+    </div>
 
-      <div>
-        <span *ngIf="selectedVariant.originalPrice" class="text-coco-red line-through decoration-1">
-          {{ selectedVariant.originalPrice.amount }} {{ selectedVariant.originalPrice.currencyCode }}
-        </span>
-
-        <span>
-          {{ selectedVariant.price.amount }} {{ selectedVariant.price.currencyCode }}
-        </span>
+    <div class="flex">
+      <!-- TODO: Include other variant-specific and -unspecific images -->
+      <div *ngFor="let image of selectedVariant.images">
+        <img [src]="image.url" [alt]="image.altText" class="max-h-[700px]" />
       </div>
     </div>
 
-    <div class="flex flex-col gap-y-4 p-2 bg-coco-light-gray rounded">
-      <div class="flex flex-col gap-y-2">
-        <div>
-          <span>iPhone model</span>
-        </div>
+    <div class="flex flex-col gap-y-10">
+      <div class="flex flex-col gap-y-4 rounded">
+        <app-product-option-group title="iPhone Model">
+          <app-product-option-selector *ngFor="let serie of availableSeries" [isEnabled]="true"
+            [isActive]="serie === selectedSerie" buttonClass="px-5" (click)="changeSerie(serie)">
+            {{ serie | replace:'-':' ' | titlecase | seriecase }}
+          </app-product-option-selector>
+        </app-product-option-group>
 
-        <div class="flex gap-x-4">
-          <button *ngFor="let serie of availableSeries"
-            [ngClass]="[serie === selectedSerie ? 'font-medium border-2 border-black' : '']"
-            class="option-selector-btn bg-white" (click)="changeSerie(serie)">
-            <span>
-              {{ serie | replace:'-':' ' | titlecase | seriecase }}
-            </span>
-          </button>
-        </div>
-      </div>
+        <app-product-option-group title="iPhone Version">
+          <app-product-option-selector *ngFor="let model of availableModels"
+            [isEnabled]="isValidVariant('model', model)" [isActive]="model === selectedModel" buttonClass="px-4"
+            (click)="changeModel(model)">
+            {{ model | replace:'-':' ' | titlecase }}
+          </app-product-option-selector>
+        </app-product-option-group>
 
-      <!-- TODO: Ask Nimer: What should be the model order there? (like the old one?) -->
-      <div class="flex flex-col gap-y-2">
-        <div>
-          <span>iPhone version</span>
-        </div>
+        <app-product-option-group *ngIf="availableColors.length" title="Choose your Color">
+          <app-product-option-selector *ngFor="let color of availableColors"
+            [isEnabled]="isValidVariant('color', color)" [isActive]="color === selectedColor"
+            [buttonClass]="[color === selectedColor ? 'color-option-selected--' + color : 'text-white color-option-unselected--' + color]"
+            class="w-[calc(33.333%-8px/3)]" (click)="changeColor(color)">
+            {{ color | replace:'-':' ' | titlecase }}
+          </app-product-option-selector>
+        </app-product-option-group>
 
-        <div class="flex gap-x-4">
-          <button *ngFor="let model of availableModels" [ngClass]="[isValidVariant('model', model) ? '' : 'opacity-20 cursor-not-allowed',
-          model === selectedModel ? 'font-medium border-2 border-black' : '']" class="option-selector-btn bg-white"
-            [disabled]="!isValidVariant('model', model)" (click)="changeModel(model)">
-            <span>
-              {{ model | replace:'-':' ' | titlecase }}
-            </span>
-          </button>
-        </div>
-      </div>
-
-      <!-- TODO: Ask Nimer: What should be the color order there? (like the old one?) -->
-      <div *ngIf="availableColors.length" class="flex flex-col gap-y-2">
-        <div>
-          <span>Choose your color</span>
-        </div>
-
-        <div class="flex gap-x-4">
-          <button *ngFor="let color of availableColors"
-            [ngClass]="[isValidVariant('color', color) ? '' : 'opacity-20 cursor-not-allowed',
-        color === selectedColor ? 'font-medium border-2 bg-white color-option-selected--' + color : 'text-white color-option-unselected--' + color]"
-            class="option-selector-btn" [disabled]="!isValidVariant('color', color)" (click)="changeColor(color)">
-            <span>
-              {{ color | replace:'-':' ' | titlecase }}
-            </span>
-          </button>
-        </div>
-      </div>
-
-      <!-- TODO: Ask Nimer: What should be the tier order there? (like the old one?) -->
-      <div *ngIf="availableTiers.length" class="flex flex-col gap-y-2">
-        <div>
-          <span>Choose your tier</span>
-        </div>
-
-        <div class="flex gap-x-4">
-          <button *ngFor="let tier of availableTiers" [ngClass]="[isValidVariant('tier', tier) ? '' : 'opacity-20 cursor-not-allowed',
-          tier === selectedTier ? 'font-medium border-2 border-black' : '']" class="option-selector-btn bg-white"
-            [disabled]="!isValidVariant('tier', tier)" (click)="changeTier(tier)">
-            <span>
-              {{ tier | titlecase }}
-            </span>
-          </button>
-        </div>
+        <app-product-option-group *ngIf="availableTiers.length" title="Choose your Tier">
+          <app-product-option-selector *ngFor="let tier of availableTiers" [isEnabled]="isValidVariant('tier', tier)"
+            [isActive]="tier === selectedTier" buttonClass="px-4" (click)="changeTier(tier)">
+            {{ tier | titlecase }}
+          </app-product-option-selector>
+        </app-product-option-group>
       </div>
     </div>
   </div>
+
+  <div class="w-full h-16 bg-coco-darkest-blue" #addToCartPlaceholder>
+    <app-add-to-cart class="w-full h-16"
+      [ngClass]="[markerElementReached ? '' : 'fixed bottom-0 left-0 right-0 z-add-to-cart']"
+      [productVariant]="selectedVariant"></app-add-to-cart>
+  </div>
+</div>

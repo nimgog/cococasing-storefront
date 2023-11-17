@@ -1,0 +1,28 @@
+<div class="flex justify-between items-center gap-x-4 w-full h-full p-2 bg-coco-darkest-blue">
+  <div class="flex flex-col">
+    <div>
+      <span class="text-white !font-anekb">
+        {{ variantTitle }}
+      </span>
+    </div>
+
+    <div class="flex items-baseline gap-x-1.5">
+      <span *ngIf="productVariant.originalPrice"
+        class="text-coco-red text-base font-normal !font-anekb line-through decoration-1">
+        {{ productVariant.originalPrice.amount }} {{ productVariant.originalPrice.currencyCode }}
+      </span>
+
+      <span class="text-white text-lg font-semibold !font-anekb">
+        {{ productVariant.price.amount }} {{ productVariant.price.currencyCode }}
+      </span>
+    </div>
+  </div>
+
+  <div>
+    <button (click)="addToCart()" class="px-4 py-2 bg-coco-orange text-white rounded">
+      <span class="text-uppercase text-base font-semibold !font-anekb">
+        Add to Cart
+      </span>
+    </button>
+  </div>
+</div>

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { client } from '../app.module';
 import { Image, Product, ProductVariant } from 'shopify-buy';
-import { Option, colors, model, options } from '../models/product.model';
+import { Option, colors, model, options } from '../models/product-old.model';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { LocationService } from '../services/location.service';
 import { Subscription, catchError, from, of, switchMap } from 'rxjs';

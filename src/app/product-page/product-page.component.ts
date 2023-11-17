@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ShopifyProductService } from '../services/shopify-product.service';
 import { ActivatedRoute } from '@angular/router';
-import {
-  Observable,
-  Subscription,
-  filter,
-  firstValueFrom,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs';
-import { ShoppingCartService } from '../services/shopping-cart.service';
+import { Observable, Subscription, filter, map, switchMap, tap } from 'rxjs';
 import {
   Product,
   ProductVariant,
@@ -25,7 +23,7 @@ import {
   productModels,
   productSeries,
   productTiers,
-} from '../models/new-product.model';
+} from '../models/product.model';
 import { NavigationService } from '../services/navigation.service';
 
 @Component({
@@ -47,12 +45,25 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   availableColors: string[] = [];
   availableTiers: string[] = [];
 
+  markerElementReached = true;
+
+  @ViewChild('addToCartPlaceholder')
+  addToCartPlaceholderElement!: ElementRef<HTMLDivElement>;
+
+  @HostListener('document:scroll', ['$event'])
+  onWindowScroll() {
+    const windowHeight = window.innerHeight;
+    const markerBoundingRect =
+      this.addToCartPlaceholderElement.nativeElement.getBoundingClientRect();
+
+    this.markerElementReached = markerBoundingRect.bottom <= windowHeight;
+  }
+
   constructor(
     private readonly location: Location,
     private readonly navigationService: NavigationService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly shopifyProductService: ShopifyProductService,
-    private readonly shoppingCartService: ShoppingCartService
+    private readonly shopifyProductService: ShopifyProductService
   ) {}
 
   get selectedSerie(): string {
@@ -232,7 +243,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   changeSerie(newSerie: string) {
     const newModel = this.isValidModelForSerie(newSerie, this.selectedModel)
       ? this.selectedModel
-      : 'regular';
+      : defaultProductModel;
 
     let newColor: string | undefined;
 
@@ -351,13 +362,5 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         variant.color === color &&
         variant.tier === tier
     );
-  }
-
-  addToCart() {
-    const addItemAndOpenCart$ = this.shoppingCartService
-      .addLineItem(this.selectedVariant.id)
-      .pipe(tap(() => this.shoppingCartService.openCart()));
-
-    firstValueFrom(addItemAndOpenCart$);
   }
 }

@@ -44,6 +44,7 @@ module.exports = {
       },
       zIndex: {
         'product-slider-arrow': '100',
+        'add-to-cart': '250',
         'dropdown-menu': '500',
         'mobile-drawer': '1000',
         'shopping-cart': '1000',

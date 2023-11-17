@@ -51,6 +51,9 @@ import { SiteDrawerComponent } from './site-drawer/site-drawer.component';
 import { NgxTurnstileFormsModule, NgxTurnstileModule } from 'ngx-turnstile';
 import { ReplacePipe } from './common/utils/replace.pipe';
 import { SerieCasePipe } from './common/utils/seriecase.pipe';
+import { ProductOptionGroupComponent } from './product-page/product-option-group/product-option-group.component';
+import { ProductOptionSelectorComponent } from './product-page/product-option-group/product-option-selector/product-option-selector.component';
+import { AddToCartComponent } from './product-page/add-to-cart/add-to-cart.component';
 
 const Client = require('shopify-buy');
 
@@ -91,6 +94,9 @@ export const client = Client.buildClient({
     SiteDrawerComponent,
     ReplacePipe,
     SerieCasePipe,
+    ProductOptionGroupComponent,
+    ProductOptionSelectorComponent,
+    AddToCartComponent,
   ],
   imports: [
     MatExpansionModule,

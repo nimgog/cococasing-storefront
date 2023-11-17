@@ -17,11 +17,12 @@ import {
   Money,
   Product,
   ProductVariant,
+  defaultProductModel,
   discountedProductTagPrefix,
   expectedProductOptions,
   productColors,
   productTiers,
-} from '../models/new-product.model';
+} from '../models/product.model';
 import { LocationService } from './location.service';
 import { LocalStorageService } from './local-storage.service';
 import {
@@ -128,7 +129,7 @@ export class ShopifyProductService {
                 id: shopifyProductVariant.id,
                 slug,
                 serie,
-                model: model || 'regular',
+                model: model || defaultProductModel,
                 color,
                 tier,
                 images: shopifyProduct.images.nodes.map((shopifyImage) => ({
@@ -161,6 +162,7 @@ export class ShopifyProductService {
 
         return <Product>{
           slug: productSlug,
+          description: '[Product description placeholder]', // TODO: Ask Nimer where to look for it
           variants,
         };
       }),

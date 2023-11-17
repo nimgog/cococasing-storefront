@@ -10,7 +10,7 @@ import {
   SetLineItemQuantityGQL,
   ShoppingCartFragment,
 } from '../graphql/types';
-import { expectedProductOptions } from '../models/new-product.model';
+import { expectedProductOptions } from '../models/product.model';
 import { LocationService } from './location.service';
 import { NotificationService } from './notification.service';
 import { ShopifyProductService } from './shopify-product.service';

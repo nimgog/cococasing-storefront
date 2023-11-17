@@ -4,7 +4,7 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
 import { NavigationService } from '../services/navigation.service';
 import { ShoppingCart } from '../models/shopping-cart.model';
 import { ShopifyProductService } from '../services/shopify-product.service';
-import { Money } from '../models/new-product.model';
+import { Money } from '../models/product.model';
 
 @Component({
   selector: 'app-site-shopping-cart',
