@@ -267,6 +267,8 @@ export class ShopifyProductService {
                   featuredProduct.price,
                   discountPercent
                 );
+
+                featuredProduct.discountPercent = discountPercent;
               }
 
               return featuredProduct;
