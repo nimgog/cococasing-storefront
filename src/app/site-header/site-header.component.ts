@@ -8,6 +8,7 @@ import {
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { Subscription } from 'rxjs';
 import { ShopifyProductService } from '../services/shopify-product.service';
+import { isScullyRunning } from '@scullyio/ng-lib';
 
 @Component({
   selector: 'app-site-header',
@@ -22,7 +23,7 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
   cartTotalQuantity = 0;
 
   freeShippingSub?: Subscription;
-  freeShippingThreshold: string | null = null;
+  freeShippingText = '&nbsp';
 
   constructor(
     private readonly shoppingCartService: ShoppingCartService,
@@ -30,18 +31,20 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.cartSub = this.shoppingCartService.cart$.subscribe(
-      (cart) => (this.cartTotalQuantity = cart?.totalQuantity || 0)
-    );
-
-    this.freeShippingSub = this.shopifyProductService
-      .fetchFreeShippingThreshold()
-      .subscribe(
-        (threshold) =>
-          (this.freeShippingThreshold = threshold
-            ? `${threshold.amount} ${threshold.currencyCode}`
-            : null)
+    if (!isScullyRunning()) {
+      this.cartSub = this.shoppingCartService.cart$.subscribe(
+        (cart) => (this.cartTotalQuantity = cart?.totalQuantity || 0)
       );
+
+      this.freeShippingSub = this.shopifyProductService
+        .fetchFreeShippingThreshold()
+        .subscribe(
+          (threshold) =>
+            (this.freeShippingText = threshold
+              ? `Free shippings on order over ${threshold.amount} ${threshold.currencyCode}!`
+              : '&nbsp')
+        );
+    }
   }
 
   ngOnDestroy() {

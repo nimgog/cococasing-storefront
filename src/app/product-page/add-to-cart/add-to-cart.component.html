@@ -6,7 +6,7 @@
       </span>
     </div>
 
-    <div class="flex items-baseline gap-x-1.5">
+    <div *scullyExclude class="flex items-baseline gap-x-1.5">
       <span *ngIf="productVariant.originalPrice"
         class="text-coco-red text-base font-normal !font-anekb line-through decoration-1">
         {{ productVariant.originalPrice.amount }} {{ productVariant.originalPrice.currencyCode }}

@@ -5,7 +5,7 @@
   <div class="grow">
     <app-site-drawer [ngClass]="{ 'hidden': !drawerIsVisible }" (drawerClose)="onDrawerClose()"></app-site-drawer>
 
-    <app-site-shopping-cart [ngClass]="{ 'hidden': !cartIsVisible }"></app-site-shopping-cart>
+    <app-site-shopping-cart *scullyExclude [ngClass]="{ 'hidden': !cartIsVisible }"></app-site-shopping-cart>
 
     <app-site-header (hamburgerMenuClick)="onHamburgerMenuClick()"></app-site-header>
 

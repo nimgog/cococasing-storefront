@@ -144,7 +144,8 @@
             </div>
           </div>
 
-          <ngx-turnstile formControlName="turnstileToken" [siteKey]="turnstileSiteKey" theme="light"></ngx-turnstile>
+          <ngx-turnstile *scullyExclude formControlName="turnstileToken" [siteKey]="turnstileSiteKey"
+            theme="light"></ngx-turnstile>
 
           <div class="pt-2">
             <button type="submit" [disabled]="!allowSubmit"

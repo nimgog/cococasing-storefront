@@ -54,6 +54,7 @@ import { SerieCasePipe } from './common/utils/seriecase.pipe';
 import { ProductOptionGroupComponent } from './product-page/product-option-group/product-option-group.component';
 import { ProductOptionSelectorComponent } from './product-page/product-option-group/product-option-selector/product-option-selector.component';
 import { AddToCartComponent } from './product-page/add-to-cart/add-to-cart.component';
+import { ScullyExcludeDirective } from './common/utils/scully-exclude.directive';
 
 const Client = require('shopify-buy');
 
@@ -97,6 +98,7 @@ export const client = Client.buildClient({
     ProductOptionGroupComponent,
     ProductOptionSelectorComponent,
     AddToCartComponent,
+    ScullyExcludeDirective,
   ],
   imports: [
     MatExpansionModule,

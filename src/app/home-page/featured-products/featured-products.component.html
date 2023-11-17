@@ -48,7 +48,7 @@
         {{ product.description }}
       </span>
 
-      <div class="flex gap-x-2">
+      <div *scullyExclude class="flex gap-x-2">
         <span *ngIf="product.originalPrice"
           class="text-uppercase text-coco-red text-xs md:text-sm lg:text-base font-normal !font-anekt leading-5 lg:leading-7 tracking-[1.2px] lg:tracking-[1.6px] line-through decoration-1">{{
           product.originalPrice.amount

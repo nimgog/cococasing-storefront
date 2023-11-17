@@ -45,7 +45,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   availableColors: string[] = [];
   availableTiers: string[] = [];
 
-  markerElementReached = true;
+  markerElementReached = false;
 
   @ViewChild('addToCartPlaceholder')
   addToCartPlaceholderElement!: ElementRef<HTMLDivElement>;
