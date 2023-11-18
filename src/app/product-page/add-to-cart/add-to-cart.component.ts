@@ -43,7 +43,9 @@ export class AddToCartComponent {
       (this.productVariant.tier || '').replaceAll('-', ' ')
     );
 
-    return `iPhone ${serie} ${model} ◦ ${color}${tier}`;
+    return `iPhone ${serie} ${model}${
+      color || tier ? ` ◦ ${color}${tier}` : ''
+    }`;
   }
 
   addToCart() {
