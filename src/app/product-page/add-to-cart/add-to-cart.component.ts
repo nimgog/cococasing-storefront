@@ -11,7 +11,6 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 @Component({
   selector: 'app-add-to-cart',
   templateUrl: './add-to-cart.component.html',
-  styleUrls: ['./add-to-cart.component.scss'],
 })
 export class AddToCartComponent {
   private readonly titleCasePipe = new TitleCasePipe();

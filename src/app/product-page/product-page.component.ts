@@ -29,7 +29,6 @@ import { NavigationService } from '../services/navigation.service';
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
-  styleUrls: ['./product-page.component.scss'],
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
   private productSub!: Subscription;

@@ -14,7 +14,6 @@ import { ScrollBlockerService } from 'src/app/services/scroll-blocker.service';
 @Component({
   selector: 'app-product-image-slider',
   templateUrl: './product-image-slider.component.html',
-  styleUrls: ['./product-image-slider.component.scss'],
 })
 export class ProductImageSliderComponent implements OnChanges, OnDestroy {
   selectedVariantImages: Image[] = [];

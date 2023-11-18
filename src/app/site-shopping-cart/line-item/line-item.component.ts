@@ -6,7 +6,6 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 @Component({
   selector: 'app-line-item',
   templateUrl: './line-item.component.html',
-  styleUrls: ['./line-item.component.scss'],
 })
 export class LineItemComponent implements OnInit, OnDestroy {
   private readonly quantitySubject = new Subject<number>();

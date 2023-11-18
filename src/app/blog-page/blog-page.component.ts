@@ -14,7 +14,6 @@ interface BlogPostPreviewScullyRoute extends ScullyRoute {
 @Component({
   selector: 'app-blog-page',
   templateUrl: './blog-page.component.html',
-  styleUrls: ['./blog-page.component.scss'],
 })
 export class BlogPageComponent implements OnInit, OnDestroy {
   private static readonly PageSize = 5;

@@ -11,7 +11,6 @@ import {
 @Component({
   selector: 'app-benefits-slider',
   templateUrl: './benefits-slider.component.html',
-  styleUrls: ['./benefits-slider.component.scss'],
   animations: [
     trigger('fadeAnimation', [
       state('shown', style({ opacity: 1 })),

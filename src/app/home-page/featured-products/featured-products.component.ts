@@ -41,7 +41,6 @@ const animations = [
 @Component({
   selector: 'app-featured-products',
   templateUrl: './featured-products.component.html',
-  styleUrls: ['./featured-products.component.scss'],
   animations,
 })
 export class FeaturedProductsComponent {
