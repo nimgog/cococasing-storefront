@@ -48,6 +48,7 @@ module.exports = {
         'dropdown-menu': '500',
         'mobile-drawer': '1000',
         'shopping-cart': '1000',
+        'product-image-fullscreen': '1500',
         'toast-container': '2000',
       },
     },

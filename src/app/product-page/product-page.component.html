@@ -1,7 +1,7 @@
 <div *ngIf="!isLoading" class="pb-8">
   <div class="flex flex-col items-center gap-y-8 px-2 pt-10 pb-10">
     <div>
-      <span class="text-uppercase text-coco-dark-blue text-2xl font-bold !font-anekt">
+      <span class="text-uppercase text-coco-dark-blue text-3xl font-bold !font-anekt">
         {{ product.slug | replace:'-':' ' | titlecase }}
       </span>
     </div>
@@ -12,12 +12,8 @@
       </p>
     </div>
 
-    <div class="flex">
-      <!-- TODO: Include other variant-specific and -unspecific images -->
-      <div *ngFor="let image of selectedVariant.images">
-        <img [src]="image.url" [alt]="image.altText" class="max-h-[700px]" />
-      </div>
-    </div>
+    <app-product-image-slider [product]="product" [selectedVariant]="selectedVariant"
+      class="w-full"></app-product-image-slider>
 
     <div class="flex flex-col gap-y-10">
       <div class="flex flex-col gap-y-4 rounded">

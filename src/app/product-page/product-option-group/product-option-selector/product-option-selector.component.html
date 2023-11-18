@@ -1,5 +1,5 @@
-<button class="w-full h-full py-2 text-coco-slate-gray border rounded shadow bg-white"
-  [ngClass]="[isActive ? 'border-2 border-black' : '', isEnabled ? '' : 'opacity-20 cursor-not-allowed', _buttonClass]"
+<button class="w-full h-full py-2 text-coco-slate-gray border-2 rounded shadow bg-white"
+  [ngClass]="[isActive ? 'border-black' : '', isEnabled ? '' : 'opacity-20 cursor-not-allowed', _buttonClass]"
   [disabled]="!isEnabled">
   <span class="!font-anekb" [ngClass]="[isActive ? 'font-medium' : '']">
     <ng-content></ng-content>
