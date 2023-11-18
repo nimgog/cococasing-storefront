@@ -8,11 +8,9 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
-import { ProductPageOldComponent } from './product-page-old/product-page-old.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, pathMatch: 'full' },
-  { path: 'products-old', component: ProductPageOldComponent },
   {
     path: 'products',
     children: [

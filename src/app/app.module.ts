@@ -8,14 +8,11 @@ import {
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductPageOldComponent } from './product-page-old/product-page-old.component';
-import { AccordionComponent } from './accordion/accordion.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
-import { ImageSliderComponent } from './product-page-old/image-slider/image-slider.component';
 import { CustomHammerConfig } from './custom-hammer-config';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -67,9 +64,6 @@ export const client = Client.buildClient({
 @NgModule({
   declarations: [
     AppComponent,
-    ProductPageOldComponent,
-    AccordionComponent,
-    ImageSliderComponent,
     HomePageComponent,
     FeaturedProductsComponent,
     SiteFooterComponent,

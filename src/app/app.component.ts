@@ -4,6 +4,7 @@ import { Subscription, distinctUntilChanged, skip } from 'rxjs';
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { ScrollBlockerService } from './services/scroll-blocker.service';
 
+// TODO: Get rid of unused old global styles
 // TODO: Upgrade to Angular 16
 @Component({
   selector: 'app-root',
