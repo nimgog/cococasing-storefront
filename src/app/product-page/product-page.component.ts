@@ -51,11 +51,16 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   @HostListener('document:scroll', ['$event'])
   onWindowScroll() {
-    const windowHeight = window.innerHeight;
-    const markerBoundingRect =
-      this.addToCartPlaceholderElement.nativeElement.getBoundingClientRect();
+    const placeholderNativeElement =
+      this.addToCartPlaceholderElement.nativeElement;
 
-    this.markerElementReached = markerBoundingRect.bottom <= windowHeight;
+    if (placeholderNativeElement) {
+      const windowHeight = window.innerHeight;
+      const markerBoundingRect =
+        placeholderNativeElement.getBoundingClientRect();
+
+      this.markerElementReached = markerBoundingRect.bottom <= windowHeight;
+    }
   }
 
   constructor(
