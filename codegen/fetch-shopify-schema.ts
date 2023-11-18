@@ -1,8 +1,8 @@
-const { writeFileSync } = require('fs');
-const { getIntrospectionQuery } = require('graphql');
-const path = require('path');
+import { writeFileSync } from 'fs';
+import { getIntrospectionQuery } from 'graphql';
+import * as path from 'path';
 
-const { environment } = require('../src/environments/environment');
+import { environment } from '../src/environments/environment';
 
 const fetchSchema = async () => {
   const request: RequestInit = {
