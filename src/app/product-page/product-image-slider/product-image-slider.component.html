@@ -17,10 +17,10 @@
     </div>
 
     <div *ngIf="selectedVariantImages.length > 1" class="shrink-0 flex landscape:flex-col justify-center gap-x-0.5">
-      <div *ngFor="let image of selectedVariantImages; let i = index" class="border rounded"
-        [ngClass]="[i === fullscreenHighlightedImageIndex ? 'border-coco-medium-gray' : 'border-coco-light-gray']">
-        <img [src]="image.url" [alt]="image.altText" class="max-h-[50px] rounded"
-          (click)="fullscreenHighlightedImageIndex = i" />
+      <div *ngFor="let image of selectedVariantImages; let i = index" class="border rounded cursor-pointer"
+        [ngClass]="[i === fullscreenHighlightedImageIndex ? 'border-coco-medium-gray' : 'border-coco-light-gray']"
+        (click)="fullscreenHighlightedImageIndex = i">
+        <img [src]="image.url" [alt]="image.altText" class="max-h-[50px] rounded" />
       </div>
     </div>
   </div>
@@ -43,9 +43,10 @@
   </div>
 
   <div *ngIf="selectedVariantImages.length > 1" class="flex justify-center gap-x-0.5">
-    <div *ngFor="let image of selectedVariantImages; let i = index" class="border rounded"
-      [ngClass]="[i === highlightedImageIndex ? 'border-coco-medium-gray' : 'border-coco-light-gray']">
-      <img [src]="image.url" [alt]="image.altText" class="max-h-[50px] rounded" (click)="highlightedImageIndex = i" />
+    <div *ngFor="let image of selectedVariantImages; let i = index" class="border rounded cursor-pointer"
+      [ngClass]="[i === highlightedImageIndex ? 'border-coco-medium-gray' : 'border-coco-light-gray']"
+      (click)="highlightedImageIndex = i">
+      <img [src]="image.url" [alt]="image.altText" class="max-h-[50px] rounded" />
     </div>
   </div>
 </div>
