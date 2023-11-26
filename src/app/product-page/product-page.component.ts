@@ -1,254 +1,328 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Location } from '@angular/common';
 import {
   Component,
+  ElementRef,
   HostListener,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { client } from '../app.module';
-import { Image, Product, ProductVariant } from 'shopify-buy';
-import { Option, colors, model, options } from '../models/product.model';
-import { ImageSliderComponent } from './image-slider/image-slider.component';
-import { LocationService } from '../services/location.service';
-import { Subscription, catchError, from, of, switchMap } from 'rxjs';
-import { DeviceDetectorService } from '../services/device-detector.service';
+import { ShopifyProductService } from '../services/shopify-product.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription, filter, map, switchMap, tap } from 'rxjs';
+import {
+  Product,
+  ProductVariant,
+  defaultProductColor,
+  defaultProductModel,
+  defaultProductSerie,
+  defaultProductTier,
+  expectedProductOptions,
+} from '../models/product.model';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
-  styleUrls: ['./product-page.component.scss'],
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
-  @ViewChild(ImageSliderComponent) imageSliderComponent!: ImageSliderComponent;
+  private productSub!: Subscription;
+  private productPriceRefreshSignalSub!: Subscription;
 
+  // TODO: Create a loading indicator
+  isLoading = true;
   product!: Product;
-  colors = colors;
-  currency = '';
-  model = model;
-  options = options;
-  serieOptions!: Option;
-  modelOptions!: Option;
-  colorOptions!: Option;
-  selectedColor = 'Orange';
-  selectedModel = '14';
-  selectedSeries = 'Regular';
-  selectedImages: Image[] = [];
-  imageIndex = 0;
-  isAtBottom = false;
-  isMobile = false;
-  variantId: string | null = null;
-  tab = 'selection';
-  showFullScreen = false;
-  imageFullScreen!: Image;
-  private checkoutId = '';
-  private subscriptions: Subscription[] = [];
-  loaded = false;
+  selectedVariant!: ProductVariant;
 
-  constructor(
-    private location: LocationService,
-    private deviceDetectorService: DeviceDetectorService
-  ) {}
+  markerElementReached = false;
 
-  ngOnInit(): void {
-    this.isMobile = this.deviceDetectorService.isMobile();
-    const checkoutCreationSubscription = this.location
-      .getUserIP()
-      .pipe(
-        catchError(() => {
-          return of({ ip: 'EUROPE' });
-        }),
-        switchMap((response: any) => {
-          return this.location.getLocation(response.ip).pipe(
-            catchError(() => {
-              return of({ country_code: 'XX' });
-            })
-          );
-        }),
-        switchMap((response: any) => {
-          if (response['country_code'] === 'SE') {
-            this.currency = 'SEK';
-          } else {
-            this.currency = 'EUR';
-          }
-          return from(
-            client.checkout.create({ presentmentCurrencyCode: this.currency })
-          );
-        })
-      )
-      .subscribe((checkout: any) => {
-        this.checkoutId = checkout.id;
+  @ViewChild('addToCartPlaceholder')
+  addToCartPlaceholderElement!: ElementRef<HTMLDivElement>;
 
-        this.getProduct();
-      });
-
-    this.subscriptions.push(checkoutCreationSubscription);
-  }
-
-  private getProduct(): void {
-    client.product
-      .fetch('gid://shopify/Product/8578309521732')
-      .then((product: Product) => {
-        this.product = product;
-        this.setImages();
-        this.setOptions();
-        this.onOptionChange();
-        this.loaded = true;
-      })
-      .catch((error: string) => {});
-  }
-
-  private setOptions(): void {
-    this.product.options.forEach((option: any) => {
-      if (option.name === 'Series') this.serieOptions = option;
-      else if (option.name === 'Model') this.modelOptions = option;
-      else if (option.name === 'Color') this.colorOptions = option;
-    });
-  }
-
-  private setImages(): void {
-    this.selectedImages = this.product.images.filter((image) => {
-      const altText = image.altText?.toLowerCase() ?? '';
-      const isSelectedColor = altText.includes(
-        this.selectedColor.toLowerCase()
-      );
-      const isScreenOrLens = altText === 'screen' || altText === 'lens';
-
-      if (this.selectedModel.toLowerCase() !== '11') {
-        return (
-          (isSelectedColor || isScreenOrLens) && !altText.includes('iphone11')
-        );
-      }
-
-      return (
-        (isSelectedColor || isScreenOrLens) &&
-        (altText.includes('iphone11') || isScreenOrLens)
-      );
-    });
-
-    this.sortImages(this.selectedImages);
-  }
-
-  private sortImages(images: Image[]): void {
-    images.sort((a, b) => {
-      const aAltText = a.altText;
-      const bAltText = b.altText;
-
-      if (!aAltText || !bAltText) return 0;
-
-      if (aAltText === 'screen' || aAltText === 'lens') return 1;
-      if (bAltText === 'screen' || bAltText === 'lens') return -1;
-
-      const aIndex = Number.parseInt(aAltText.split('_')[1], 10);
-      const bIndex = Number.parseInt(bAltText.split('_')[1], 10);
-
-      return aIndex - bIndex;
-    });
-  }
-
-  setSelectedSeries(series: string): void {
-    this.selectedSeries = series;
-    this.onOptionChange();
-  }
-
-  setSelectedModel(model: string): void {
-    this.selectedModel = model;
-    this.setSelectedSeries('Regular');
-    this.setSelectedColor('Orange');
-    this.onOptionChange();
-  }
-
-  setSelectedColor(color: string): void {
-    this.selectedColor = color;
-    this.setImages();
-    this.onOptionChange();
-  }
-
-  setTab(tab: string) {
-    this.tab = tab;
-  }
-
-  setImageFullScreen(imageId: any) {
-    this.imageFullScreen = this.selectedImages[imageId];
-    this.showFullScreen = true;
-  }
-
-  closeFullScreen() {
-    this.showFullScreen = false;
-  }
-
-  @HostListener('window:scroll', [])
+  @HostListener('document:scroll', ['$event'])
   onWindowScroll() {
-    const pos =
-      (document.documentElement.scrollTop || document.body.scrollTop) +
-      document.documentElement.offsetHeight;
-    const max = document.documentElement.scrollHeight + 85;
+    const placeholderNativeElement =
+      this.addToCartPlaceholderElement.nativeElement;
 
-    if (pos >= max) {
-      this.isAtBottom = true;
-    } else {
-      this.isAtBottom = false;
+    if (placeholderNativeElement) {
+      const windowHeight = window.innerHeight;
+      const markerBoundingRect =
+        placeholderNativeElement.getBoundingClientRect();
+
+      this.markerElementReached = markerBoundingRect.bottom <= windowHeight;
     }
   }
 
-  scrollToBottom() {
-    document.documentElement.scrollTop = document.documentElement.scrollHeight;
+  constructor(
+    private readonly location: Location,
+    private readonly navigationService: NavigationService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly shopifyProductService: ShopifyProductService
+  ) {}
+
+  get selectedSerie(): string {
+    return this.selectedVariant.serie;
   }
 
-  // In your product-page.component.ts
-  onSwipeLeft() {
-    this.imageSliderComponent.onNextClick();
+  get selectedModel(): string {
+    return this.selectedVariant.model;
   }
 
-  onSwipeRight() {
-    this.imageSliderComponent.onPreviousClick();
+  get selectedColor(): string | undefined {
+    return this.selectedVariant.color;
   }
 
-  onOptionChange() {
-    const selectedVariant = this.findSelectedVariant();
-    this.variantId = selectedVariant
-      ? (selectedVariant.id.split('/').pop() as string | null)
-      : null;
+  get selectedTier(): string | undefined {
+    return this.selectedVariant.tier;
   }
 
-  private findSelectedVariant(): ProductVariant | undefined {
-    return this.product.variants.find((variant) => {
-      const variantOptions = variant.selectedOptions;
+  ngOnInit() {
+    this.productSub = this.activatedRoute.params
+      .pipe(
+        tap(() => (this.isLoading = true)),
+        map((params) => ({
+          productSlug: (params['product'] as string)?.toLocaleLowerCase(),
+          variantSlug: (params['variant'] as string)?.toLocaleLowerCase(),
+        })),
+        tap(({ productSlug }) => {
+          if (!productSlug || !expectedProductOptions.has(productSlug)) {
+            this.navigationService.navigateToProducts();
+            return;
+          }
+        }),
+        this.fetchProductAndVariantBySlug()
+      )
+      .subscribe(({ product, variant }) => {
+        this.setProductAndSelectedVariant(product, variant);
+        this.isLoading = false;
+      });
 
-      const colorOption = variantOptions.find(
-        (option) => option.name.toLowerCase() === 'color'
+    this.productPriceRefreshSignalSub =
+      this.shopifyProductService.productPriceRefreshSignal$
+        .pipe(
+          filter(() => !this.isLoading),
+          map(() => ({
+            productSlug: this.product.slug,
+            variantSlug: this.selectedVariant.slug,
+          })),
+          this.fetchProductAndVariantBySlug()
+        )
+        .subscribe(({ product, variant }) =>
+          this.setProductAndSelectedVariant(product, variant)
+        );
+  }
+
+  ngOnDestroy() {
+    this.productSub.unsubscribe();
+    this.productPriceRefreshSignalSub.unsubscribe();
+  }
+
+  fetchProductAndVariantBySlug(): (
+    source: Observable<{ productSlug: string; variantSlug?: string }>
+  ) => Observable<{ product: Product; variant?: ProductVariant }> {
+    return (
+      source: Observable<{ productSlug: string; variantSlug?: string }>
+    ) =>
+      source.pipe(
+        switchMap(({ productSlug, variantSlug }) => {
+          return this.shopifyProductService
+            .fetchProduct(productSlug)
+            .pipe(map((product) => ({ product, variantSlug })));
+        }),
+        map(({ product, variantSlug }) => ({
+          product,
+          variant: product.variants.find(
+            (variant) => variant.slug === variantSlug
+          ),
+        }))
       );
-      const modelOption = variantOptions.find(
-        (option) => option.name.toLowerCase() === 'model'
-      );
-      const seriesOption = variantOptions.find(
-        (option) => option.name.toLowerCase() === 'series'
-      );
-
-      return (
-        colorOption?.value.toLowerCase() === this.selectedColor.toLowerCase() &&
-        modelOption?.value.toLowerCase() ===
-          this.selectedSeries.toLowerCase() &&
-        seriesOption?.value.toLowerCase() === this.selectedModel.toLowerCase()
-      );
-    });
   }
 
-  createCheckout(): void {
-    const cId = this.checkoutId;
-    const lineItemsToAdd = [
-      {
-        variantId: `gid://shopify/ProductVariant/${this.variantId}`,
-        quantity: 1,
-      },
-    ];
+  setProductAndSelectedVariant(product: Product, variant?: ProductVariant) {
+    this.product = product;
 
-    // Add an item to the checkout
-    client.checkout.addLineItems(cId, lineItemsToAdd).then((checkout: any) => {
-      window.location.href = checkout.webUrl;
-    });
+    if (variant) {
+      this.selectedVariant = variant;
+    } else {
+      this.selectDefaultVariant(product);
+    }
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  selectDefaultVariant(product: Product) {
+    const expectedOptions = expectedProductOptions.get(product.slug)!;
+
+    const filterColor = expectedOptions.some((option) => option === 'color')
+      ? defaultProductColor
+      : undefined;
+
+    const filterTier = expectedOptions.some((option) => option === 'tier')
+      ? defaultProductTier
+      : undefined;
+
+    const defaultVariant =
+      product.variants.find(
+        (variant) =>
+          variant.serie === defaultProductSerie &&
+          variant.model === defaultProductModel &&
+          variant.color === filterColor &&
+          variant.tier === filterTier
+      ) || product.variants[0]; // Fallback to the first variant should be impossible
+
+    this.changeVariant(
+      defaultVariant.serie,
+      defaultVariant.model,
+      defaultVariant.color,
+      defaultVariant.tier,
+      true
+    );
+  }
+
+  changeVariant(
+    newSerie: string,
+    newModel: string,
+    newColor?: string,
+    newTier?: string,
+    redirect = false
+  ) {
+    const newVariant = this.product.variants.find(
+      (variant) =>
+        variant.serie === newSerie &&
+        variant.model === newModel &&
+        variant.color === newColor &&
+        variant.tier === newTier
+    )!;
+
+    const url = `/products/${this.product.slug}/${newVariant.slug}`;
+
+    if (redirect) {
+      this.location.replaceState(url);
+    } else {
+      this.location.go(url);
+    }
+
+    this.selectedVariant = newVariant;
+  }
+
+  changeSerie(newSerie: string) {
+    const newModel = this.isValidModelForSerie(newSerie, this.selectedModel)
+      ? this.selectedModel
+      : defaultProductModel;
+
+    let newColor: string | undefined;
+
+    if (this.selectedColor) {
+      newColor = this.isValidVariantEx(
+        newSerie,
+        newModel,
+        this.selectedColor,
+        this.selectedTier
+      )
+        ? this.selectedColor
+        : defaultProductColor;
+    }
+
+    let newTier: string | undefined;
+
+    if (this.selectedTier) {
+      newTier = this.isValidVariantEx(
+        newSerie,
+        newModel,
+        newColor,
+        this.selectedTier
+      )
+        ? this.selectedTier
+        : defaultProductTier;
+    }
+
+    this.changeVariant(newSerie, newModel, newColor, newTier);
+  }
+
+  changeModel(newModel: string) {
+    console.log('PARENT');
+
+    if (!this.isValidModelForSerie(this.selectedSerie, newModel)) {
+      return;
+    }
+
+    let newColor: string | undefined;
+
+    if (this.selectedColor) {
+      newColor = this.isValidVariantEx(
+        this.selectedSerie,
+        newModel,
+        this.selectedColor,
+        this.selectedTier
+      )
+        ? this.selectedColor
+        : defaultProductColor;
+    }
+
+    let newTier: string | undefined;
+
+    if (this.selectedTier) {
+      newTier = this.isValidVariantEx(
+        this.selectedSerie,
+        newModel,
+        newColor,
+        this.selectedTier
+      )
+        ? this.selectedTier
+        : 'premium';
+    }
+
+    this.changeVariant(this.selectedSerie, newModel, newColor, newTier);
+  }
+
+  changeColor(newColor: string) {
+    if (this.isValidVariant('color', newColor)) {
+      this.changeVariant(
+        this.selectedSerie,
+        this.selectedModel,
+        newColor,
+        this.selectedTier
+      );
+    }
+  }
+
+  changeTier(newTier: string) {
+    if (this.isValidVariant('tier', newTier)) {
+      this.changeVariant(
+        this.selectedSerie,
+        this.selectedModel,
+        this.selectedColor,
+        newTier
+      );
+    }
+  }
+
+  isValidModelForSerie(serie: string, model: string) {
+    return this.product.variants.some(
+      (variant) => variant.serie === serie && variant.model === model
+    );
+  }
+
+  isValidVariant(option: string, newValue: string) {
+    const serie = option === 'serie' ? newValue : this.selectedSerie;
+    const model = option === 'model' ? newValue : this.selectedModel;
+    const color = option === 'color' ? newValue : this.selectedColor;
+    const tier = option === 'tier' ? newValue : this.selectedTier;
+
+    return this.isValidVariantEx(serie, model, color, tier);
+  }
+
+  isValidVariantEx(
+    serie: string,
+    model: string,
+    color?: string,
+    tier?: string
+  ) {
+    return this.product.variants.some(
+      (variant) =>
+        variant.serie === serie &&
+        variant.model === model &&
+        variant.color === color &&
+        variant.tier === tier
+    );
   }
 }

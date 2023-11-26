@@ -1,0 +1,11 @@
+.product-description-fade {
+  &::before {
+    @apply lg:hidden content-[''] absolute top-0 left-0 right-0 bottom-0 h-full #{!important};
+
+    background: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.95) 10%,
+      rgba(255, 255, 255, 0.13) 60%,
+      rgba(255, 255, 255, 0.04) 70%);
+  }
+}

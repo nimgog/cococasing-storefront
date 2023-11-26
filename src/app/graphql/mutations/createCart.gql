@@ -1,0 +1,8 @@
+mutation CreateCart($variantId: ID!, $countryCode: CountryCode!)
+@inContext(country: $countryCode) {
+  cartCreate(input: { lines: { merchandiseId: $variantId, quantity: 1 } }) {
+    cart {
+      ...ShoppingCart
+    }
+  }
+}

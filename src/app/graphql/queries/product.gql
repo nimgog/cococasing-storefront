@@ -1,0 +1,37 @@
+# TODO: Consider involving pagination
+
+query Product($collectionHandle: String!, $countryCode: CountryCode!)
+@inContext(country: $countryCode) {
+  collection(handle: $collectionHandle) {
+    descriptionHtml
+    products(first: 250) {
+      nodes {
+        handle
+        images(first: 250) {
+          nodes {
+            url
+            altText
+          }
+        }
+        options {
+          name
+          values
+        }
+        variants(first: 250) {
+          nodes {
+            id
+            selectedOptions {
+              name
+              value
+            }
+            price {
+              amount
+              currencyCode
+            }
+          }
+        }
+        tags
+      }
+    }
+  }
+}

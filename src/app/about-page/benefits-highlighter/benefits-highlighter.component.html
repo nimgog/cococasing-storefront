@@ -1,0 +1,23 @@
+<div class="grid grid-cols-4 gap-x-8 gap-y-2.5 px-4 py-6">
+  <div *ngFor="let benefit of benefits" class="grow flex justify-center">
+    <img [src]="benefit.imageUrl" [alt]="benefit.title" />
+  </div>
+
+  <div *ngFor="let benefit of benefits" class="grow flex justify-center">
+    <span class="text-center text-uppercase text-coco-slate-gray text-base font-medium !font-anekt">
+      {{ benefit.title }}
+    </span>
+  </div>
+
+  <div *ngFor="let benefit of benefits">
+    <p class="text-coco-dark-blue text-sm font-normal !font-anekb">
+      {{ benefit.description }}
+    </p>
+
+    <a [routerLink]="[benefit.learnMoreUrl]">
+      <span class="text-[#006FCF] text-sm font-medium !font-anekb">
+        Learn More &gt;
+      </span>
+    </a>
+  </div>
+</div>

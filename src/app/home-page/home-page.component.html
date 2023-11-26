@@ -1,0 +1,30 @@
+<!-- TODO: Go through px values and turn them to rem -->
+<!-- TODO: Do font sizing + re-ask Nimer if Roboto can be overriden with anekb or anekt ('!' can be removed now) -->
+<!-- TODO: Typo in ALL components needs to be re-checked, PX->REM and design-wise as well -->
+
+<app-hero-section></app-hero-section>
+
+<app-product-categories></app-product-categories>
+
+<app-blog-teaser></app-blog-teaser>
+
+<div class="flex justify-center pt-16 md:pt-24 lg:pt-32 px-2">
+  <div class="grow flex flex-col max-w-centered-content">
+    <div class="py-1 border-b border-coco-light-medium-gray">
+      <!-- TODO: Just like for the other headings, re-check the new design for font changes -->
+      <span class="text-coco-dark-blue text-uppercase text-[18px] !font-anekt leading-[28px]">
+        New at Coco-Casing
+      </span>
+    </div>
+
+    <div class="flex gap-x-1 pt-8">
+      <app-featured-products [products]="featuredProducts" [allowSlideBeyondEnds]="false"
+        class="sm:hidden grow"></app-featured-products>
+
+      <app-featured-products *ngFor="let product of featuredProducts" [products]="[product]"
+        class="hidden sm:block grow"></app-featured-products>
+    </div>
+  </div>
+</div>
+
+<app-insta-gallery></app-insta-gallery>

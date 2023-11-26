@@ -1,0 +1,165 @@
+<!-- TODO: Only mobile and desktop views are ready, no other resolution inbetween -->
+
+<!-- TODO: Banner image is messed up again betwen mobile and desktop design - use the mobile's version -->
+<app-page-header imageUrl="/assets/img/contact-page/page-banner.jpg">
+  Contact
+</app-page-header>
+
+<div class="flex justify-center px-4 py-10 lg:py-28">
+  <div class="flex flex-col max-w-centered-content">
+    <div class="py-1 border-b border-coco-lighter-gray">
+      <span class="text-uppercase text-coco-slate-gray text-lg lg:text-3xl font-medium !font-anekt">
+        Any Questions?
+      </span>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-x-8 gap-y-10 pt-8 lg:pt-14 lg:pb-4">
+      <div class="flex flex-col gap-y-8 lg:w-1/2">
+        <div class="grow flex flex-col gap-y-2">
+          <span class="text-coco-slate-gray text-lg lg:text-2xl font-medium !font-anekt">
+            How can we be of assistance?
+          </span>
+
+          <span class="text-coco-slate-gray text-base font-normal !font-anekb">
+            If you have any questions about a Coco-Casing product, or anything we can be assistance of, please do reach
+            out. We do our best to get back to you within 24 hours on workdays.
+          </span>
+        </div>
+
+        <!-- TODO: If we want symmetricity, lets throw away the anekt font -->
+        <div class="flex gap-x-2 lg:gap-x-8 p-4 lg:p-8 bg-coco-dark-blue rounded-lg text-white">
+          <div class="flex justify-start lg:justify-center items-center w-1/2">
+            <span class="lg:text-center text-base font-medium !font-anekb">Workdays</span>
+          </div>
+
+          <div class="flex flex-col gap-y-2 lg:gap-y-0 w-1/2 text-base font-normal">
+            <span class="lg:text-center !font-anekb">Monday - Friday</span>
+            <span class="lg:text-center !font-anekb">08.00 AM - 08.00 PM</span>
+          </div>
+        </div>
+
+        <div class="p-2 bg-coco-off-white rounded">
+          <div class="flex flex-col lg:flex-row lg:gap-x-8 gap-y-8 p-2 border border-black rounded bg-white">
+            <div>
+              <iframe class="w-full h-[168px] lg:h-[282px]"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2254.5468453694803!2d13.006067477125288!3d55.5924959043268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4653a15b639bc3bf%3A0xd4cf76906ff34ba3!2sKristianstadsgatan%2010%2C%20214%2023%20Malm%C3%B6%2C%20Sv%C3%A9dorsz%C3%A1g!5e0!3m2!1shu!2shu!4v1695578555306!5m2!1shu!2shu"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="flex flex-col lg:justify-center text-coco-slate-gray text-sm lg:text-base font-normal">
+              <span class="whitespace-nowrap !font-anekb">Shadida Trading Company AB</span>
+              <span class="whitespace-nowrap !font-anekb">559356-9345</span>
+              <span class="whitespace-nowrap !font-anekb">Kristianstadsgatan 10</span>
+              <span class="whitespace-nowrap !font-anekb">214 23 Malmö</span>
+              <span class="whitespace-nowrap !font-anekb">Sweden</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-y-2 lg:w-1/2 px-2 py-6 lg:p-8 bg-coco-off-white">
+        <div>
+          <span class="text-uppercase text-coco-slate-gray text-2xl font-medium !font-anekt">
+            Submit A Ticket
+          </span>
+        </div>
+
+        <div>
+          <span class="text-coco-slate-gray text-lg font-normal !font-anekb">
+            Please take a look at our
+            <a routerLink="/faq">
+              <span class="text-coco-orange font-semibold !font-anekb">FAQs</span>
+            </a>
+            before reaching out to us, as it might help to answer your question.
+          </span>
+        </div>
+
+        <!-- TODO: Go through the input elements and set a reasonable amount of padding - Tailwind resets these -->
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-y-2 pt-8">
+          <div class="flex flex-col">
+            <label for="orderNumber" class="text-coco-slate-gray text-base font-medium !font-anekb">
+              Order Number
+            </label>
+
+            <input formControlName="orderNumber" id="orderNumber" type="text"
+              class="form-field h-9 border border-coco-lighter-gray !outline-none" />
+
+            <div class="form-field-error-container"></div>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="fullName" class="text-coco-slate-gray text-base font-medium !font-anekb">
+              Full Name <span class="text-coco-orange">*</span>
+            </label>
+
+            <input formControlName="fullName" id="fullName" type="text"
+              class="form-field h-9 border border-coco-lighter-gray !outline-none" />
+
+            <div class="form-field-error-container">
+              <span *ngIf="isInvalidTouched('fullName')" class="form-field-error-message">
+                Please enter your full name.
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="emailAddress" class="text-coco-slate-gray text-base font-medium !font-anekb">
+              Email Address <span class="text-coco-orange">*</span>
+            </label>
+
+            <input formControlName="emailAddress" id="emailAddress" type="email"
+              class="form-field h-9 border border-coco-lighter-gray !outline-none" />
+
+            <div class="form-field-error-container">
+              <span *ngIf="isInvalidTouched('emailAddress')" class="form-field-error-message">
+                Please enter a valid email address.
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="phoneNumber" class="text-coco-slate-gray text-base font-medium !font-anekb">
+              Phone Number
+            </label>
+
+            <input formControlName="phoneNumber" id="phoneNumber" type="tel"
+              class="h-9 border border-coco-lighter-gray !outline-none" />
+
+            <div class="form-field-error-container"></div>
+          </div>
+
+          <!-- TODO: Should we add a character counter for this textarea? -->
+          <div class="flex flex-col pb-2">
+            <label for="message" class="text-coco-slate-gray text-base font-medium !font-anekb">
+              Let us know how to help you <span class="text-coco-orange">*</span>
+            </label>
+
+            <textarea formControlName="message" id="message"
+              class="form-field h-[106px] border border-coco-lighter-gray !outline-none"></textarea>
+
+            <div class="form-field-error-container">
+              <span *ngIf="isInvalidTouched('message')" class="form-field-error-message">
+                Please enter at least {{ messageMinLength }}, maximum {{ messageMaxLength }} characters.
+              </span>
+            </div>
+          </div>
+
+          <ngx-turnstile *scullyExclude formControlName="turnstileToken" [siteKey]="turnstileSiteKey"
+            theme="light"></ngx-turnstile>
+
+          <div class="pt-2">
+            <button type="submit" [disabled]="!allowSubmit"
+              [ngClass]="[allowSubmit ? '' : 'opacity-50 cursor-not-allowed']" class="px-6 py-4 bg-coco-orange">
+              <span class="text-uppercase text-white text-sm font-semibold !font-anekb">
+                Send
+              </span>
+
+              <app-loading-spinner *ngIf="isSubmitting" color="white" bgClass="bg-coco-orange"
+                [scale]=".5"></app-loading-spinner>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

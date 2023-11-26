@@ -1,6 +1,18 @@
-<div class="header p-3" *ngIf="isMobile">
-  <a href="https://cococasing.se/" >
-    <img src="/assets/img/cococasing_logo.png" alt="Coco Casing" class="icon" [class.icon--mobile]="isMobile">
-  </a>
+<!-- TODO: Consider adding Content-Security-Policy -->
+<!-- TODO: Revisit spacings and alignments in the design that might look strange -->
+<!-- TODO: Think about how could h1, h2, ... inherited styles be reset via Tailwind -->
+<div class="flex flex-col min-h-screen bg-white">
+  <div class="grow">
+    <app-site-drawer [ngClass]="{ 'hidden': !drawerIsVisible }" (drawerClose)="onDrawerClose()"></app-site-drawer>
+
+    <app-site-shopping-cart *scullyExclude [ngClass]="{ 'hidden': !cartIsVisible }"></app-site-shopping-cart>
+
+    <app-site-header (hamburgerMenuClick)="onHamburgerMenuClick()"></app-site-header>
+
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-site-news-signup></app-site-news-signup>
+
+  <app-site-footer></app-site-footer>
 </div>
-<router-outlet></router-outlet>

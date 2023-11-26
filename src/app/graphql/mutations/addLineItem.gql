@@ -1,0 +1,7 @@
+mutation AddLineItem($cartId: ID!, $variantId: ID!) {
+  cartLinesAdd(cartId: $cartId, lines: { merchandiseId: $variantId }) {
+    cart {
+      ...ShoppingCart
+    }
+  }
+}

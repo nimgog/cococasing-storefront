@@ -1,0 +1,13 @@
+.selected-color-marker {
+  &--desert-beige,
+  &--french-lavender,
+  &--sunset-orange {
+    @apply bg-black #{!important};
+  }
+
+  &--forest-green,
+  &--jet-black,
+  &--midnight-blue {
+    @apply bg-white #{!important};
+  }
+}

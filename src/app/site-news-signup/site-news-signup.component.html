@@ -1,0 +1,50 @@
+<!-- TODO: Styles of this component changed in the new design, get back to this and update styles -->
+
+<div class="flex justify-center px-2 bg-coco-orange">
+  <div class="grow flex flex-col max-w-centered-content">
+    <div class="flex flex-col md:flex-row md:justify-between gap-y-4 py-8 md:py-10 lg:py-16">
+      <div class="grow">
+        <span
+          class="block text-center md:text-left text-white text-uppercase text-[24px] font-bold !font-anekt leading-[32px]">
+          Join us & save
+        </span>
+
+        <span class="block text-center md:text-left text-white text-[16px] font-roboto leading-[24px]">
+          Sign up and stay up to date on all the latest news.
+        </span>
+      </div>
+
+      <div class="grow flex justify-center md:justify-end items-center">
+        <form [formGroup]="newsSignupForm" (ngSubmit)="onSubmit()"
+          class="relative grow max-w-[250px] md:max-w-[305px] lg:max-w-[360px] md:h-11">
+          <div class="flex items-center w-full h-full bg-white rounded-lg overflow-hidden">
+            <input formControlName="signupEmail" type="email" autocomplete="email"
+              class="grow pl-1.5 py-2 min-w-0 rounded-l-lg placeholder-coco-dark-blue text-[16px] font-light !font-anekb leading-[20px] !outline-none"
+              placeholder="Your Email*" />
+
+            <button type="submit" [disabled]="!allowSubmit"
+              [ngClass]="[allowSubmit ? '' : 'opacity-50 cursor-not-allowed']"
+              class="flex justify-center items-center h-7 md:h-8 border-l border-coco-slate-gray rounded-r-lg">
+
+              <div class="flex justify-end items-center px-1.5">
+                <mat-icon inline="true" class="text-2xl text-coco-slate-gray" aria-label="Navigation icon"
+                  aria-hidden="false">
+                  east
+                </mat-icon>
+              </div>
+
+              <app-loading-spinner [ngClass]="{ 'hidden': !isSubmitting }" bgClass="bg-white"
+                [scale]=".75"></app-loading-spinner>
+            </button>
+          </div>
+
+          <div *ngIf="isInvalidTouched('signupEmail')" class="absolute -bottom-5 left-0 w-full h-5">
+            <span class="text-white text-sm font-normal !font-anekb">
+              Please enter a valid email address.
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

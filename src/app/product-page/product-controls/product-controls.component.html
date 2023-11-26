@@ -1,0 +1,38 @@
+<div *ngIf="selectedVariant" class="flex flex-col gap-y-4">
+  <div class="flex justify-center">
+    <span class="uppercase text-2xl lg:text-3xl font-semibold !font-anekt">
+      Choose Yours
+    </span>
+  </div>
+
+  <app-product-option-group title="iPhone Model">
+    <app-product-option-selector *ngFor="let serie of availableSeries" [isEnabled]="true"
+      [isActive]="serie === selectedVariant.serie" buttonClass="px-5" (click)="serieChange.emit(serie)">
+      {{ serie | replace:'-':' ' | titlecase | seriecase }}
+    </app-product-option-selector>
+  </app-product-option-group>
+
+  <app-product-option-group title="iPhone Version">
+    <app-product-option-selector *ngFor="let model of availableModels" [isEnabled]="isValidVariant('model', model)"
+      [isActive]="model === selectedVariant.model" buttonClass="px-3.5" (click)="modelChange.emit(model)">
+      {{ model | replace:'-':' ' | titlecase }}
+    </app-product-option-selector>
+  </app-product-option-group>
+
+  <app-product-option-group *ngIf="availableColors.length" title="Choose your Color">
+    <app-product-option-selector *ngFor="let color of availableColors" [isEnabled]="isValidVariant('color', color)"
+      [isActive]="color === selectedVariant.color" [buttonClass]="['color-option--' + color]" class="w-[54px] h-10"
+      (click)="colorChange.emit(color)">
+      <div class="w-3 h-3 mx-auto rounded-full"
+        [ngClass]="[color === selectedVariant.color ? 'selected-color-marker--' + color : 'hidden']">
+      </div>
+    </app-product-option-selector>
+  </app-product-option-group>
+
+  <app-product-option-group *ngIf="availableTiers.length" title="Choose your Tier">
+    <app-product-option-selector *ngFor="let tier of availableTiers" [isEnabled]="isValidVariant('tier', tier)"
+      [isActive]="tier === selectedVariant.tier" buttonClass="px-4" (click)="tierChange.emit(tier)">
+      {{ tier | titlecase }}
+    </app-product-option-selector>
+  </app-product-option-group>
+</div>

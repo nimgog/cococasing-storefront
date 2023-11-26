@@ -1,0 +1,87 @@
+<div class="flex justify-center px-2 pt-16 md:pt-24 lg:pt-32">
+  <div class="grow flex flex-col max-w-centered-content">
+    <div class="py-1 border-b border-coco-light-medium-gray">
+      <!-- TODO: Look into section titles including this one: Text colors are inconsistent between
+      the mobile and desktop views, but also between the old and new designs -->
+      <!-- TODO: There's a "VIEW ALL" link in desktop view, should it be added to others, too? -->
+      <!-- TODO: Ask Nimer if there should there should be a breakpoint being used between mobile and desktop -->
+      <span id="products"
+        class="text-coco-dark-blue lg:text-coco-darkest-blue text-uppercase text-lg lg:text-3xl lg:font-medium !font-anekt leading-7 lg:leading-9">
+        Shop by category
+      </span>
+    </div>
+
+    <div class="flex flex-col pt-8 pb-6 lg:pb-8 gap-y-2">
+      <div class="grid grid-rows-6 grid-cols-3 grid-flow-col gap-x-2 gap-y-1 lg:gap-y-2 h-[512px] lg:h-[844px]">
+        <div
+          class="row-span-2 lg:row-span-6 col-span-full lg:col-span-2 flex gap-x-1 lg:gap-x-4 p-1 rounded-lg bg-coco-light-gray">
+          <div class="w-1/2 p-1 lg:p-0">
+            <img class="w-full h-full object-center object-contain lg:object-cover lg:rounded-lg"
+              [src]="categories[0].imageUrl" [alt]="categories[0].name" />
+          </div>
+
+          <div class="w-1/2 flex flex-col justify-center items-center lg:items-start p-1">
+            <span
+              class="text-coco-darkest-blue text-uppercase text-xl lg:text-4xl font-bold !font-anekt leading-7 lg:leading-10 whitespace-nowrap lg:whitespace-normal">
+              {{ categories[0].name }}
+            </span>
+
+            <span
+              class="pt-1 pb-2 lg:pb-8 text-center lg:text-left text-coco-dark-blue text-xs lg:text-xl font-light lg:font-normal !font-anekb lg:leading-7">
+              {{ categories[0].description }}
+            </span>
+
+            <button [routerLink]="[categories[0].pageUrl]"
+              class="flex justify-center items-center w-[82px] lg:w-[137px] h-[30px] lg:h-[47px] px-[5px] lg:px-5 py-1 lg:py-[14px] bg-coco-darkest-blue rounded lg:rounded-lg">
+              <span class="text-white text-uppercase text-sm lg:text-base font-medium !font-anekb leading-6">
+                Shop now
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div *ngFor="let category of categories | slice:1:3"
+          class="row-span-2 lg:row-span-3 col-span-full lg:col-span-1 flex lg:flex-col gap-x-1 lg:gap-y-0.5 p-1 rounded-lg bg-coco-light-gray">
+          <div class="lg:grow w-1/2 lg:w-auto lg:min-h-0 p-1 lg:p-0">
+            <img class="w-full h-full object-center object-contain" [src]="category.imageUrl" [alt]="category.name" />
+          </div>
+
+          <div class="lg:flex-none w-1/2 lg:w-full flex flex-col justify-center items-center p-1">
+            <span
+              class="text-coco-darkest-blue text-uppercase text-xl lg:text-2xl font-bold !font-anekt leading-7 lg:leading-8 whitespace-nowrap lg:whitespace-normal">
+              {{ category.name }}
+            </span>
+
+            <span
+              class="pt-1 pb-2 lg:pb-8 text-center text-coco-dark-blue text-xs lg:text-xl font-light lg:font-normal !font-anekb lg:leading-7">
+              {{ category.description }}
+            </span>
+
+            <button [routerLink]="[category.pageUrl]"
+              class="flex justify-center items-center w-[82px] lg:w-[137px] h-[30px] lg:h-[47px] px-[5px] lg:px-5 py-1 lg:py-[14px] bg-coco-darkest-blue rounded lg:rounded-lg">
+              <span class="text-white text-uppercase text-sm lg:text-base font-medium !font-anekb leading-6">
+                Shop now
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-x-2 h-[61px] lg:h-[280px]">
+        <a *ngFor="let category of categories | slice:3" [routerLink]="[category.pageUrl]"
+          class="flex flex-col justify-center items-center lg:gap-y-0.5 p-1 rounded-lg bg-coco-light-gray">
+          <div class="hidden lg:block">
+            <img class="w-full h-full object-center object-contain" [src]="category.imageUrl" [alt]="category.name" />
+          </div>
+
+          <div class="flex justify-center items-center lg:p-1">
+            <span
+              class="text-coco-darkest-blue text-center text-uppercase text-xs lg:text-lg font-semibold !font-anekt">
+              {{ category.name }}
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

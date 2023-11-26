@@ -1,4 +1,3 @@
-
 const setEnv = () => {
   const fs = require('fs');
   const writeFile = fs.writeFile;
@@ -14,6 +13,10 @@ const setEnv = () => {
   const envConfigFile = `export const environment = {
   ipapiKey: '${process.env['ipapiKey']}',
   storeFrontAT: '${process.env['storeFrontAT']}',
+  storeFrontEndpoint: '${process.env['storeFrontEndpoint']}',
+  contactWorkerEndpoint: '${process.env['contactWorkerEndpoint']}',
+  turnstileSiteKey: '${process.env['turnstileSiteKey']}',
+  mailChimpNewsletterEndpoint: '${process.env['mailChimpNewsletterEndpoint']}',
   appVersion: '${appVersion}',
   production: true,
 };

@@ -1,0 +1,10 @@
+  .blog-post-body {
+    h2 {
+      @apply pb-2 text-coco-slate-gray text-base lg:text-lg font-medium font-anekt leading-7 #{!important};
+      text-transform: uppercase;
+    }
+
+    p {
+      @apply pb-8 text-coco-slate-gray text-sm lg:text-base font-normal font-anekb #{!important};
+    }
+  }

@@ -1,0 +1,10 @@
+mutation SetLineItemQuantity($cartId: ID!, $itemId: ID!, $quantity: Int!) {
+  cartLinesUpdate(
+    cartId: $cartId
+    lines: { id: $itemId, quantity: $quantity }
+  ) {
+    cart {
+      ...ShoppingCart
+    }
+  }
+}

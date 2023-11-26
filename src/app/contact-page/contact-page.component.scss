@@ -1,0 +1,11 @@
+.form-field.ng-invalid.ng-touched {
+  @apply bg-coco-orange bg-opacity-5 border-coco-orange border-opacity-50 #{!important};
+}
+
+.form-field-error-container {
+  @apply h-5 #{!important};
+}
+
+.form-field-error-message {
+  @apply text-coco-orange text-sm font-normal font-anekb #{!important};
+}

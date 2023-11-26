@@ -41,7 +41,16 @@ testem.log
 .DS_Store
 Thumbs.db
 
-
+src/**/*.js*
 src/environments/environment.prod.ts
 src/environments/environment.ts
 src/environments/.env
+
+scully.log
+scullyStats.json
+scully.cococasing-storefront.config.js
+.scully
+/scully/**/*.js
+/scully/**/*.js.map
+/scully/**/*.d.ts
+src/assets/scully-routes.json

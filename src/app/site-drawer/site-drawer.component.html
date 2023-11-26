@@ -1,0 +1,99 @@
+<!-- TODO: Collapse font-roboto into !font-anekb, maybe also replace font-anekt -->
+<!-- TODO: If anekb is ok to be the only font, configure it globally -->
+
+<div class="fixed flex w-full h-screen z-mobile-drawer">
+  <div class="grow shrink-0 top-0 right-0 flex flex-col w-full max-w-[400px] bg-white">
+    <div class="relative flex justify-center items-center p-4 border-b border-coco-lighter-gray">
+      <div>
+        <img src="/assets/img/site-header/coco-logo-dark.svg" alt="Coco Casing logo">
+      </div>
+
+      <button (click)="closeDrawer()" class="absolute top-4 right-4 p-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="#374151" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="grow">
+      <div class="flex flex-col gap-y-4 px-4 py-4">
+        <ng-container *ngTemplateOutlet="menuItem; context: { title: 'Home', link:'/' }"></ng-container>
+        <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+
+        <div>
+          <div class="flex flex-col gap-y-4">
+            <button (click)="toggleProductsMenu()">
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-uppercase text-lg font-roboto">Products</span>
+                </div>
+
+                <div>
+                  <mat-icon [ngClass]="isProductsMenuOpen ? 'text-coco-orange' : ''" class="text-2xl"
+                    aria-label="Expand icon" aria-hidden="false">
+                    {{ isProductsMenuOpen ? 'expand_less' : 'expand_more' }}
+                  </mat-icon>
+                </div>
+              </div>
+            </button>
+
+            <div [ngClass]="[isProductsMenuOpen ? '' : 'hidden']" class="flex flex-col gap-y-4">
+              <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="submenuItem; context: { title:'The Coco Package', link: '/products/the-coco-package' }"></ng-container>
+              <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="submenuItem; context: { title:'The Package', link: '/products/the-package' }"></ng-container>
+              <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="submenuItem; context: { title:'The Glass Kit', link: '/products/the-glass-kit' }"></ng-container>
+              <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="submenuItem; context: { title:'The Coco Case', link: '/products/the-coco-case' }"></ng-container>
+              <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="submenuItem; context: { title:'The Screen Protection', link: '/products/the-screen-protection' }"></ng-container>
+              <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+              <ng-container
+                *ngTemplateOutlet="submenuItem; context: { title:'The Lens Protection', link: '/products/the-lens-protection' }"></ng-container>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+        <ng-container *ngTemplateOutlet="menuItem; context: { title: 'Blog', link: '/blog' }"></ng-container>
+        <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+        <ng-container *ngTemplateOutlet="menuItem; context: { title: 'FAQ', link: '/faq' }"></ng-container>
+        <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+        <ng-container *ngTemplateOutlet="menuItem; context: { title: 'Contact', link: '/contact' }"></ng-container>
+        <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
+        <ng-container *ngTemplateOutlet="menuItem; context: { title: 'About Us', link: '/about' }"></ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div (click)="closeDrawer()" class="grow h-full bg-black opacity-[.65]"></div>
+</div>
+
+<ng-template #menuItem let-title="title" let-link="link">
+  <a (click)="closeDrawer()" [routerLink]="link">
+    <span class="text-uppercase text-lg font-roboto">
+      {{ title }}
+    </span>
+  </a>
+</ng-template>
+
+<ng-template #submenuItem let-title="title" let-link="link">
+  <div class="px-8">
+    <a (click)="closeDrawer()" [routerLink]="link">
+      <span class="text-uppercase text-sm font-medium font-roboto">
+        {{ title }}
+      </span>
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #menuSeparator>
+  <div class="w-full h-[1px] bg-gradient-to-r from-coco-orange to-transparent opacity-50"></div>
+</ng-template>

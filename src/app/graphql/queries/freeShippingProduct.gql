@@ -1,0 +1,11 @@
+query FreeShippingProduct($countryCode: CountryCode!)
+@inContext(country: $countryCode) {
+  product(handle: "dummy-product-free-shipping-at-20") {
+    priceRange {
+      minVariantPrice {
+        currencyCode
+        amount
+      }
+    }
+  }
+}

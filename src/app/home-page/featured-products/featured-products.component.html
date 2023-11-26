@@ -1,0 +1,74 @@
+<div *ngIf="products.length" (swipeleft)="showNextProduct()" (swiperight)="showPreviousProduct()"
+  class="bg-coco-darkest-blue flex flex-col items-center gap-y-0.5 px-4 pt-2 pb-4 rounded-lg">
+  <div *ngFor="let product of products; let i = index" [@fadeAnimation]="i === currentProductIndex ? 'shown' : 'hidden'"
+    [ngClass]="[
+    i === currentProductIndex ? 'block' : 'hidden',
+    isNewProduct(product) ? 'bg-coco-orange' : 'bg-coco-red'
+  ]" class="flex justify-center w-[81px] px-2 pt-1 mb-1.5">
+    <span class="text-white text-center text-uppercase text-[12px] font-medium !font-anekt leading-7 tracking-[1.2px]">
+      {{ getProductAnnouncement(product) }}
+    </span>
+  </div>
+
+  <div class="grow w-full relative">
+    <!-- <button (click)="showPreviousProduct()" [ngClass]="{ hidden: hideArrows || !leftControlEnabled }"
+      class="bg-coco-orange/75 z-product-slider-arrow absolute left-0 top-1/2 -translate-y-1/2 flex-none flex justify-center items-center w-[34px] h-[34px] rounded-full">
+      <img src="/assets/img/..." alt="Previous product" />
+    </button> -->
+
+    <div class="grow flex justify-center h-[288px]">
+      <img *ngFor="let product of products; let i = index" [@slideAnimation]="i - currentProductIndex"
+        [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="object-contain" [src]="product.image.url"
+        [alt]="product.image.altText || product.title" />
+    </div>
+
+    <!-- <button (click)="showNextProduct()" [ngClass]="{ hidden: hideArrows || !rightControlEnabled }"
+      class="bg-coco-orange/75 z-product-slider-arrow absolute right-0 top-1/2 transform -translate-y-1/2 flex-none flex justify-center items-center w-[34px] h-[34px] rounded-full">
+      <img src="/assets/img/..." alt="Next product" />
+    </button> -->
+  </div>
+
+  <div *ngIf="products.length > 1" class="flex justify-center gap-x-2 pt-2 pb-4">
+    <button *ngFor="let product of products; let i = index"
+      [@swapColorAnimation]="i === currentProductIndex ? 'selected' : 'unselected'" (click)="selectProduct(i)"
+      class="w-[14px] h-[14px] rounded-full"></button>
+  </div>
+
+  <div [ngClass]="{ 'pt-[38px]': products.length === 1 }">
+    <div *ngFor="let product of products; let i = index"
+      [@fadeAnimation]="i === currentProductIndex ? 'shown' : 'hidden'"
+      [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="flex flex-col items-center pb-2.5">
+      <span
+        class="text-center text-white text-uppercase text-sm md:text-base lg:text-lg font-medium !font-anekt leading-5 tracking-[1.4px] lg:tracking-[1.8px]">
+        {{ product.title }}
+      </span>
+
+      <span
+        class="mt-1 mb-[18px] text-center text-coco-lighter-gray text-[12px] font-roboto leading-[16px] tracking-[1.2px]">
+        {{ product.description }}
+      </span>
+
+      <div *scullyExclude class="flex gap-x-2">
+        <span *ngIf="product.originalPrice"
+          class="text-uppercase text-coco-red text-xs md:text-sm lg:text-base font-normal !font-anekt leading-5 lg:leading-7 tracking-[1.2px] lg:tracking-[1.6px] line-through decoration-1">{{
+          product.originalPrice.amount
+          }} {{ product.originalPrice.currencyCode }}</span>
+
+        <span
+          class="text-uppercase text-white text-sm md:text-base lg:text-lg font-semibold !font-anekt tracking-[1.4px] lg:tracking-[1.8px]">{{
+          product.price.amount }} {{ product.price.currencyCode
+          }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button
+      [routerLink]="['/products', products[currentProductIndex].productSlug, products[currentProductIndex].variantSlug]"
+      role="link" class="bg-coco-orange w-[143px] h-[34px] px-8 py-1 rounded">
+      <span class="text-white text-uppercase text-[14px] font-semibold !font-anekb">
+        Shop Now
+      </span>
+    </button>
+  </div>
+</div>

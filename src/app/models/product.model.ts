@@ -1,139 +1,80 @@
-export interface Product {
-  id: string;
-  availableForSale: boolean;
-  createdAt: string;
-  updatedAt: string;
-  descriptionHtml: string;
-  description: string;
-  handle: string;
-  productType: string;
-  title: string;
-  vendor: string;
-  publishedAt: string;
-  onlineStoreUrl: string;
-  options: Option[];
-  images: any[];
-  variants: Variant[];
-}
+export type Image = {
+  url: string;
+  altText?: string;
+};
 
-export interface Option {
-  id: string;
-  name: string;
-  values: Value[];
-}
-
-export interface Value {
-  value: string;
-  type: string;
-}
-
-export interface Variant {
-  id: string;
-  title: string;
-  price: Price;
-  weight: number;
-  available: boolean;
-  sku: string;
-  compareAtPrice: Price;
-  image: any;
-  selectedOptions: SelectedOption[];
-  unitPrice: any;
-  unitPriceMeasurement: UnitPriceMeasurement;
-  hasNextPage: any;
-  hasPreviousPage: any;
-  variableValues: VariableValues;
-}
-
-export interface Price {
-  amount: string;
+export type Money = {
+  amount: number;
   currencyCode: string;
-}
+};
 
-export interface SelectedOption {
-  name: string;
-  value: string;
-}
+export const productSeries = [
+  '8-se',
+  'x',
+  'xr',
+  'xs',
+  'xs-max',
+  '11',
+  '12',
+  '13',
+  '14',
+];
+export const productModels = ['mini', 'regular', 'plus', 'pro', 'pro-max'];
+export const productColors = [
+  'sunset-orange',
+  'french-lavender',
+  'desert-beige',
+  'midnight-blue',
+  'jet-black',
+  'forest-green',
+];
+export const productTiers = ['standard', 'premium'];
 
-export interface UnitPriceMeasurement {
-  measuredType: any;
-  quantityUnit: any;
-  quantityValue: number;
-  referenceUnit: any;
-  referenceValue: number;
-}
+export const defaultProductSerie = '14';
+export const defaultProductModel = 'regular';
+export const defaultProductColor = 'sunset-orange';
+export const defaultProductTier = 'premium';
 
-export interface VariableValues {
+type ProductOption = 'color' | 'tier';
+
+// Extend this when a new product is added
+// Model is expected for each, so it shouldn't be added explicitly
+export const expectedProductOptions = new Map<string, ProductOption[]>([
+  ['the-coco-case', ['color']],
+  ['the-coco-package', ['color']],
+  ['the-glass-kit', []],
+  ['the-lens-protection', ['tier']],
+  ['the-package', ['color']],
+  ['the-screen-protection', ['tier']],
+]);
+
+export type Product = {
+  slug: string;
+  description: string;
+  variants: ProductVariant[];
+};
+
+export type ProductVariant = {
   id: string;
-}
-
-/* The Package Constants */
-
-export const model: { [key: string]: string } = {
-  mini: 'Mini',
-  plus: 'Plus',
-  pro: 'Pro',
-  proMax: 'Pro Max',
-  regular: 'Regular',
+  slug: string;
+  serie: string;
+  model: string;
+  color?: string;
+  tier?: string;
+  images: Image[];
+  originalPrice?: Money;
+  price: Money;
 };
 
-export const colors: { [key: string]: string } = {
-  Black: 'Jet black',
-  Green: 'Forest green',
-  Orange: 'Sunset orange',
-  Blue: 'Midnight blue',
-  Beige: 'Desert beige',
-  Lavender: 'French lavender',
-};
+export const discountedProductTagPrefix = 'sale-';
 
-export const options: {
-  [key: string]: {
-    colors: { [key: string]: string };
-    model: { [key: string]: string };
-  };
-} = {
-  '14': {
-    colors: colors,
-    model: {
-      Plus: 'Plus',
-      Pro: 'Pro',
-      'Pro Max': 'Pro Max',
-      Regular: 'Regular',
-    },
-  },
-  '13': {
-    colors: {
-      Orange: 'Sunset orange',
-      Beige: 'Desert beige',
-      Lavender: 'French lavender',
-    },
-    model: {
-      Mini: 'Mini',
-      Pro: 'Pro',
-      'Pro Max': 'Pro Max',
-      Regular: 'Regular',
-    },
-  },
-  '12': {
-    colors: {
-      Orange: 'Sunset orange',
-      Lavender: 'French lavender',
-    },
-    model: {
-      Mini: 'Mini',
-      Pro: 'Pro',
-      'Pro Max': 'Pro Max',
-      Regular: 'Regular',
-    },
-  },
-  '11': {
-    colors: {
-      Orange: 'Sunset orange',
-      Lavender: 'French lavender',
-    },
-    model: {
-      Pro: 'Pro',
-      'Pro Max': 'Pro Max',
-      Regular: 'Regular',
-    },
-  },
+export type FeaturedProduct = {
+  productSlug: string;
+  variantSlug: string;
+  title: string;
+  description: string;
+  image: Image;
+  price: Money;
+  originalPrice?: Money;
+  discountPercent?: number;
 };
