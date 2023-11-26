@@ -13,7 +13,7 @@
     <div class="grow flex flex-col max-w-centered-content">
       <!-- TODO: Check what's the desired height in the new design: 75 vs 61 px -->
       <div class="grow flex justify-between items-center h-[61px] px-1.5">
-        <button (click)="onHamburgerMenuClick()" class="lg:hidden">
+        <button (click)="onHamburgerMenuClick()" class="md:hidden">
           <img src="/assets/img/site-header/hamburger-menu.svg" alt="Menu" />
         </button>
 
@@ -22,7 +22,7 @@
             <img src="/assets/img/site-header/coco-logo-dark.svg" alt="Coco Casing logo" />
           </a>
 
-          <div class="hidden lg:flex items-stretch gap-x-3 text-coco-darkest-blue text-[16px] font-medium font-roboto">
+          <div class="hidden md:flex items-stretch gap-x-3 text-coco-darkest-blue text-[16px] font-medium font-roboto">
             <ng-container *ngTemplateOutlet="navLink; context: { title: 'Home', link: '/' }"></ng-container>
             <ng-container *ngTemplateOutlet="navSeparator"></ng-container>
 
@@ -62,15 +62,16 @@
         </div>
 
         <div class="lg:grow flex justify-end items-center gap-x-4">
+          <!-- TODO: Re-add search when implemented -->
           <!-- Spacer to force the search to shrink when it'd be too close to the nav links -->
-          <div class="hidden lg:block shrink-0 w-10"></div>
+          <!-- <div class="hidden lg:block shrink-0 w-10"></div>
 
           <form class="grow hidden lg:flex gap-x-2.5 max-w-[235px] px-2 py-0.5 bg-coco-light-gray rounded-2xl">
             <button class="shrink-0 rounded-l-2xl" type="submit">
               <img src="/assets/img/site-header/search.svg" alt="Search" />
             </button>
             <input class="grow bg-coco-light-gray rounded-r-2xl !outline-none" type="search" placeholder="Search ..." />
-          </form>
+          </form> -->
 
           <button (click)="openCart()" class="relative shrink-0 w-6 lg:w-8 h-6 lg:h-8">
             <img src="/assets/img/site-header/shopping-bag.svg" alt="Shopping bag" />
