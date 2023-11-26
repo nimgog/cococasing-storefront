@@ -25,7 +25,6 @@ const routes: RouteConfig = {
   },
 };
 
-// TODO: Reminder: look into other Scully plugins, too - there's up-front one for sitemaps
 export const config: ScullyConfig = {
   projectRoot: './src',
   projectName: 'cococasing-storefront',
