@@ -40,6 +40,12 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     private readonly scully: ScullyRoutesService
   ) {}
 
+  get categoryPageRoutePrefixes() {
+    return this.routeTabs
+      .filter((tab) => tab.category)
+      .map((tab) => `/blog/${tab.category}/`);
+  }
+
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.currentCategory = (params['category'] as PostCategory) || undefined;
@@ -77,11 +83,10 @@ export class BlogPageComponent implements OnInit, OnDestroy {
             route.route.startsWith(`/blog/${this.currentCategory}/`)
           );
         } else {
-          filteredRoutes = scullyRoutes.filter(
-            (scullyRoute) =>
-              scullyRoute.route.startsWith('/blog/lifestyle/') ||
-              scullyRoute.route.startsWith('/blog/training/') ||
-              scullyRoute.route.startsWith('/blog/update/')
+          filteredRoutes = scullyRoutes.filter((scullyRoute) =>
+            this.categoryPageRoutePrefixes.some((prefix) =>
+              scullyRoute.route.startsWith(prefix)
+            )
           );
         }
 
