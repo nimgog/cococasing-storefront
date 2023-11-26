@@ -53,6 +53,7 @@ import { ProductOptionSelectorComponent } from './product-page/product-option-gr
 import { AddToCartComponent } from './product-page/add-to-cart/add-to-cart.component';
 import { ScullyExcludeDirective } from './common/utils/scully-exclude.directive';
 import { ProductImageSliderComponent } from './product-page/product-image-slider/product-image-slider.component';
+import { ProductDescriptionComponent } from './product-page/product-description/product-description.component';
 
 const Client = require('shopify-buy');
 
@@ -95,6 +96,7 @@ export const client = Client.buildClient({
     AddToCartComponent,
     ScullyExcludeDirective,
     ProductImageSliderComponent,
+    ProductDescriptionComponent,
   ],
   imports: [
     MatExpansionModule,

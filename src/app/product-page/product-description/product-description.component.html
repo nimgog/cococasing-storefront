@@ -1,0 +1,17 @@
+<div class="flex justify-center">
+  <div class="flex flex-col items-center gap-y-2 w-full max-w-[480px]">
+    <div class="relative flex flex-col text-coco-slate-gray text-sm !font-anekb"
+      [ngClass]="[isExpanded ? '' : 'h-10 lg:h-auto overflow-hidden lg:overflow-auto product-description-fade']"
+      [innerHTML]="descriptionHtml">
+    </div>
+
+    <button class="flex lg:hidden justify-center items-center" (click)="isExpanded = !isExpanded">
+      <span class="text-coco-slate-gray text-sm font-semibold !font-anekb">{{ isExpanded ? 'Show Less' : 'Show More'
+        }}</span>
+
+      <mat-icon class="text-base" aria-label="Expand icon" aria-hidden="false">
+        {{ isExpanded ? 'expand_less' : 'expand_more' }}
+      </mat-icon>
+    </button>
+  </div>
+</div>

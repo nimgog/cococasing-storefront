@@ -75,10 +75,14 @@ export class ShopifyProductService {
           );
         }
 
-        return response.data.collection.products.nodes;
+        return response.data.collection;
       }),
-      map((shopifyProducts) =>
-        mapShopifyProductsToCocoProduct(shopifyProducts, productSlug)
+      map((shopifyCollection) =>
+        mapShopifyProductsToCocoProduct(
+          shopifyCollection.products.nodes,
+          productSlug,
+          shopifyCollection.descriptionHtml
+        )
       ),
       catchAndReportError(this.notificationService)
     );

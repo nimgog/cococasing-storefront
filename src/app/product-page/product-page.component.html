@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading" class="pb-8">
+<div *ngIf="!isLoading" class="pb-1">
   <div class="flex flex-col items-center gap-y-8 px-2 pt-10 pb-10">
     <div>
       <span class="text-uppercase text-coco-dark-blue text-3xl font-bold !font-anekt">
@@ -6,11 +6,7 @@
       </span>
     </div>
 
-    <div>
-      <p class="text-coco-slate-gray text-base font-medium !font-anekb">
-        {{ product.description }}
-      </p>
-    </div>
+    <app-product-description *ngIf="product.description" [description]="product.description"></app-product-description>
 
     <app-product-image-slider [product]="product" [selectedVariant]="selectedVariant"
       class="w-full"></app-product-image-slider>
@@ -26,7 +22,7 @@
 
         <app-product-option-group title="iPhone Version">
           <app-product-option-selector *ngFor="let model of availableModels"
-            [isEnabled]="isValidVariant('model', model)" [isActive]="model === selectedModel" buttonClass="px-4"
+            [isEnabled]="isValidVariant('model', model)" [isActive]="model === selectedModel" buttonClass="px-3.5"
             (click)="changeModel(model)">
             {{ model | replace:'-':' ' | titlecase }}
           </app-product-option-selector>
@@ -35,9 +31,10 @@
         <app-product-option-group *ngIf="availableColors.length" title="Choose your Color">
           <app-product-option-selector *ngFor="let color of availableColors"
             [isEnabled]="isValidVariant('color', color)" [isActive]="color === selectedColor"
-            [buttonClass]="[color === selectedColor ? 'color-option-selected--' + color : 'text-white color-option-unselected--' + color]"
-            class="w-[calc(33.333%-8px/3)]" (click)="changeColor(color)">
-            {{ color | replace:'-':' ' | titlecase }}
+            [buttonClass]="['color-option--' + color]" class="w-[54px] h-10" (click)="changeColor(color)">
+            <div class="w-3 h-3 mx-auto rounded-full"
+              [ngClass]="[color === selectedColor ? 'selected-color-marker--' + color : 'hidden']">
+            </div>
           </app-product-option-selector>
         </app-product-option-group>
 

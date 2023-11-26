@@ -126,10 +126,14 @@ const fetchProduct = (
         throw new Error(`Shopify request failed: ${JSON.stringify(response)}`);
       }
 
-      return response.data.collection.products.nodes;
+      return response.data.collection;
     }),
-    map((shopifyProducts) =>
-      mapShopifyProductsToCocoProduct(shopifyProducts, productSlug)
+    map((shopifyCollection) =>
+      mapShopifyProductsToCocoProduct(
+        shopifyCollection.products.nodes,
+        productSlug,
+        shopifyCollection.description
+      )
     )
   );
 };
@@ -140,7 +144,8 @@ const fetchProduct = (
 
 const mapShopifyProductsToCocoProduct = (
   shopifyProducts: any[],
-  productSlug: string
+  productSlug: string,
+  productDescription: string
 ) => {
   const variants = shopifyProducts.flatMap((shopifyProduct) => {
     const { serie, color, tier } = parseProductVariantAttributes(
@@ -217,7 +222,7 @@ const mapShopifyProductsToCocoProduct = (
 
   return <Product>{
     slug: productSlug,
-    description: '[Product description placeholder]', // TODO: Ask Nimer where to look for it
+    description: productDescription,
     variants,
   };
 };

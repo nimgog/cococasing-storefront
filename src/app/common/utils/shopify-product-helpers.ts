@@ -17,7 +17,8 @@ type ShopifyProduct = ShopifyProductNodes[number];
 
 export const mapShopifyProductsToCocoProduct = (
   shopifyProducts: ShopifyProduct[],
-  productSlug: string
+  productSlug: string,
+  productDescription: string
 ) => {
   const variants = shopifyProducts.flatMap((shopifyProduct) => {
     const { serie, color, tier } = parseProductVariantAttributes(
@@ -94,7 +95,7 @@ export const mapShopifyProductsToCocoProduct = (
 
   return <Product>{
     slug: productSlug,
-    description: '[Product description placeholder]', // TODO: Ask Nimer where to look for it
+    description: productDescription,
     variants,
   };
 };

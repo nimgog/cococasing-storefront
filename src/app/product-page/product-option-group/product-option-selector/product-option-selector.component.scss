@@ -1,4 +1,4 @@
-.color-option-unselected {
+.color-option {
   &--desert-beige {
     @apply bg-coco-case-desert-beige #{!important};
   }
@@ -21,31 +21,5 @@
 
   &--sunset-orange {
     @apply bg-coco-case-sunset-orange #{!important};
-  }
-}
-
-.color-option-selected {
-  &--desert-beige {
-    @apply border-coco-case-desert-beige #{!important};
-  }
-
-  &--forest-green {
-    @apply border-coco-case-forest-green #{!important};
-  }
-
-  &--french-lavender {
-    @apply border-coco-case-french-lavender #{!important};
-  }
-
-  &--jet-black {
-    @apply border-coco-case-jet-black #{!important};
-  }
-
-  &--midnight-blue {
-    @apply border-coco-case-midnight-blue #{!important};
-  }
-
-  &--sunset-orange {
-    @apply border-coco-case-sunset-orange #{!important};
   }
 }
