@@ -19,17 +19,12 @@ import {
   defaultProductSerie,
   defaultProductTier,
   expectedProductOptions,
-  productColors,
-  productModels,
-  productSeries,
-  productTiers,
 } from '../models/product.model';
 import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
-  styleUrls: ['./product-page.component.scss'],
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
   private productSub!: Subscription;
@@ -39,11 +34,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   isLoading = true;
   product!: Product;
   selectedVariant!: ProductVariant;
-
-  availableSeries: string[] = [];
-  availableModels: string[] = [];
-  availableColors: string[] = [];
-  availableTiers: string[] = [];
 
   markerElementReached = false;
 
@@ -157,37 +147,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     } else {
       this.selectDefaultVariant(product);
     }
-
-    const availableSeries = new Set<string>();
-    const availableModels = new Set<string>();
-    const availableColors = new Set<string>();
-    const availableTiers = new Set<string>();
-
-    product.variants.forEach(({ serie, model, color, tier }) => {
-      availableSeries.add(serie);
-      availableModels.add(model);
-
-      if (color) {
-        availableColors.add(color);
-      }
-
-      if (tier) {
-        availableTiers.add(tier);
-      }
-    });
-
-    this.availableSeries = productSeries.filter((serie) =>
-      availableSeries.has(serie)
-    );
-    this.availableModels = productModels.filter((model) =>
-      availableModels.has(model)
-    );
-    this.availableColors = productColors.filter((color) =>
-      availableColors.has(color)
-    );
-    this.availableTiers = productTiers.filter((tier) =>
-      availableTiers.has(tier)
-    );
   }
 
   selectDefaultVariant(product: Product) {
@@ -280,6 +239,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   changeModel(newModel: string) {
+    console.log('PARENT');
+
     if (!this.isValidModelForSerie(this.selectedSerie, newModel)) {
       return;
     }
@@ -314,29 +275,25 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   changeColor(newColor: string) {
-    if (!this.isValidVariant('color', newColor)) {
-      return;
+    if (this.isValidVariant('color', newColor)) {
+      this.changeVariant(
+        this.selectedSerie,
+        this.selectedModel,
+        newColor,
+        this.selectedTier
+      );
     }
-
-    this.changeVariant(
-      this.selectedSerie,
-      this.selectedModel,
-      newColor,
-      this.selectedTier
-    );
   }
 
   changeTier(newTier: string) {
-    if (!this.isValidVariant('tier', newTier)) {
-      return;
+    if (this.isValidVariant('tier', newTier)) {
+      this.changeVariant(
+        this.selectedSerie,
+        this.selectedModel,
+        this.selectedColor,
+        newTier
+      );
     }
-
-    this.changeVariant(
-      this.selectedSerie,
-      this.selectedModel,
-      this.selectedColor,
-      newTier
-    );
   }
 
   isValidModelForSerie(serie: string, model: string) {

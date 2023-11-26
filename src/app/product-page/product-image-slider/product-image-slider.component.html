@@ -27,7 +27,7 @@
 </div>
 
 <div class="flex flex-col justify-center items-center gap-y-1 w-full">
-  <div class="flex justify-center items-center w-full h-[300px]" (swipeleft)="showNextImage()"
+  <div class="flex justify-center items-center w-full h-[300px] lg:h-[500px]" (swipeleft)="showNextImage()"
     (swiperight)="showPreviousImage()">
     <div *ngIf="selectedVariantImages.length" class="relative">
       <button class="absolute top-0 right-0" (click)="enterFullscreen()">
@@ -38,7 +38,7 @@
       </button>
 
       <img [src]="selectedVariantImages[highlightedImageIndex].url"
-        [alt]="selectedVariantImages[highlightedImageIndex].altText" class="max-h-[300px]" />
+        [alt]="selectedVariantImages[highlightedImageIndex].altText" class="max-h-[300px] lg:max-h-[500px]" />
     </div>
   </div>
 

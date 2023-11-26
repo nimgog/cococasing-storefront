@@ -1,56 +1,42 @@
-<div *ngIf="!isLoading" class="pb-1">
-  <div class="flex flex-col items-center gap-y-8 px-2 pt-10 pb-10">
-    <div>
-      <span class="text-uppercase text-coco-dark-blue text-3xl font-bold !font-anekt">
-        {{ product.slug | replace:'-':' ' | titlecase }}
-      </span>
-    </div>
+<div *ngIf="!isLoading" class="flex justify-center pb-1">
+  <div class="flex flex-col items-center w-full">
+    <div class="flex flex-col items-center w-full max-w-centered-content gap-y-10 pt-10 pb-10 px-2 lg:px-0">
+      <div class="flex flex-col lg:flex-row lg:justify-center gap-y-6 w-full">
+        <div class="flex flex-col gap-y-6">
+          <div class="flex justify-center">
+            <span class="text-uppercase text-coco-dark-blue text-3xl lg:text-6xl font-bold !font-anekt">
+              {{ product.slug | replace:'-':' ' | titlecase }}
+            </span>
+          </div>
 
-    <app-product-description *ngIf="product.description" [description]="product.description"></app-product-description>
+          <div class="lg:grow flex flex-col lg:flex-col-reverse gap-y-8">
+            <app-product-description *ngIf="product.description" [description]="product.description"
+              class="flex justify-center"></app-product-description>
 
-    <app-product-image-slider [product]="product" [selectedVariant]="selectedVariant"
-      class="w-full"></app-product-image-slider>
+            <app-product-image-slider [product]="product" [selectedVariant]="selectedVariant"
+              class="w-full"></app-product-image-slider>
+          </div>
+        </div>
 
-    <div class="flex flex-col gap-y-10">
-      <div class="flex flex-col gap-y-4 rounded">
-        <app-product-option-group title="iPhone Model">
-          <app-product-option-selector *ngFor="let serie of availableSeries" [isEnabled]="true"
-            [isActive]="serie === selectedSerie" buttonClass="px-5" (click)="changeSerie(serie)">
-            {{ serie | replace:'-':' ' | titlecase | seriecase }}
-          </app-product-option-selector>
-        </app-product-option-group>
+        <div class="shrink-0 lg:max-w-[400px] lg:pt-[84px]">
+          <div class="flex flex-col justify-center lg:h-[500px]">
+            <div class="flex flex-col lg:gap-y-4 lg:ml-4 lg:pl-4 lg:border-l lg:border-[rgb(0,0,0,0.25)]">
+              <app-product-controls [availableVariants]="product.variants" [selectedVariant]="selectedVariant"
+                [isValidVariant]="isValidVariant.bind(this)" (serieChange)="changeSerie($event)"
+                (modelChange)="changeModel($event)" (colorChange)="changeColor($event)"
+                (tierChange)="changeTier($event)"></app-product-controls>
 
-        <app-product-option-group title="iPhone Version">
-          <app-product-option-selector *ngFor="let model of availableModels"
-            [isEnabled]="isValidVariant('model', model)" [isActive]="model === selectedModel" buttonClass="px-3.5"
-            (click)="changeModel(model)">
-            {{ model | replace:'-':' ' | titlecase }}
-          </app-product-option-selector>
-        </app-product-option-group>
-
-        <app-product-option-group *ngIf="availableColors.length" title="Choose your Color">
-          <app-product-option-selector *ngFor="let color of availableColors"
-            [isEnabled]="isValidVariant('color', color)" [isActive]="color === selectedColor"
-            [buttonClass]="['color-option--' + color]" class="w-[54px] h-10" (click)="changeColor(color)">
-            <div class="w-3 h-3 mx-auto rounded-full"
-              [ngClass]="[color === selectedColor ? 'selected-color-marker--' + color : 'hidden']">
+              <app-add-to-cart class="hidden lg:block" [productVariant]="selectedVariant"></app-add-to-cart>
             </div>
-          </app-product-option-selector>
-        </app-product-option-group>
-
-        <app-product-option-group *ngIf="availableTiers.length" title="Choose your Tier">
-          <app-product-option-selector *ngFor="let tier of availableTiers" [isEnabled]="isValidVariant('tier', tier)"
-            [isActive]="tier === selectedTier" buttonClass="px-4" (click)="changeTier(tier)">
-            {{ tier | titlecase }}
-          </app-product-option-selector>
-        </app-product-option-group>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="w-full h-16 bg-coco-darkest-blue" #addToCartPlaceholder>
-    <app-add-to-cart class="w-full h-16"
-      [ngClass]="[markerElementReached ? '' : 'fixed bottom-0 left-0 right-0 z-add-to-cart']"
-      [productVariant]="selectedVariant"></app-add-to-cart>
+    <div class="lg:hidden w-full h-16 bg-coco-darkest-blue" #addToCartPlaceholder>
+      <app-add-to-cart class="w-full h-16"
+        [ngClass]="[markerElementReached ? '' : 'fixed bottom-0 left-0 right-0 z-add-to-cart']"
+        [productVariant]="selectedVariant"></app-add-to-cart>
+    </div>
   </div>
 </div>
