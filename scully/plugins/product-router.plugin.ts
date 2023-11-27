@@ -8,7 +8,8 @@ import {
 } from '@apollo/client/core';
 import { firstValueFrom, from, map, mergeMap, toArray } from 'rxjs';
 import { HandledRoute, registerPlugin } from '@scullyio/scully';
-import { environment } from '../../src/environments/environment';
+import { environment as environmentDev } from '../../src/environments/environment';
+import { environment as environmentProd } from '../../src/environments/environment.prod';
 import {
   Money,
   Product,
@@ -19,6 +20,9 @@ import {
   productColors,
   productTiers,
 } from '../../src/app/models/product.model';
+
+const environment =
+  'storeFrontEndpoint' in environmentProd ? environmentProd : environmentDev;
 
 export const productRouterPlugin = 'productRouterPlugin';
 
