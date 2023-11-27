@@ -14,7 +14,7 @@
       {{ benefit.description }}
     </p>
 
-    <a [routerLink]="[benefit.learnMoreUrl]">
+    <a [routerLink]="[benefit.learnMorePath]" [fragment]="benefit.learnMoreFragment">
       <span class="text-[#006FCF] text-sm font-medium !font-anekb">
         Learn More &gt;
       </span>

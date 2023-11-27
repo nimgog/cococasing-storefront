@@ -1,25 +1,36 @@
 <!-- TODO: Should it have visible slide controls? -->
 <!-- TODO: Auto slide? -->
-<div (swipeleft)="showNextBenefit()" (swiperight)="showPreviousBenefit()" class="px-12 py-2">
+<div (swipeleft)="showNextBenefit()" (swiperight)="showPreviousBenefit()"
+  class="flex flex-col justify-between items-center h-[250px] px-12 py-2">
   <div *ngFor="let benefit of benefits; let i = index" [@fadeAnimation]="i === currentBenefitIndex ? 'shown' : 'hidden'"
     [ngClass]="[
     i === currentBenefitIndex ? 'block' : 'hidden',
 
-  ]" class="flex flex-col items-center gap-y-2">
+  ]" class="flex flex-col items-center gap-y-2 pt-2">
     <div>
       <img [src]="benefit.imageUrl" [alt]="benefit.title" />
     </div>
 
-    <span class="block text-uppercase text-coco-slate-gray text-sm font-medium !font-anekt">
-      {{ benefit.title }}
-    </span>
+    <div>
+      <span class="block text-uppercase text-coco-slate-gray text-sm font-medium !font-anekt">
+        {{ benefit.title }}
+      </span>
+    </div>
 
-    <p class="text-center text-coco-dark-blue text-sm font-normal !font-anekb">
-      {{ benefit.description }}
-    </p>
+    <div class="flex flex-col items-center max-w-[300px]">
+      <p class="text-center text-coco-dark-blue text-sm font-normal !font-anekb">
+        {{ benefit.description }}
+      </p>
+
+      <a [routerLink]="[benefit.learnMorePath]" [fragment]="benefit.learnMoreFragment">
+        <span class="text-[#006FCF] text-sm font-medium !font-anekb">
+          Learn More &gt;
+        </span>
+      </a>
+    </div>
   </div>
 
-  <div class="flex justify-center gap-x-2 pt-2 pb-4">
+  <div class="flex justify-center gap-x-2 pt-4 pb-4">
     <button *ngFor="let benefit of benefits; let i = index"
       [@swapColorAnimation]="i === currentBenefitIndex ? 'selected' : 'unselected'" (click)="selectProduct(i)"
       class="w-[10px] h-[10px] rounded-full"></button>

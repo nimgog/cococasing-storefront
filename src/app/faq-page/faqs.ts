@@ -1,17 +1,8 @@
-import { Scenario } from './scenario';
 import { Section } from './section';
 
-const dummyCase: Scenario = {
-  title: 'I neglected to enter my promotional code.',
-  body: 'When you buy something, you agree to pay the amount stated. Unfortunately, after a transaction has been made, discount codes cannot be applied. Naturally, you are able to make a new order using your discount coupon. Please be aware, though, that we are unable to cancel made orders, and you must return your initial purchase to receive a refund.',
-};
-
-const lorem =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-
-// TODO: Replace these with real data
 export const faqs: Section[] = [
   {
+    id: 'payment-and-discount',
     title: 'Payment & Discount',
     topics: [
       {
@@ -96,6 +87,7 @@ export const faqs: Section[] = [
     ],
   },
   {
+    id: 'order-and-delivery',
     title: 'Order & Delivery',
     topics: [
       {
@@ -191,6 +183,7 @@ export const faqs: Section[] = [
     ],
   },
   {
+    id: 'returns-and-refunds',
     title: 'Returns & Refunds',
     topics: [
       {
@@ -313,6 +306,7 @@ After we have processed the refund, it typically takes 1 to 5 business days for 
     ],
   },
   {
+    id: 'product-and-warranty',
     title: 'Product & Warranty',
     topics: [
       {
@@ -375,13 +369,15 @@ After we have processed the refund, it typically takes 1 to 5 business days for 
     ],
   },
   {
+    id: 'partnerships-and-dealers',
     title: 'Partnerships & Dealers',
     topics: [
       {
         title: 'Partnerships',
         scenarios: [
           {
-            title: 'What steps do I need to take if I wish to collaborate with you as an influencer?',
+            title:
+              'What steps do I need to take if I wish to collaborate with you as an influencer?',
             body: `It's wonderful that you wish to join our team at Coco Casing! You can work together directly or through one of our platforms, such as Brandbassador, DIPI, or Rewardstyle. Choose from one or all of them.
             Collaboration Do you have a social media presence with more than 1,000 followers, an accessible profile, and significant engagement? Would you be interested in working with us? You can reach us by email at contact@cococasing.se. After considering your request, we'll get back to you.
             Please be aware that we can only react to applicants that we decide to work with because there are so many of them.

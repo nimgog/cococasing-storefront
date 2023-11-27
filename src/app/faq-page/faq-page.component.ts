@@ -3,6 +3,7 @@ import { Section } from './section';
 import { faqs } from './faqs';
 import { DeviceDetectorService } from '../services/device-detector.service';
 import { Scenario } from './scenario';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-faq-page',
@@ -14,16 +15,24 @@ export class FaqPageComponent implements OnInit {
   scenarioExpandedStates!: Map<Scenario, boolean>;
   isMobile!: boolean;
 
-  constructor(private readonly deviceDetectorService: DeviceDetectorService) {}
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly deviceDetectorService: DeviceDetectorService
+  ) {}
 
   ngOnInit() {
     this.isMobile = this.deviceDetectorService.isMobile();
 
-    this.sectionExpandedStates = new Map(
-      this.sections.map((section) => [section, !this.isMobile])
+    const { fragment } = this.activatedRoute.snapshot;
+
+    this.sectionExpandedStates = new Map<Section, boolean>(
+      this.sections.map((section) => [
+        section,
+        !this.isMobile || (!!fragment && fragment === section.id),
+      ])
     );
 
-    this.scenarioExpandedStates = new Map(
+    this.scenarioExpandedStates = new Map<Scenario, boolean>(
       this.sections.flatMap((section) =>
         section.topics.flatMap((topic) =>
           topic.scenarios.map((scenario) => [scenario, !this.isMobile])

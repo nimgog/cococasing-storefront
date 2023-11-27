@@ -42,7 +42,7 @@
     <div class="flex flex-col gap-y-10 lg:gap-y-16">
       <div *ngFor="let section of sections" class="flex flex-col gap-y-8 lg:gap-y-12">
         <div (click)="toggleSection(section)" class="flex justify-between py-1 border-b border-[E5E7EB]">
-          <span class="text-uppercase text-coco-orange text-lg lg:text-3xl font-medium !font-anekt">
+          <span [id]="section.id" class="text-uppercase text-coco-orange text-lg lg:text-3xl font-medium !font-anekt">
             {{ section.title }}
           </span>
 

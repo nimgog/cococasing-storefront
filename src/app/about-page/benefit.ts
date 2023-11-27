@@ -2,5 +2,6 @@ export interface Benefit {
   title: string;
   description: string;
   imageUrl: string;
-  learnMoreUrl: string;
+  learnMorePath: string;
+  learnMoreFragment?: string;
 }
