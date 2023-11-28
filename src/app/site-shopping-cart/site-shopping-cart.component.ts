@@ -9,7 +9,6 @@ import { Money } from '../models/product.model';
 @Component({
   selector: 'app-site-shopping-cart',
   templateUrl: './site-shopping-cart.component.html',
-  styleUrls: ['./site-shopping-cart.component.scss'],
 })
 export class SiteShoppingCartComponent implements OnInit, OnDestroy {
   cartSub!: Subscription;

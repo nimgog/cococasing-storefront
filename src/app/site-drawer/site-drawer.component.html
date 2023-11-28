@@ -1,8 +1,8 @@
 <!-- TODO: Collapse font-roboto into !font-anekb, maybe also replace font-anekt -->
 <!-- TODO: If anekb is ok to be the only font, configure it globally -->
 
-<div class="fixed flex w-full h-screen z-mobile-drawer">
-  <div class="grow shrink-0 top-0 right-0 flex flex-col w-full max-w-[400px] bg-white">
+<div class="fixed inset-0 flex z-mobile-drawer">
+  <div class="shrink-0 flex flex-col w-full max-w-[400px] bg-white">
     <div class="relative flex justify-center items-center p-4 border-b border-coco-lighter-gray">
       <div>
         <img src="/assets/img/site-header/coco-logo-dark.svg" alt="Coco Casing logo">
@@ -16,7 +16,7 @@
       </button>
     </div>
 
-    <div class="grow">
+    <div class="grow overflow-y-auto no-scrollbar">
       <div class="flex flex-col gap-y-4 px-4 py-4">
         <ng-container *ngTemplateOutlet="menuItem; context: { title: 'Home', link:'/' }"></ng-container>
         <ng-container *ngTemplateOutlet="menuSeparator"></ng-container>
@@ -85,13 +85,13 @@
 </ng-template>
 
 <ng-template #submenuItem let-title="title" let-link="link">
-  <div class="px-8">
-    <a (click)="closeDrawer()" [routerLink]="link">
+  <a (click)="closeDrawer()" [routerLink]="link">
+    <div class="px-8">
       <span class="text-uppercase text-sm font-medium font-roboto">
         {{ title }}
       </span>
-    </a>
-  </div>
+    </div>
+  </a>
 </ng-template>
 
 <ng-template #menuSeparator>
