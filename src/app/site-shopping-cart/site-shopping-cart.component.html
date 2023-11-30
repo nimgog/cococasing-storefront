@@ -16,8 +16,8 @@
     </div>
 
     <div *ngIf="cart && cart.lines && cart.lines.length else emptyCart"
-      class="grow flex flex-col justify-between px-4 pb-2.5">
-      <ul class="grow basis-0 overflow-y-auto no-scrollbar">
+      class="grow flex flex-col justify-between px-4 pb-2.5 landscape:overflow-y-auto md:overflow-y-visible no-scrollbar">
+      <ul class="grow basis-0 portrait:overflow-y-auto md:overflow-y-auto no-scrollbar">
         <li *ngFor="let lineItem of cart.lines; let i = index"
           [ngClass]="[i === cart.lines.length - 1 ? '' : 'border-b border-coco-lighter-gray']" class="pt-4">
           <app-line-item [lineItem]="lineItem"></app-line-item>
