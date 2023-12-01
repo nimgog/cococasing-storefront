@@ -37,12 +37,17 @@ export class LocationService {
       catchError(() => {
         return of({ ip: 'EUROPE' });
       }),
-      switchMap((response: any) => {
-        return this.getLocation(response.ip).pipe(
+      switchMap((ipResponse: any) => {
+        return this.getLocation(ipResponse.ip).pipe(
           catchError(() => {
             return of({ country_code: 'SE' });
           })
         );
+      }),
+      map((locationResponse) => {
+        return locationResponse.country_code
+          ? locationResponse
+          : { country_code: 'SE' };
       }),
       tap(({ country_code }) => {
         this.localStorageService.set('country_code', country_code, 60);
