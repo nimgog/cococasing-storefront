@@ -69,7 +69,7 @@ const routes: Routes = [
   {
     path: 'not-found',
     component: NotFoundPageComponent,
-    title: getFullPageTitle('404'),
+    title: getFullPageTitle('Page Not Found'),
   },
   { path: '**', redirectTo: 'not-found' },
 ];
