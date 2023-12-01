@@ -1,7 +1,7 @@
 <!-- TODO: Should it have visible slide controls? -->
 <!-- TODO: Auto slide? -->
 <div (swipeleft)="showNextBenefit()" (swiperight)="showPreviousBenefit()"
-  class="flex flex-col justify-between items-center h-[250px] px-12 py-2">
+  class="flex flex-col justify-between items-center h-[266px] px-12 py-2">
   <div *ngFor="let benefit of benefits; let i = index" [@fadeAnimation]="i === currentBenefitIndex ? 'shown' : 'hidden'"
     [ngClass]="[
     i === currentBenefitIndex ? 'block' : 'hidden',
