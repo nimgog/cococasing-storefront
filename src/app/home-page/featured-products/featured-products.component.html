@@ -18,8 +18,8 @@
 
     <div class="grow flex justify-center h-[288px]">
       <img *ngFor="let product of products; let i = index" [@slideAnimation]="i - currentProductIndex"
-        [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="object-contain" [src]="product.image.url"
-        [alt]="product.image.altText || product.title" />
+        [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="object-contain" [src]="product.image.src"
+        [alt]="product.image.alt || product.title" />
     </div>
 
     <!-- <button (click)="showNextProduct()" [ngClass]="{ hidden: hideArrows || !rightControlEnabled }"

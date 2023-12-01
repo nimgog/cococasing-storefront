@@ -193,8 +193,8 @@ const mapShopifyProductsToCocoProduct = (
           color,
           tier,
           images: shopifyProduct.images.nodes.map((shopifyImage) => ({
-            url: shopifyImage.url,
-            altText: shopifyImage.altText || undefined,
+            src: shopifyImage.url,
+            alt: shopifyImage.altText || undefined,
           })),
           price: {
             amount: parseFloat(shopifyProductVariant.price.amount),
