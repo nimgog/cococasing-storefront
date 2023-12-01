@@ -4,7 +4,7 @@
       class="object-contain" />
   </div>
 
-  <div class="grow flex flex-col justify-between">
+  <div class="grow flex flex-col justify-between gap-y-[30px]">
     <div class="flex justify-between items-between">
       <div class="flex flex-col">
         <span class="text-uppercase text-coco-slate-gray text-sm	font-semibold !font-anekt">
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <div class="flex items-baseline gap-x-2">
+      <div class="flex flex-wrap justify-end items-baseline gap-x-2">
         <span *ngIf="lineItem.originalTotalPrice"
           class="text-uppercase text-coco-red text-sm font-normal !font-anekb line-through decoration-1">
           {{ lineItem.originalTotalPrice.amount }} {{ lineItem.originalTotalPrice.currencyCode }}
