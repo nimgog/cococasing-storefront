@@ -1,6 +1,6 @@
 <!-- TODO: Add arrows for at least desktop view -->
 <div *ngIf="isFullscreen"
-  class="fixed top-0 left-0 flex flex-col justify-center items-center w-full h-screen z-product-image-fullscreen bg-[rgba(0,0,0,.65)]"
+  class="fixed inset-0 flex flex-col justify-center items-center z-product-image-fullscreen bg-[rgba(0,0,0,.65)]"
   (click)="exitFullscreen()">
   <div class="relative flex flex-col landscape:flex-row-reverse gap-y-1 w-full landscape:h-full p-2 bg-white"
     (click)="$event.stopPropagation()" (swipeleft)="showNextImage()" (swiperight)="showPreviousImage()">
@@ -10,17 +10,18 @@
       </mat-icon>
     </button>
 
-    <div *ngIf="selectedVariantImages.length" class="flex justify-center w-full max-h-screen">
-      <img [src]="selectedVariantImages[fullscreenHighlightedImageIndex].url"
-        [alt]="selectedVariantImages[fullscreenHighlightedImageIndex].altText"
+    <div *ngIf="selectedVariantFullscreenImages.length" class="flex justify-center w-full max-h-screen">
+      <img [src]="selectedVariantFullscreenImages[fullscreenHighlightedImageIndex].src"
+        [alt]="selectedVariantFullscreenImages[fullscreenHighlightedImageIndex].alt"
         class="object-contain max-h-[calc(100vh-16px)]" />
     </div>
 
-    <div *ngIf="selectedVariantImages.length > 1" class="shrink-0 flex landscape:flex-col justify-center gap-x-0.5">
-      <div *ngFor="let image of selectedVariantImages; let i = index" class="border rounded cursor-pointer"
+    <div *ngIf="selectedVariantFullscreenImages.length > 1"
+      class="shrink-0 flex landscape:flex-col justify-center gap-x-0.5 w-[52px] h-[52px] landscape:h-full">
+      <div *ngFor="let image of selectedVariantFullscreenImages; let i = index" class="border rounded cursor-pointer"
         [ngClass]="[i === fullscreenHighlightedImageIndex ? 'border-coco-medium-gray' : 'border-coco-light-gray']"
         (click)="fullscreenHighlightedImageIndex = i">
-        <img [src]="image.url" [alt]="image.altText" class="max-h-[50px] rounded" />
+        <img [src]="image.src" [alt]="image.alt" class="max-h-[50px] rounded" />
       </div>
     </div>
   </div>
@@ -37,16 +38,19 @@
         </mat-icon>
       </button>
 
-      <img [src]="selectedVariantImages[highlightedImageIndex].url"
-        [alt]="selectedVariantImages[highlightedImageIndex].altText" class="max-h-[300px] lg:max-h-[500px]" />
+      <img [src]="selectedVariantImages[highlightedImageIndex].src"
+        [alt]="selectedVariantImages[highlightedImageIndex].alt"
+        [srcset]="selectedVariantImages[highlightedImageIndex].srcset"
+        [sizes]="selectedVariantImages[highlightedImageIndex].sizes" class="max-h-[300px] lg:max-h-[500px]" />
     </div>
   </div>
 
-  <div *ngIf="selectedVariantImages.length > 1" class="flex justify-center gap-x-0.5">
+  <div *ngIf="selectedVariantImages.length > 1" class="flex justify-center gap-x-0.5 h-[52px]">
     <div *ngFor="let image of selectedVariantImages; let i = index" class="border rounded cursor-pointer"
       [ngClass]="[i === highlightedImageIndex ? 'border-coco-medium-gray' : 'border-coco-light-gray']"
       (click)="highlightedImageIndex = i">
-      <img [src]="image.url" [alt]="image.altText" class="max-h-[50px] rounded" />
+      <img [src]="image.src" [alt]="image.alt" [srcset]="image.srcset" [sizes]="image.sizes"
+        class="max-h-[300px] lg:max-h-[500px]" class="max-h-[50px] rounded" />
     </div>
   </div>
 </div>

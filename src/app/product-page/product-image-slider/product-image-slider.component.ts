@@ -1,28 +1,19 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-} from '@angular/core';
-import { isScullyRunning } from '@scullyio/ng-lib';
-import { EMPTY, catchError, take } from 'rxjs';
-import { Image, Product, ProductVariant } from 'src/app/models/product.model';
-import { ImageLoaderService } from 'src/app/services/image-loader.service';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Product, ProductVariant } from 'src/app/models/product.model';
 import { ScrollBlockerService } from 'src/app/services/scroll-blocker.service';
+import type { Image, ResponsiveImage } from 'src/app/models/image';
 
 @Component({
   selector: 'app-product-image-slider',
   templateUrl: './product-image-slider.component.html',
 })
 export class ProductImageSliderComponent implements OnChanges, OnDestroy {
-  selectedVariantImages: Image[] = [];
+  selectedVariantImages: ResponsiveImage[] = [];
   highlightedImageIndex = 0;
 
   isFullscreen = false;
+  selectedVariantFullscreenImages: Image[] = [];
   fullscreenHighlightedImageIndex = 0;
-
-  productHasChangedRecently = false;
 
   @Input()
   product?: Product;
@@ -30,22 +21,32 @@ export class ProductImageSliderComponent implements OnChanges, OnDestroy {
   @Input()
   selectedVariant?: ProductVariant;
 
-  constructor(
-    private readonly imageLoaderService: ImageLoaderService,
-    private readonly scrollBlockerService: ScrollBlockerService
-  ) {}
+  constructor(private readonly scrollBlockerService: ScrollBlockerService) {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.highlightedImageIndex = 0;
     this.fullscreenHighlightedImageIndex = 0;
 
-    if (changes['product'] && this.product) {
-      this.productHasChangedRecently = true;
-    }
+    if (this.selectedVariant) {
+      this.selectedVariantImages = this.selectedVariant.images.map(
+        (image, index) => ({
+          src: `${image.src}&height=500`,
+          alt:
+            image.alt ||
+            (index === 0
+              ? 'Main product image'
+              : `Additional product image #${index}`),
+          srcset: `${image.src}&height=300 1023w, ${image.src}&height=500`,
+          sizes: '(max-width: 1023px) 1023px, 100vw',
+        })
+      );
 
-    if (changes['selectedVariant'] && this.selectedVariant) {
-      const imageLoadingPriorityQueue = this.createImageLoadingPriorityGroups();
-      this.loadImagesInPriority(imageLoadingPriorityQueue);
+      this.selectedVariantFullscreenImages = this.selectedVariant.images.map(
+        (image, index) => ({
+          src: `${image.src}&width=${window.innerWidth}&height=${window.innerHeight}`,
+          alt: this.selectedVariantImages[index].alt,
+        })
+      );
     }
   }
 
@@ -95,64 +96,5 @@ export class ProductImageSliderComponent implements OnChanges, OnDestroy {
   exitFullscreen() {
     this.scrollBlockerService.unblockPageScroll();
     this.isFullscreen = false;
-  }
-
-  private createImageLoadingPriorityGroups() {
-    const imageLoadingPriorityGroups: Image[][] = [];
-
-    if (!this.selectedVariant) {
-      return imageLoadingPriorityGroups;
-    }
-
-    const [selectedVariantMainImage, ...selectedVariantOtherImages] =
-      this.selectedVariant.images;
-
-    imageLoadingPriorityGroups.push(
-      selectedVariantMainImage ? [selectedVariantMainImage] : []
-    );
-
-    imageLoadingPriorityGroups.push(selectedVariantOtherImages);
-
-    if (!isScullyRunning() && this.productHasChangedRecently && this.product) {
-      this.productHasChangedRecently = false;
-
-      let otherVariantMainImageUrls = this.product.variants
-        .filter((variant) => variant.images.length)
-        .map((variant) => variant.images[0]);
-
-      const distinctUrls = new Set(otherVariantMainImageUrls);
-
-      otherVariantMainImageUrls = [...distinctUrls];
-
-      imageLoadingPriorityGroups.push(otherVariantMainImageUrls);
-    }
-
-    return imageLoadingPriorityGroups;
-  }
-
-  private loadImagesInPriority(imageLoadingPriorityGroups: Image[][]) {
-    if (!imageLoadingPriorityGroups.length) {
-      return;
-    }
-
-    const [[selectedVariantMainImage], selectedVariantOtherImages] =
-      imageLoadingPriorityGroups;
-
-    this.imageLoaderService
-      .loadImagesInPriorityOrder(
-        imageLoadingPriorityGroups.map((group) =>
-          group.map((image) => image.url)
-        )
-      )
-      .pipe(
-        take(1),
-        catchError(() => EMPTY)
-      )
-      .subscribe(() => {
-        this.selectedVariantImages = [
-          selectedVariantMainImage,
-          ...selectedVariantOtherImages,
-        ];
-      });
   }
 }

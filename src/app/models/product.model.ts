@@ -1,7 +1,4 @@
-export type Image = {
-  url: string;
-  altText?: string;
-};
+import type { Image } from './image';
 
 export type Money = {
   amount: number;

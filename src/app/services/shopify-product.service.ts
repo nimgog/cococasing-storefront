@@ -164,8 +164,8 @@ export class ShopifyProductService {
                 title: shopifyFeaturedProduct.title,
                 description: shopifyFeaturedProduct.description,
                 image: {
-                  url: shopifyFeaturedProduct.featuredImage?.url,
-                  altText:
+                  src: shopifyFeaturedProduct.featuredImage?.url,
+                  alt:
                     shopifyFeaturedProduct.featuredImage?.altText || undefined,
                 },
                 price: {
