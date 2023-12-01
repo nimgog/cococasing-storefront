@@ -22,29 +22,29 @@ export class AddToCartComponent {
   constructor(private readonly shoppingCartService: ShoppingCartService) {}
 
   get variantTitle() {
-    const serie = this.serieCasePipe.transform(
+    const serieTitle = this.serieCasePipe.transform(
       this.titleCasePipe.transform(
         this.productVariant.serie.replaceAll('-', ' ')
       )
     );
 
-    const model = this.titleCasePipe.transform(
+    const modelTitle = this.titleCasePipe.transform(
       (this.productVariant.model === defaultProductModel
         ? ''
-        : this.productVariant.model
+        : ` ${this.productVariant.model}`
       ).replaceAll('-', ' ')
     );
 
-    const color = this.titleCasePipe.transform(
+    const colorTitle = this.titleCasePipe.transform(
       (this.productVariant.color || '').replaceAll('-', ' ')
     );
 
-    const tier = this.titleCasePipe.transform(
+    const tierTitle = this.titleCasePipe.transform(
       (this.productVariant.tier || '').replaceAll('-', ' ')
     );
 
-    return `iPhone ${serie} ${model}${
-      color || tier ? ` ◦ ${color}${tier}` : ''
+    return `iPhone ${serieTitle}${modelTitle}${
+      colorTitle || tierTitle ? ` ◦ ${colorTitle}${tierTitle}` : ''
     }`;
   }
 

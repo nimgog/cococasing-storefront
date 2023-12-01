@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Location } from '@angular/common';
+import { Location, TitleCasePipe } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -21,12 +21,18 @@ import {
   expectedProductOptions,
 } from '../models/product.model';
 import { NavigationService } from '../services/navigation.service';
+import { getFullPageTitle } from '../common/utils/page-helpers';
+import { Title } from '@angular/platform-browser';
+import { SerieCasePipe } from '../common/utils/seriecase.pipe';
 
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
+  private readonly titleCasePipe = new TitleCasePipe();
+  private readonly serieCasePipe = new SerieCasePipe();
+
   private productSub!: Subscription;
   private productPriceRefreshSignalSub!: Subscription;
 
@@ -58,7 +64,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private readonly location: Location,
     private readonly navigationService: NavigationService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly shopifyProductService: ShopifyProductService
+    private readonly shopifyProductService: ShopifyProductService,
+    private readonly titleService: Title
   ) {}
 
   get selectedSerie(): string {
@@ -144,6 +151,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
     if (variant) {
       this.selectedVariant = variant;
+      this.setPageTitle();
     } else {
       this.selectDefaultVariant(product);
     }
@@ -202,6 +210,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     }
 
     this.selectedVariant = newVariant;
+    this.setPageTitle();
   }
 
   changeSerie(newSerie: string) {
@@ -324,5 +333,38 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         variant.color === color &&
         variant.tier === tier
     );
+  }
+
+  setPageTitle() {
+    const productTitle = this.titleCasePipe.transform(
+      this.product.slug.replaceAll('-', ' ')
+    );
+
+    const serieTitle = this.serieCasePipe.transform(
+      this.titleCasePipe.transform(this.selectedSerie.replaceAll('-', ' '))
+    );
+
+    const modelTitle = this.titleCasePipe.transform(
+      (this.selectedModel === defaultProductModel
+        ? ''
+        : ` ${this.selectedModel}`
+      ).replaceAll('-', ' ')
+    );
+
+    let title = `${productTitle} - iPhone ${serieTitle}${modelTitle}`;
+
+    if (this.selectedColor) {
+      title += ` - ${this.titleCasePipe.transform(
+        this.selectedColor.replaceAll('-', ' ')
+      )}`;
+    }
+
+    if (this.selectedTier) {
+      title += ` - ${this.titleCasePipe.transform(
+        this.selectedTier.replaceAll('-', ' ')
+      )}`;
+    }
+
+    this.titleService.setTitle(getFullPageTitle(title));
   }
 }

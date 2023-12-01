@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
 import { Subscription } from 'rxjs';
 import { BlogPostPreview } from './blog-post-preview';
+import { Title } from '@angular/platform-browser';
+import { getFullPageTitle } from '../common/utils/page-helpers';
 
 interface BlogPostPreviewScullyRoute extends ScullyRoute {
   date: string;
@@ -37,7 +39,8 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     private readonly location: Location,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly scully: ScullyRoutesService
+    private readonly scully: ScullyRoutesService,
+    private readonly titleService: Title
   ) {}
 
   get categoryPageRoutePrefixes() {
@@ -49,6 +52,7 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.currentCategory = (params['category'] as PostCategory) || undefined;
+      this.setPageTitle();
       this.loadPosts();
     });
   }
@@ -63,6 +67,7 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
     this.location.go(urlTree.toString());
     this.currentCategory = category;
+    this.setPageTitle();
     this.loadPosts();
   }
 
@@ -168,5 +173,18 @@ export class BlogPageComponent implements OnInit, OnDestroy {
       case 'environment':
         return '#A3CB38';
     }
+  }
+
+  setPageTitle() {
+    let pageTitle = 'Blog';
+    const categoryTitle = this.routeTabs
+      .filter((tab) => tab.category)
+      .find((tab) => tab.category === this.currentCategory)?.title;
+
+    if (categoryTitle) {
+      pageTitle = `${categoryTitle} - ${pageTitle}`;
+    }
+
+    this.titleService.setTitle(getFullPageTitle(pageTitle));
   }
 }

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { EMPTY, Subscription, catchError } from 'rxjs';
 import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
 import { BlogPost } from './blog-post';
+import { Title } from '@angular/platform-browser';
+import { getFullPageTitle as getFullPageTitle } from 'src/app/common/utils/page-helpers';
 
 interface BlogPostScullyRoute extends ScullyRoute {
   author: string;
@@ -22,7 +24,8 @@ export class BlogPostPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly scully: ScullyRoutesService
+    private readonly scully: ScullyRoutesService,
+    private readonly titleService: Title
   ) {}
 
   ngOnInit() {
@@ -35,15 +38,17 @@ export class BlogPostPageComponent implements OnInit, OnDestroy {
       )
       .subscribe((scullyRoute) => {
         const postScullyRoute = scullyRoute as BlogPostScullyRoute;
+        const title = postScullyRoute.title;
 
-        if (!postScullyRoute) {
+        if (!postScullyRoute || !title) {
           this.router.navigate(['/not-found'], { replaceUrl: true });
           return;
         }
 
+        this.titleService.setTitle(getFullPageTitle(title));
+
         this.blogPost = {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          title: postScullyRoute.title!,
+          title,
           author: postScullyRoute.author,
           date: new Date(postScullyRoute.date),
           headingImageUrl: postScullyRoute.headingImageUrl,

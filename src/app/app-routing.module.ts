@@ -8,9 +8,15 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { BlogPostPageComponent } from './blog-page/blog-post-page/blog-post-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
+import { getFullPageTitle } from './common/utils/page-helpers';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent, pathMatch: 'full' },
+  {
+    path: '',
+    component: HomePageComponent,
+    pathMatch: 'full',
+    title: getFullPageTitle('Home'),
+  },
   {
     path: 'products',
     children: [
@@ -49,10 +55,22 @@ const routes: Routes = [
       },
     ],
   },
-  { path: 'faq', component: FaqPageComponent },
-  { path: 'contact', component: ContactPageComponent },
-  { path: 'about', component: AboutPageComponent },
-  { path: 'not-found', component: NotFoundPageComponent },
+  { path: 'faq', component: FaqPageComponent, title: getFullPageTitle('FAQ') },
+  {
+    path: 'contact',
+    component: ContactPageComponent,
+    title: getFullPageTitle('Contact'),
+  },
+  {
+    path: 'about',
+    component: AboutPageComponent,
+    title: getFullPageTitle('About'),
+  },
+  {
+    path: 'not-found',
+    component: NotFoundPageComponent,
+    title: getFullPageTitle('404'),
+  },
   { path: '**', redirectTo: 'not-found' },
 ];
 
