@@ -37,6 +37,9 @@ module.exports = {
       height: {
         'screen-minus-lg-header': 'calc(100vh - 76px)',
       },
+      maxHeight: {
+        'screen-minus-lg-header': 'calc(100vh - 76px)',
+      },
       maxWidth: {
         'blog-content': '1040px',
         'centered-content': '1280px',

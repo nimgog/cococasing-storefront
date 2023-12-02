@@ -8058,7 +8058,7 @@ export const ShoppingCartFragmentDoc = gql`
         ... on ProductVariant {
           id
           image {
-            url(transform: {maxWidth: 120, maxHeight: 120})
+            url
           }
           product {
             handle

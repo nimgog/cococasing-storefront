@@ -1,7 +1,7 @@
 <div class="flex gap-x-8">
   <div class="w-[120px] h-[120px]">
-    <img [src]="lineItem.product.imageUrl" [alt]="lineItem.product.title + ' - ' + lineItem.product.subtitle"
-      class="object-contain" />
+    <img [src]="lineItem.product.imageUrl + '&height=120'"
+      [alt]="lineItem.product.title + ' - ' + lineItem.product.subtitle" class="object-contain" />
   </div>
 
   <div class="grow flex flex-col justify-between gap-y-[30px]">

@@ -17,19 +17,19 @@ export class ProductCategoriesComponent {
       name: 'The Coco Package',
       description:
         'A phone case package that can keep up with your active life.',
-      imageUrl: '/assets/img/home-page/product-categories/coco-package.jpg',
+      imageUrl: '/assets/img/home-page/product-categories/the-coco-package.jpg',
       pageUrl: '/products/the-coco-package',
     },
     {
       name: 'The Package',
       description: 'The package for casual activities for him and her.',
-      imageUrl: '/assets/img/home-page/product-categories/package.png',
+      imageUrl: '/assets/img/home-page/product-categories/the-package.png',
       pageUrl: '/products/the-package',
     },
     {
       name: 'The Glass Kit',
       description: 'Reinforce your outer structure with the glass kit.',
-      imageUrl: '/assets/img/home-page/product-categories/glass-kit.png',
+      imageUrl: '/assets/img/home-page/product-categories/the-glass-kit.png',
       pageUrl: '/products/the-glass-kit',
     },
     {

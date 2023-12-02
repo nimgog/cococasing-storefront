@@ -1,27 +1,36 @@
 <!-- TODO: Which background image should go there? Mobile and desktop images differ -->
 <div class="flex justify-center">
-  <div
-    class="grow flex justify-center bg-center bg-[linear-gradient(0deg,rgba(0,0,0,0.74),rgba(0,0,0,0.74)),url('/assets/img/home-page/blog-teaser/read-more-mobile.png')] bg-cover bg-no-repeat">
-    <div
-      class="grow flex flex-col justify-center max-w-centered-content h-[126px] md:h-[180px] lg:h-[235px] px-4 md:px-2 lg:px-0">
-      <div>
-        <span
-          class="block text-white text-uppercase text-2xl md:text-4xl lg:text-6xl font-bold !font-anekt leading-[34px] md:leading-[48px] lg:leading-[62px]">
-          Live without limits
-        </span>
+  <div class="relative grow h-[126px] md:h-[180px] lg:h-[235px]">
+    <div class="relative w-full h-full">
+      <img assetImage="/assets/img/home-page/blog-teaser/live-without-limits.png" [breakpoints]="['xs', 'md', 'lg']"
+        alt="Person with backpack facing snow-capped mountains from a rocky peak"
+        class="w-full h-full max-h-[126px] md:max-h-[180px] lg:max-h-[235px] object-cover object-center" />
+
+      <div class="absolute inset-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.74),rgba(0,0,0,0.74))] bg-cover">
       </div>
+    </div>
 
-      <div class="flex md:flex-col items-start gap-x-6 gap-y-6 lg:gap-y-8">
-        <span class="block text-white text-xs md:text-sm lg:text-base font-bold !font-anekb leading-[20px]">
-          Ready to break a sweat without breaking your phone?
-        </span>
-
-        <button routerLink="/blog"
-          class="w-[82px] md:w-[97px] lg:w-[115px] h-[30px] md:h-[40px] md:ml-2 px-[5px] md:px-4 py-0.5 md:py-2 bg-coco-orange rounded">
-          <span class="text-white text-uppercase text-[14px] font-semibold !font-anekb whitespace-nowrap">
-            Read more
+    <div class="absolute inset-0 flex justify-center items-center lg:px-2">
+      <div class="grow flex flex-col justify-center max-w-centered-content px-4 md:px-2 lg:px-0">
+        <div>
+          <span
+            class="block text-white text-uppercase text-2xl md:text-4xl lg:text-6xl font-bold !font-anekt leading-[34px] md:leading-[48px] lg:leading-[62px]">
+            Live without limits
           </span>
-        </button>
+        </div>
+
+        <div class="flex md:flex-col items-start gap-x-6 gap-y-6 lg:gap-y-8">
+          <span class="block text-white text-xs md:text-sm lg:text-base font-bold !font-anekb leading-[20px]">
+            Ready to break a sweat without breaking your phone?
+          </span>
+
+          <button routerLink="/blog"
+            class="w-[82px] md:w-[97px] lg:w-[115px] h-[30px] md:h-[40px] px-[5px] md:px-4 py-0.5 md:py-2 bg-coco-orange rounded">
+            <span class="text-white text-uppercase text-[14px] font-semibold !font-anekb whitespace-nowrap">
+              Read more
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

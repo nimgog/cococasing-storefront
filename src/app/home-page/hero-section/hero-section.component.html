@@ -1,8 +1,9 @@
 <!-- TODO: Revisit this whole section, because its mobile view is missing from the design -->
 <div class="flex justify-center">
   <div class="md:relative grow flex flex-col">
-    <div
-      class="h-[466px] md:h-[560px] lg:h-screen-minus-lg-header bg-coco-light-gray bg-[url('/assets/img/home-page/hero.jpeg')] bg-cover bg-center bg-no-repeat">
+    <div class="h-[466px] md:h-[560px] lg:h-screen-minus-lg-header bg-coco-light-gray">
+      <img assetImage="/assets/img/home-page/hero.jpg" [breakpoints]="['xs', 'md', 'lg']"
+        class="w-full h-full max-h-[466px] md:max-h-[560px] lg:max-h-screen-minus-lg-header object-cover object-center" />
     </div>
     <div
       class="md:absolute md:left-0 md:bottom-0 flex flex-col md:justify-end md:items-start h-[257px] md:h-auto px-[8px] pt-[32px] pb-16px md:p-10 lg:p-20 bg-coco-darkest-blue md:bg-transparent">

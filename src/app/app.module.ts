@@ -55,6 +55,7 @@ import { ScullyExcludeDirective } from './common/utils/scully-exclude.directive'
 import { ProductImageSliderComponent } from './product-page/product-image-slider/product-image-slider.component';
 import { ProductDescriptionComponent } from './product-page/product-description/product-description.component';
 import { ProductControlsComponent } from './product-page/product-controls/product-controls.component';
+import { AssetImageDirective } from './common/utils/asset-image.directive';
 
 const Client = require('shopify-buy');
 
@@ -99,6 +100,7 @@ export const client = Client.buildClient({
     ProductImageSliderComponent,
     ProductDescriptionComponent,
     ProductControlsComponent,
+    AssetImageDirective,
   ],
   imports: [
     MatExpansionModule,
