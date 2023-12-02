@@ -18,9 +18,9 @@ export class SiteShoppingCartComponent implements OnInit, OnDestroy {
   freeShippingThreshold: Money | null = null;
 
   constructor(
-    private readonly navigationService: NavigationService,
-    private readonly shoppingCartService: ShoppingCartService,
-    private readonly shopifyProductService: ShopifyProductService
+    private navigationService: NavigationService,
+    private shoppingCartService: ShoppingCartService,
+    private shopifyProductService: ShopifyProductService
   ) {}
 
   get shippingInfo() {

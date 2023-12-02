@@ -19,8 +19,8 @@ export class ContactPageComponent implements OnInit {
   turnstileSiteKey = environment.turnstileSiteKey;
 
   constructor(
-    private readonly httpClient: HttpClient,
-    private readonly notificationService: NotificationService
+    private httpClient: HttpClient,
+    private notificationService: NotificationService
   ) {}
 
   get allowSubmit() {

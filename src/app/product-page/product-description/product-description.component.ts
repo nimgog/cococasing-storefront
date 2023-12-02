@@ -15,5 +15,5 @@ export class ProductDescriptionComponent {
     this.descriptionHtml = this.domSanitizer.bypassSecurityTrustHtml(value);
   }
 
-  constructor(private readonly domSanitizer: DomSanitizer) {}
+  constructor(private domSanitizer: DomSanitizer) {}
 }

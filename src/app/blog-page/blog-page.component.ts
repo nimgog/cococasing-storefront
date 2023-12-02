@@ -36,11 +36,11 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private readonly location: Location,
-    private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly scully: ScullyRoutesService,
-    private readonly titleService: Title
+    private location: Location,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private scully: ScullyRoutesService,
+    private titleService: Title
   ) {}
 
   get categoryPageRoutePrefixes() {

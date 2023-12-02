@@ -4,7 +4,7 @@ import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
   providedIn: 'root',
 })
 export class ScrollBlockerService {
-  private readonly renderer: Renderer2;
+  private renderer: Renderer2;
 
   private blockCount = 0;
 

@@ -15,10 +15,7 @@ export class DropdownMenuComponent implements OnInit {
     }
   }
 
-  constructor(
-    private readonly router: Router,
-    private readonly el: ElementRef
-  ) {}
+  constructor(private router: Router, private el: ElementRef) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {

@@ -13,13 +13,13 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
   templateUrl: './add-to-cart.component.html',
 })
 export class AddToCartComponent {
-  private readonly titleCasePipe = new TitleCasePipe();
-  private readonly serieCasePipe = new SerieCasePipe();
+  private titleCasePipe = new TitleCasePipe();
+  private serieCasePipe = new SerieCasePipe();
 
   @Input()
   productVariant!: ProductVariant;
 
-  constructor(private readonly shoppingCartService: ShoppingCartService) {}
+  constructor(private shoppingCartService: ShoppingCartService) {}
 
   get variantTitle() {
     const serieTitle = this.serieCasePipe.transform(

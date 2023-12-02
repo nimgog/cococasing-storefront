@@ -41,7 +41,7 @@ export class SiteFooterComponent {
 
   currentYear = new Date().getFullYear();
 
-  constructor(private readonly navigationService: NavigationService) {}
+  constructor(private navigationService: NavigationService) {}
 
   navigateToProducts() {
     this.navigationService.navigateToProducts();

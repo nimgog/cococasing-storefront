@@ -10,15 +10,15 @@ import { NotificationService } from './notification.service';
   providedIn: 'root',
 })
 export class ShoppingCartService implements OnDestroy {
-  private readonly cartIsVisibleSubject = new BehaviorSubject(false);
-  private readonly cartSubject = new BehaviorSubject<ShoppingCart | null>(null);
-  private readonly productPriceRefreshSignalSub!: Subscription;
+  private cartIsVisibleSubject = new BehaviorSubject(false);
+  private cartSubject = new BehaviorSubject<ShoppingCart | null>(null);
+  private productPriceRefreshSignalSub!: Subscription;
 
   constructor(
-    private readonly shopifyCartService: ShopifyCartService,
-    private readonly shopifyProductService: ShopifyProductService,
-    private readonly localStorageService: LocalStorageService,
-    private readonly notificationService: NotificationService
+    private shopifyCartService: ShopifyCartService,
+    private shopifyProductService: ShopifyProductService,
+    private localStorageService: LocalStorageService,
+    private notificationService: NotificationService
   ) {
     this.productPriceRefreshSignalSub =
       this.shopifyProductService.productPriceRefreshSignal$.subscribe(() =>

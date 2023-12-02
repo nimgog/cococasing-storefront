@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 })
 export class NavigationService {
   constructor(
-    private readonly router: Router,
-    private readonly viewportScroller: ViewportScroller
+    private router: Router,
+    private viewportScroller: ViewportScroller
   ) {}
 
   navigateToProducts() {

@@ -36,8 +36,8 @@ export class LoadingSpinnerComponent implements AfterViewInit, OnDestroy {
   diameter = 0;
 
   constructor(
-    private readonly renderer: Renderer2,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private renderer: Renderer2,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit() {

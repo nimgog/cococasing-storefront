@@ -25,8 +25,8 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
   freeShippingText = '&nbsp';
 
   constructor(
-    private readonly shoppingCartService: ShoppingCartService,
-    private readonly shopifyProductService: ShopifyProductService
+    private shoppingCartService: ShoppingCartService,
+    private shopifyProductService: ShopifyProductService
   ) {}
 
   ngOnInit() {

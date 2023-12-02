@@ -22,9 +22,9 @@ export class SiteNewsSignupComponent implements OnInit {
   isSubmitting = false;
 
   constructor(
-    private readonly router: Router,
-    private readonly httpClient: HttpClient,
-    private readonly notificationService: NotificationService
+    private router: Router,
+    private httpClient: HttpClient,
+    private notificationService: NotificationService
   ) {}
 
   get allowSubmit() {

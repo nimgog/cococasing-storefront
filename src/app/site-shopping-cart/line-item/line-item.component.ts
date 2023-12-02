@@ -8,13 +8,13 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
   templateUrl: './line-item.component.html',
 })
 export class LineItemComponent implements OnInit, OnDestroy {
-  private readonly quantitySubject = new Subject<number>();
+  private quantitySubject = new Subject<number>();
   private updateQuantitySub?: Subscription;
 
   @Input()
   lineItem!: LineItem;
 
-  constructor(private readonly shoppingCartService: ShoppingCartService) {}
+  constructor(private shoppingCartService: ShoppingCartService) {}
 
   ngOnInit() {
     this.updateQuantitySub = this.quantitySubject

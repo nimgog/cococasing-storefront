@@ -21,8 +21,8 @@ export class LocationService {
   currency$ = this.currencySubject.asObservable();
 
   constructor(
-    private readonly httpClient: HttpClient,
-    private readonly localStorageService: LocalStorageService
+    private httpClient: HttpClient,
+    private localStorageService: LocalStorageService
   ) {}
 
   getTwoLetterCountryCode() {

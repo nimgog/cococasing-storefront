@@ -19,7 +19,7 @@ export class NotificationService {
 
   private static readonly DefaultErrorConfig: NotificationConfig = {};
 
-  constructor(private readonly toastrService: ToastrService) {}
+  constructor(private toastrService: ToastrService) {}
 
   showSuccessMessage(notification: Notification) {
     this.toastrService.success(notification.message, notification.title, {

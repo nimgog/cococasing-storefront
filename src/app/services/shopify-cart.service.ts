@@ -17,13 +17,13 @@ import { mapCart } from '../common/utils/shopify-cart-helpers';
 })
 export class ShopifyCartService {
   constructor(
-    private readonly locationService: LocationService,
-    private readonly notificationService: NotificationService,
-    private readonly addLineItemGQL: AddLineItemGQL,
-    private readonly removeLineItemGQL: RemoveLineItemGQL,
-    private readonly cartGQL: CartGQL,
-    private readonly createCartGQL: CreateCartGQL,
-    private readonly setLineItemQuantityGQL: SetLineItemQuantityGQL
+    private locationService: LocationService,
+    private notificationService: NotificationService,
+    private addLineItemGQL: AddLineItemGQL,
+    private removeLineItemGQL: RemoveLineItemGQL,
+    private cartGQL: CartGQL,
+    private createCartGQL: CreateCartGQL,
+    private setLineItemQuantityGQL: SetLineItemQuantityGQL
   ) {}
 
   createCart(variantId: string) {

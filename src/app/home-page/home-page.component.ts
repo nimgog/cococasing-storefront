@@ -11,7 +11,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   featuredProductsSub!: Subscription;
   featuredProducts: FeaturedProduct[] = [];
 
-  constructor(private readonly shopifyProductService: ShopifyProductService) {}
+  constructor(private shopifyProductService: ShopifyProductService) {}
 
   ngOnInit() {
     this.featuredProductsSub = this.shopifyProductService

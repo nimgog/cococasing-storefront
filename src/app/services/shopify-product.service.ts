@@ -34,7 +34,7 @@ export class ShopifyProductService {
   private static readonly NumberOfFeaturedProducts = 2;
   private static readonly ProductPriceRefreshIntervalInMins = 10;
 
-  private readonly _productPriceRefreshSignal$ = interval(
+  private _productPriceRefreshSignal$ = interval(
     ShopifyProductService.ProductPriceRefreshIntervalInMins * 60 * 1000
   ).pipe(
     share(),
@@ -42,12 +42,12 @@ export class ShopifyProductService {
   );
 
   constructor(
-    private readonly locationService: LocationService,
-    private readonly localStorageService: LocalStorageService,
-    private readonly notificationService: NotificationService,
-    private readonly freeShippingProductGQL: FreeShippingProductGQL,
-    private readonly productGQL: ProductGQL,
-    private readonly featuredProductsGQL: FeaturedProductsGQL
+    private locationService: LocationService,
+    private localStorageService: LocalStorageService,
+    private notificationService: NotificationService,
+    private freeShippingProductGQL: FreeShippingProductGQL,
+    private productGQL: ProductGQL,
+    private featuredProductsGQL: FeaturedProductsGQL
   ) {}
 
   get productPriceRefreshSignal$() {

@@ -16,9 +16,9 @@ export class AppComponent implements OnInit, OnDestroy {
   drawerIsVisible = false;
 
   constructor(
-    private readonly router: Router,
-    private readonly shoppingCartService: ShoppingCartService,
-    private readonly scrollBlockerService: ScrollBlockerService
+    private router: Router,
+    private shoppingCartService: ShoppingCartService,
+    private scrollBlockerService: ScrollBlockerService
   ) {}
 
   ngOnInit() {

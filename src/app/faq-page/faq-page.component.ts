@@ -16,8 +16,8 @@ export class FaqPageComponent implements OnInit {
   isMobile!: boolean;
 
   constructor(
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly deviceDetectorService: DeviceDetectorService
+    private activatedRoute: ActivatedRoute,
+    private deviceDetectorService: DeviceDetectorService
   ) {}
 
   ngOnInit() {

@@ -23,9 +23,9 @@ export class BlogPostPageComponent implements OnInit, OnDestroy {
   blogPost?: BlogPost;
 
   constructor(
-    private readonly router: Router,
-    private readonly scully: ScullyRoutesService,
-    private readonly titleService: Title
+    private router: Router,
+    private scully: ScullyRoutesService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {

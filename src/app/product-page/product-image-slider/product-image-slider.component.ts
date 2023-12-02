@@ -21,7 +21,7 @@ export class ProductImageSliderComponent implements OnChanges, OnDestroy {
   @Input()
   selectedVariant?: ProductVariant;
 
-  constructor(private readonly scrollBlockerService: ScrollBlockerService) {}
+  constructor(private scrollBlockerService: ScrollBlockerService) {}
 
   ngOnChanges() {
     this.highlightedImageIndex = 0;

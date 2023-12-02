@@ -30,8 +30,8 @@ import { SerieCasePipe } from '../common/utils/seriecase.pipe';
   templateUrl: './product-page.component.html',
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
-  private readonly titleCasePipe = new TitleCasePipe();
-  private readonly serieCasePipe = new SerieCasePipe();
+  private titleCasePipe = new TitleCasePipe();
+  private serieCasePipe = new SerieCasePipe();
 
   private productSub!: Subscription;
   private productPriceRefreshSignalSub!: Subscription;
@@ -61,11 +61,11 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private readonly location: Location,
-    private readonly navigationService: NavigationService,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly shopifyProductService: ShopifyProductService,
-    private readonly titleService: Title
+    private location: Location,
+    private navigationService: NavigationService,
+    private activatedRoute: ActivatedRoute,
+    private shopifyProductService: ShopifyProductService,
+    private titleService: Title
   ) {}
 
   get selectedSerie(): string {
