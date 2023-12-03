@@ -4,8 +4,8 @@
 
 <div class="flex justify-center">
   <div class="grow flex flex-col items-center max-w-widened-content">
-    <div *ngIf="blogPost" class="flex h-[140px] lg:h-[320px]">
-      <img class="object-cover" [src]="blogPost.headingImageUrl" alt="Blog post header" />
+    <div *ngIf="blogPost" class="flex w-full h-[140px] lg:h-[320px]">
+      <img class="w-full h-full object-cover" [src]="blogPost.headingImageUrl" alt="Blog post header" />
     </div>
 
     <div class="flex flex-col items-center max-w-blog-content px-4 pt-8 lg:pt-36 pb-10 lg:pb-28">
