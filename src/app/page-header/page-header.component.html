@@ -3,8 +3,9 @@
   <div class="relative grow max-w-widened-content h-[90px] md:h-[165px] lg:h-[240px] bg-coco-light-gray">
     <img [assetImage]="imageUrl" [breakpoints]="['xs', 'sm', 'md', 'lg']" alt="Page banner"
       class="w-full h-full object-cover object-center" />
-    <div class="absolute left-0 top-0 flex items-center w-full h-full px-4 md:px-12 lg:px-20">
-      <span class="flex flex-col text-white text-uppercase text-xl md:text-3xl lg:text-5xl font-bold !font-anekt">
+    <div class="absolute left-0 top-0 flex items-center w-full h-full px-4 md:px-12 lg:px-20 bg-[rgba(0,0,0,0.05)]">
+      <span
+        class="flex flex-col text-white text-uppercase text-xl md:text-3xl lg:text-5xl font-bold !font-anekt drop-shadow">
         <ng-content></ng-content>
       </span>
     </div>
