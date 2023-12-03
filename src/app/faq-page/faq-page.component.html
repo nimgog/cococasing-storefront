@@ -10,15 +10,15 @@
     class="relative grow flex justify-center lg:justify-between items-center max-w-centered-content mb-13 p-2 lg:px-8 lg:py-10 bg-coco-darkest-blue lg:bg-[linear-gradient(0deg,rgba(3,7,18,0.7),rgba(3,7,18,0.7)),url('/assets/img/contact-page/page-banner.jpg')] lg:bg-cover lg:bg-center lg:bg-no-repeat">
     <div class="flex flex-col justify-center px-8">
       <span
-        class="text-uppercase text-white text-base lg:text-5xl font-medium !font-anekt leading-[18px] lg:leading-[48px]">
+        class="text-uppercase text-white text-base lg:text-4xl xl:text-5xl font-medium !font-anekt leading-[18px] lg:leading-[48px]">
         Can't find what you need in the FAQ?<br>Lets talk!
       </span>
     </div>
 
     <div class="absolute lg:relative flex items-center right-0 h-full pr-2 lg:pr-[85px]">
       <button routerLink="/contact">
-        <img class="w-8 lg:w-32 h-8 lg:h-32 object-contain" src="/assets/img/faq-page/arrow-narrow-right.svg"
-          alt="Contact us" />
+        <img class="w-8 lg:w-24 xl:w-32 h-8 lg:h-24 xl:h-32 object-contain"
+          src="/assets/img/faq-page/arrow-narrow-right.svg" alt="Contact us" />
       </button>
     </div>
   </div>
@@ -79,7 +79,6 @@
               </div>
 
               <div [ngClass]="{ 'hidden': !isScenarioExpanded(scenario) }" class="px-1 py-4 lg:pb-2">
-                <!-- TODO: Render body as HTML if needed -->
                 <p class="text-coco-slate-gray text-sm font-normal !font-anekb" [innerHTML]="scenario.body">
                 </p>
               </div>
