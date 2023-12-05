@@ -2,6 +2,7 @@ import { RouteConfig, ScullyConfig } from '@scullyio/scully';
 import '@scullyio/scully-plugin-puppeteer';
 import { blogPostRouterPlugin } from './scully/plugins/blog-post-router.plugin';
 import { productRouterPlugin } from './scully/plugins/product-router.plugin';
+import { MinifyHtml } from 'scully-plugin-minify-html';
 
 const routes: RouteConfig = {
   '/products/:product': {
@@ -30,7 +31,6 @@ export const config: ScullyConfig = {
   projectName: 'cococasing-storefront',
   distFolder: './dist/cococasing-storefront', // output directory of your Angular build artifacts
   outDir: './dist/static', // directory for scully build artifacts
-  defaultPostRenderers: [],
+  defaultPostRenderers: [MinifyHtml],
   routes,
-  // handle404: 'not-found', // TODO: Look into how could the "not-found" page be used here
 };
