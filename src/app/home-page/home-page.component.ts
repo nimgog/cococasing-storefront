@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { FeaturedProduct } from '../models/product.model';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Subscription } from 'rxjs';
+import type { FeaturedProduct } from '../models/product.model';
 import { ShopifyProductService } from '../services/shopify-product.service';
 
 @Component({

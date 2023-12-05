@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Section } from './section';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Scenario, Section } from '../models/faq.model';
 import { faqs } from './faqs';
 import { DeviceDetectorService } from '../services/device-detector.service';
-import { Scenario } from './scenario';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

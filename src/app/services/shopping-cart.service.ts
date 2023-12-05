@@ -1,9 +1,11 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription, of, switchMap, tap } from 'rxjs';
+import type { OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
+import type { Subscription } from 'rxjs';
+import { BehaviorSubject, of, switchMap, tap } from 'rxjs';
 import { ShopifyCartService } from './shopify-cart.service';
 import { ShopifyProductService } from './shopify-product.service';
 import { LocalStorageService } from './local-storage.service';
-import { ShoppingCart } from '../models/shopping-cart.model';
+import type { ShoppingCart } from '../models/shopping-cart.model';
 import { NotificationService } from './notification.service';
 
 @Injectable({

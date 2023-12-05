@@ -1,8 +1,10 @@
-import { ProductQuery } from 'src/app/graphql/types';
-import {
+import type { ProductQuery } from 'src/app/graphql/types';
+import type {
   Money,
   Product,
   ProductVariant,
+} from 'src/app/models/product.model';
+import {
   defaultProductModel,
   discountedProductTagPrefix,
   expectedProductOptions,

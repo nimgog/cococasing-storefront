@@ -1,6 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription, switchMap } from 'rxjs';
-import { LineItem } from 'src/app/models/shopping-cart.model';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import type { Subscription } from 'rxjs';
+import { Subject, switchMap } from 'rxjs';
+import type { LineItem } from 'src/app/models/shopping-cart.model';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({

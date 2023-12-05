@@ -1,4 +1,11 @@
-import type { Image } from './image';
+import type { Image } from './image.model';
+
+export type ProductCategory = {
+  name: string;
+  description?: string;
+  imageUrl: string;
+  pageUrl: string;
+};
 
 export type Money = {
   amount: number;

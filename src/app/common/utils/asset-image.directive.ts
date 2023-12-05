@@ -1,16 +1,11 @@
 /* eslint-disable @angular-eslint/directive-selector */
+import type { OnChanges } from '@angular/core';
+import { ElementRef, Directive, Input, Renderer2 } from '@angular/core';
+import type { ImageBreakpoint } from 'src/app/models/image.model';
 import {
-  Directive,
-  ElementRef,
-  Input,
-  OnChanges,
-  Renderer2,
-} from '@angular/core';
-import {
-  ImageBreakpoint,
   imageBreakpointMinSizes,
   imageBreakpointOrder,
-} from 'src/app/models/image';
+} from 'src/app/models/image.model';
 
 @Directive({
   selector: '[assetImage]',

@@ -1,4 +1,4 @@
-import { Section } from './section';
+import type { Section } from '../models/faq.model';
 
 export const faqs: Section[] = [
   {

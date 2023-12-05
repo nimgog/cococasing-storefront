@@ -27,6 +27,14 @@
             "style": "kebab-case"
           }
         ]
+        // Uncomment the rule below to get highlights for places type import could be used
+        // "@typescript-eslint/consistent-type-imports": [
+        //   "warn",
+        //   {
+        //     "prefer": "type-imports",
+        //     "disallowTypeAnnotations": false
+        //   }
+        // ]
       }
     },
     {

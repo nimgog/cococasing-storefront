@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HammerGestureConfig } from '@angular/platform-browser';
 import * as hammer from 'hammerjs';
 

@@ -2,10 +2,8 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { firstValueFrom, tap } from 'rxjs';
 import { SerieCasePipe } from 'src/app/common/utils/seriecase.pipe';
-import {
-  ProductVariant,
-  defaultProductModel,
-} from 'src/app/models/product.model';
+import type { ProductVariant } from 'src/app/models/product.model';
+import { defaultProductModel } from 'src/app/models/product.model';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({

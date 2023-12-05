@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Benefit } from '../benefit';
+import type { Benefit } from '../../models/benefit.model';
 import {
   animate,
   state,

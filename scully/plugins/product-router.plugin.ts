@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ApolloClient,
-  ApolloQueryResult,
+  type ApolloQueryResult,
   InMemoryCache,
-  NormalizedCacheObject,
+  type NormalizedCacheObject,
   gql,
 } from '@apollo/client/core';
 import { firstValueFrom, from, map, mergeMap, toArray } from 'rxjs';
-import { HandledRoute, registerPlugin } from '@scullyio/scully';
+import { type HandledRoute, registerPlugin } from '@scullyio/scully';
 import { environment } from '../../src/environments/environment.prod';
 import {
-  Money,
-  Product,
-  ProductVariant,
+  type Money,
+  type Product,
+  type ProductVariant,
   defaultProductModel,
   discountedProductTagPrefix,
   expectedProductOptions,

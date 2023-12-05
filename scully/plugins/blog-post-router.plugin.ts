@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HandledRoute, registerPlugin } from '@scullyio/scully';
+import type { HandledRoute } from '@scullyio/scully';
+import { registerPlugin } from '@scullyio/scully';
 
 export const blogPostRouterPlugin = 'blogPostRouterPlugin';
 

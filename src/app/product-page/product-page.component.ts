@@ -1,19 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Location, TitleCasePipe } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import type { ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { ShopifyProductService } from '../services/shopify-product.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription, filter, map, switchMap, tap } from 'rxjs';
+import type { Observable, Subscription } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs';
+import type { Product, ProductVariant } from '../models/product.model';
 import {
-  Product,
-  ProductVariant,
   defaultProductColor,
   defaultProductModel,
   defaultProductSerie,

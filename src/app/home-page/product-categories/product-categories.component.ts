@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-
-interface ProductCategory {
-  name: string;
-  description?: string;
-  imageUrl: string;
-  pageUrl: string;
-}
+import type { ProductCategory } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-product-categories',

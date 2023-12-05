@@ -1,16 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EMPTY, Subscription, catchError } from 'rxjs';
-import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
-import { BlogPost } from './blog-post';
+import { EMPTY, type Subscription, catchError } from 'rxjs';
+import { ScullyRoutesService } from '@scullyio/ng-lib';
+import type {
+  BlogPost,
+  BlogPostScullyRoute,
+} from '../../models/blog-post.model';
 import { Title } from '@angular/platform-browser';
 import { getFullPageTitle as getFullPageTitle } from 'src/app/common/utils/page-helpers';
-
-interface BlogPostScullyRoute extends ScullyRoute {
-  author: string;
-  date: string;
-  headingImageUrl: string;
-}
 
 @Component({
   selector: 'app-blog-post-page',

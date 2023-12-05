@@ -1,11 +1,9 @@
+import type { AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   HostBinding,
   Input,
-  OnDestroy,
   Renderer2,
   ViewChild,
 } from '@angular/core';

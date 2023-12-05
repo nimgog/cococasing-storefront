@@ -6,7 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, Input } from '@angular/core';
-import { FeaturedProduct } from 'src/app/models/product.model';
+import type { FeaturedProduct } from 'src/app/models/product.model';
 
 const animations = [
   trigger('slideAnimation', [

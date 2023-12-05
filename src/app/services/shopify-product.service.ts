@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import type { Observable } from 'rxjs';
 import {
-  Observable,
   catchError,
   concatMap,
   interval,
@@ -11,7 +11,7 @@ import {
   take,
   tap,
 } from 'rxjs';
-import { FeaturedProduct, Money, Product } from '../models/product.model';
+import type { FeaturedProduct, Money, Product } from '../models/product.model';
 import { LocationService } from './location.service';
 import { LocalStorageService } from './local-storage.service';
 import {

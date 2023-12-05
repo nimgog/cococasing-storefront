@@ -1,17 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { PostCategory } from './blog-post-page/post-category';
+import type {
+  BlogPostPreview,
+  BlogPostCategory,
+  BlogPostPreviewScullyRoute,
+} from '../models/blog-post.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
-import { Subscription } from 'rxjs';
-import { BlogPostPreview } from './blog-post-preview';
+import { type ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
+import type { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { getFullPageTitle } from '../common/utils/page-helpers';
-
-interface BlogPostPreviewScullyRoute extends ScullyRoute {
-  date: string;
-  thumbnailImageUrl: string;
-}
 
 @Component({
   selector: 'app-blog-page',
@@ -24,10 +23,10 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
   posts: BlogPostPreview[] = [];
   displayedPosts: BlogPostPreview[] = [];
-  currentCategory?: PostCategory;
+  currentCategory?: BlogPostCategory;
   nextPage = 1;
 
-  routeTabs: { title: string; category?: PostCategory }[] = [
+  routeTabs: { title: string; category?: BlogPostCategory }[] = [
     { title: 'All Posts' },
     { title: 'Lifestyle', category: 'lifestyle' },
     { title: 'Training', category: 'training' },
@@ -51,7 +50,8 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      this.currentCategory = (params['category'] as PostCategory) || undefined;
+      this.currentCategory =
+        (params['category'] as BlogPostCategory) || undefined;
       this.setPageTitle();
       this.loadPosts();
     });
@@ -61,7 +61,7 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     this.availablePostsSub?.unsubscribe();
   }
 
-  changeCategory(category?: PostCategory) {
+  changeCategory(category?: BlogPostCategory) {
     const url = category ? `/blog/${category}` : '/blog';
     const urlTree = this.router.createUrlTree([url]);
 
@@ -162,7 +162,7 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCategoryColor(category: PostCategory) {
+  getCategoryColor(category: BlogPostCategory) {
     switch (category) {
       case 'lifestyle':
         return '#16A34A';

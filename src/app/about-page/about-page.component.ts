@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Benefit } from './benefit';
+import type { Benefit } from '../models/benefit.model';
 
 @Component({
   selector: 'app-about-page',

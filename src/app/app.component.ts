@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { Subscription, distinctUntilChanged, skip } from 'rxjs';
+import type { Subscription } from 'rxjs';
+import { distinctUntilChanged, skip } from 'rxjs';
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { ScrollBlockerService } from './services/scroll-blocker.service';
 

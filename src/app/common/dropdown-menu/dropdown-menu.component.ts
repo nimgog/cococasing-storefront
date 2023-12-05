@@ -1,5 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import type { OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-dropdown-menu',

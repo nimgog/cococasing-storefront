@@ -1,12 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ShoppingCartService } from '../services/shopping-cart.service';
-import { Subscription } from 'rxjs';
+import type { Subscription } from 'rxjs';
 import { ShopifyProductService } from '../services/shopify-product.service';
 import { isScullyRunning } from '@scullyio/ng-lib';
 

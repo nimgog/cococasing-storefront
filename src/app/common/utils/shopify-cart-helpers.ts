@@ -1,6 +1,9 @@
-import { ShoppingCartFragment } from 'src/app/graphql/types';
+import type { ShoppingCartFragment } from 'src/app/graphql/types';
 import { expectedProductOptions } from 'src/app/models/product.model';
-import { LineItem, ShoppingCart } from 'src/app/models/shopping-cart.model';
+import type {
+  LineItem,
+  ShoppingCart,
+} from 'src/app/models/shopping-cart.model';
 import { parseProductVariantAttributes } from './shopify-product-helpers';
 
 export const mapCart = (

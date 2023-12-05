@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
-import { Product, ProductVariant } from 'src/app/models/product.model';
+import type { OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import type { Product, ProductVariant } from 'src/app/models/product.model';
 import { ScrollBlockerService } from 'src/app/services/scroll-blocker.service';
-import type { Image, ResponsiveImage } from 'src/app/models/image';
+import type { Image, ResponsiveImage } from 'src/app/models/image.model';
 
 @Component({
   selector: 'app-product-image-slider',

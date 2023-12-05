@@ -1,7 +1,8 @@
 import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { NgModule } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+import type { ApolloClientOptions } from '@apollo/client/core';
+import { InMemoryCache } from '@apollo/client/core';
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 

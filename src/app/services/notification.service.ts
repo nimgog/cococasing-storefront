@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IndividualConfig, ToastrService } from 'ngx-toastr';
-import { Notification } from '../models/notification';
+import { type IndividualConfig, ToastrService } from 'ngx-toastr';
+import type { Notification } from '../models/notification.model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type NotificationConfig = Partial<IndividualConfig<any>>;

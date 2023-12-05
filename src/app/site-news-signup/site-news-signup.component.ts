@@ -1,15 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from '../services/notification.service';
 import { finalize } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NavigationStart, Router } from '@angular/router';
-
-interface MailChimpResponse {
-  result: string;
-  msg: string;
-}
 
 @Component({
   selector: 'app-site-news-signup',
@@ -67,7 +63,10 @@ export class SiteNewsSignupComponent implements OnInit {
       environment.mailChimpNewsletterEndpoint + params.toString();
 
     this.httpClient
-      .jsonp<MailChimpResponse>(mailChimpUrl, 'c')
+      .jsonp<{
+        result: string;
+        msg: string;
+      }>(mailChimpUrl, 'c')
       .pipe(finalize(() => (this.isSubmitting = false)))
       .subscribe({
         next: (response) => {

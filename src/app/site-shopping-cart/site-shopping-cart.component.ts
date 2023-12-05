@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Subscription } from 'rxjs';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { NavigationService } from '../services/navigation.service';
-import { ShoppingCart } from '../models/shopping-cart.model';
+import type { ShoppingCart } from '../models/shopping-cart.model';
 import { ShopifyProductService } from '../services/shopify-product.service';
-import { Money } from '../models/product.model';
+import type { Money } from '../models/product.model';
 
 @Component({
   selector: 'app-site-shopping-cart',

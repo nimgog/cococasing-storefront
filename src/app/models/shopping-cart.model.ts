@@ -1,4 +1,4 @@
-import { Money } from './product.model';
+import type { Money } from './product.model';
 
 export type ShoppingCart = {
   id: string;
