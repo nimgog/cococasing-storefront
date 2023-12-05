@@ -114,11 +114,14 @@ export const client = Client.buildClient({
     HttpClientJsonpModule,
     NgxImageZoomModule,
     BrowserAnimationsModule,
-    ScullyLibModule,
     GraphQLModule,
     ReactiveFormsModule,
     NgxTurnstileModule,
     NgxTurnstileFormsModule,
+
+    ScullyLibModule.forRoot({
+      alwaysMonitor: true,
+    }),
 
     ToastrModule.forRoot({
       closeButton: true,

@@ -66,6 +66,7 @@
     "@graphql-codegen/typescript-operations": "^4.0.1",
     "@graphql-eslint/eslint-plugin": "^3.20.1",
     "@parcel/watcher": "^2.3.0",
+    "@scullyio/scully-plugin-flash-prevention": "^2.1.41",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/hammerjs": "^2.0.41",
     "@types/jasmine": "~3.10.0",
