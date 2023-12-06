@@ -19,6 +19,7 @@ export type BlogPost = {
   author: string;
   date: Date;
   headingImageUrl: string;
+  timeToReadInMins: string;
 };
 
 export type BlogPostPreviewScullyRoute = ScullyRoute & {
@@ -30,4 +31,5 @@ export type BlogPostScullyRoute = ScullyRoute & {
   author: string;
   date: string;
   headingImageUrl: string;
+  readingTime: string;
 };

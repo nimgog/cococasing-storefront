@@ -35,6 +35,18 @@
               {{ blogPost.date | date }}
             </span>
           </div>
+
+          <div class="flex items-center gap-x-1">
+            <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
+              <mat-icon class="flex items-center text-[22px]" aria-label="Clock" aria-hidden="false" inline>
+                schedule
+              </mat-icon>
+            </div>
+
+            <span class="text-coco-slate-gray text-sm lg:text-base font-medium !font-anekb">
+              {{ blogPost.timeToReadInMins | number:'1.0-0' }} min read
+            </span>
+          </div>
         </div>
       </div>
 

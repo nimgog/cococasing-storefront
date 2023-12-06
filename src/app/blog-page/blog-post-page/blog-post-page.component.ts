@@ -49,6 +49,7 @@ export class BlogPostPageComponent implements OnInit, OnDestroy {
           author: postScullyRoute.author,
           date: new Date(postScullyRoute.date),
           headingImageUrl: postScullyRoute.headingImageUrl,
+          timeToReadInMins: postScullyRoute.readingTime,
         };
       });
   }
