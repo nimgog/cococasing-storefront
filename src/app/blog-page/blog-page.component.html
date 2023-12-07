@@ -24,6 +24,12 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-6 lg:gap-x-0.5 gap-y-2 pt-6 lg:pt-12">
+      <div *ngIf="!displayedPosts.length" class="col-span-1 sm:col-span-6">
+        <p class="text-center text-coco-slate-gray text-sm sm:text-base md:text-lg lg:text-xl !font-anekt">
+          There are no {{ currentCategory | titlecase }} posts yet.
+        </p>
+      </div>
+
       <div *ngFor="let post of displayedPosts; let i = index" [ngClass]="[{
           '2': 'sm:col-span-2',
           '3': 'sm:col-span-3',
