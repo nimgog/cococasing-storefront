@@ -152,13 +152,13 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
     switch (colSpan) {
       case 6:
-        return 'w-1/2';
+        return 'sm:w-1/2';
       case 4:
-        return 'w-3/4';
+        return 'sm:w-3/4';
       // case 3:
-      //   return 'w-11/12';
+      //   return 'sm:w-11/12';
       default:
-        return 'w-auto';
+        return 'sm:w-auto';
     }
   }
 

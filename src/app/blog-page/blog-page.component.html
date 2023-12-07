@@ -23,16 +23,17 @@
       <div class="grow hidden lg:block border-b border-coco-light-medium-gray"></div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-6 lg:gap-x-0.5 gap-y-2 pt-6 lg:pt-12">
+    <div class="grid grid-cols-1 sm:grid-cols-6 lg:gap-x-0.5 gap-y-2 pt-6 lg:pt-12">
       <div *ngFor="let post of displayedPosts; let i = index" [ngClass]="[{
-          '2': 'lg:col-span-2',
-          '3': 'lg:col-span-3',
-          '4': 'lg:col-span-4',
-          '6': 'lg:col-span-6'}[getColSpanForIndex(i)],
-          i > 0 ? 'lg:p-1' : ''
+          '2': 'sm:col-span-2',
+          '3': 'sm:col-span-3',
+          '4': 'sm:col-span-4',
+          '6': 'sm:col-span-6'}[getColSpanForIndex(i)],
+          i > 0 ? 'sm:p-1' : ''
           ]">
         <a [routerLink]="['/blog', post.category, post.slug]">
-          <div class="relative h-[204px] rounded-2xl" [ngClass]="[i === 0 ? 'lg:h-[460px]' : 'lg:h-[400px]']">
+          <div class="relative h-[204px] sm:h-[280px] rounded-2xl"
+            [ngClass]="[i === 0 ? 'lg:h-[460px]' : 'lg:h-[400px]']">
             <img class="w-full h-full object-cover rounded-2xl" [src]="post.thumbnailImageUrl" alt="Read post" />
 
             <div
