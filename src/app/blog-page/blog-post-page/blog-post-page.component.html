@@ -14,7 +14,7 @@
           {{ blogPost.title }}
         </span>
 
-        <div class="flex gap-x-8 pb-4">
+        <div class="flex flex-wrap justify-center lg:justify-start gap-x-8 gap-y-3 pb-4">
           <div class="flex items-center gap-x-1">
             <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
               <img src="/assets/img/blog-page/blog-post-page/author.svg" alt="Author" />
@@ -25,27 +25,30 @@
             </span>
           </div>
 
-          <div class="flex items-center gap-x-1">
-            <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
-              <img src="/assets/img/blog-page/blog-post-page/calendar.svg" alt="Calendar" />
+          <div class="flex gap-x-8">
+            <div class="flex items-center gap-x-1">
+              <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
+                <img src="/assets/img/blog-page/blog-post-page/calendar.svg" alt="Calendar" />
+              </div>
+
+              <span
+                class="text-uppercase text-coco-slate-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
+                {{ blogPost.date | date }}
+              </span>
             </div>
 
-            <span
-              class="text-uppercase text-coco-slate-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
-              {{ blogPost.date | date }}
-            </span>
-          </div>
+            <div class="flex items-center gap-x-1">
+              <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
+                <mat-icon class="flex items-center text-[18px] lg:text-[22px]" aria-label="Clock" aria-hidden="false"
+                  inline>
+                  schedule
+                </mat-icon>
+              </div>
 
-          <div class="flex items-center gap-x-1">
-            <div class="w-[18px] lg:w-[22px] h-[18px] lg:h-[22px]">
-              <mat-icon class="flex items-center text-[22px]" aria-label="Clock" aria-hidden="false" inline>
-                schedule
-              </mat-icon>
+              <span class="text-coco-slate-gray text-sm lg:text-base font-medium !font-anekb">
+                {{ blogPost.timeToReadInMins | number:'1.0-0' }} min read
+              </span>
             </div>
-
-            <span class="text-coco-slate-gray text-sm lg:text-base font-medium !font-anekb">
-              {{ blogPost.timeToReadInMins | number:'1.0-0' }} min read
-            </span>
           </div>
         </div>
       </div>
