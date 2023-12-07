@@ -6,21 +6,21 @@
 
 <div class="flex justify-center px-2 py-10 lg:py-28">
   <div class="grow flex flex-col max-w-centered-content">
-    <div class="flex">
+    <div class="flex justify-between sm:justify-start">
       <!-- TODO: Animate "tab switching" -->
       <div *ngFor="let routeTab of routeTabs; let i = index"
-        [ngClass]="[routeTab.category === currentCategory ? 'border-coco-orange' : 'border-coco-light-medium-gray', i > 0 ? 'lg:pl-4' : '']"
-        class="w-full lg:w-auto lg:min-w-[168px] border-b">
+        [ngClass]="[routeTab.category === currentCategory ? 'border-coco-orange' : 'border-coco-light-medium-gray', i > 0 ? 'sm:pl-4' : '']"
+        class="grow sm:grow-0 sm:pr-4 border-b">
         <button (click)="changeCategory(routeTab.category)">
           <span
             [ngClass]="[routeTab.category === currentCategory ? 'text-coco-dark-blue font-semibold' : 'text-[#6B7280] font-light']"
-            class="text-uppercase text-sm lg:text-3xl !font-anekt leading-[24px]">
+            class="text-uppercase text-sm sm:text-lg md:text-xl lg:text-3xl !font-anekt leading-[24px]">
             {{ routeTab.title }}
           </span>
         </button>
       </div>
 
-      <div class="grow hidden lg:block border-b border-coco-light-medium-gray"></div>
+      <div class="grow hidden sm:block border-b border-coco-light-medium-gray"></div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-6 lg:gap-x-0.5 gap-y-2 pt-6 lg:pt-12">
