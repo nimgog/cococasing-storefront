@@ -57,6 +57,7 @@ import { ProductDescriptionComponent } from './product-page/product-description/
 import { ProductControlsComponent } from './product-page/product-controls/product-controls.component';
 import { AssetImageDirective } from './common/utils/asset-image.directive';
 import { SkeletonLoaderComponent } from './common/skeleton-loader/skeleton-loader.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { SkeletonLoaderComponent } from './common/skeleton-loader/skeleton-loade
     ReactiveFormsModule,
     NgxTurnstileModule,
     NgxTurnstileFormsModule,
+    NgOptimizedImage,
 
     ScullyLibModule.forRoot({
       alwaysMonitor: true,
