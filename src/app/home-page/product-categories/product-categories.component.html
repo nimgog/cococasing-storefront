@@ -6,7 +6,7 @@
       <!-- TODO: There's a "VIEW ALL" link in desktop view, should it be added to others, too? -->
       <!-- TODO: Ask Nimer if there should there should be a breakpoint being used between mobile and desktop -->
       <span id="products"
-        class="text-coco-dark-blue lg:text-coco-darkest-blue text-uppercase text-lg lg:text-3xl lg:font-medium !font-anekt leading-7 lg:leading-9">
+        class="text-coco-dark-blue lg:text-coco-darkest-blue uppercase text-lg lg:text-3xl lg:font-medium !font-anekt leading-7 lg:leading-9">
         Shop by category
       </span>
     </div>
@@ -22,7 +22,7 @@
 
           <div class="w-1/2 flex flex-col justify-center items-center lg:items-start p-1">
             <span
-              class="text-coco-darkest-blue text-uppercase text-xl lg:text-4xl font-bold !font-anekt leading-7 lg:leading-10 whitespace-nowrap lg:whitespace-normal">
+              class="text-coco-darkest-blue uppercase text-xl lg:text-4xl font-bold !font-anekt leading-7 lg:leading-10 whitespace-nowrap lg:whitespace-normal">
               {{ categories[0].name }}
             </span>
 
@@ -33,7 +33,7 @@
 
             <button [routerLink]="[categories[0].pageUrl]"
               class="flex justify-center items-center w-[82px] lg:w-[137px] h-[30px] lg:h-[47px] px-[5px] lg:px-5 py-1 lg:py-[14px] bg-coco-darkest-blue rounded lg:rounded-lg">
-              <span class="text-white text-uppercase text-sm lg:text-base font-medium !font-anekb leading-6">
+              <span class="text-white uppercase text-sm lg:text-base font-medium !font-anekb leading-6">
                 Shop now
               </span>
             </button>
@@ -49,7 +49,7 @@
 
           <div class="lg:flex-none w-1/2 lg:w-full flex flex-col justify-center items-center p-1">
             <span
-              class="text-coco-darkest-blue text-uppercase text-xl lg:text-2xl font-bold !font-anekt leading-7 lg:leading-8 whitespace-nowrap lg:whitespace-normal">
+              class="text-coco-darkest-blue uppercase text-xl lg:text-2xl font-bold !font-anekt leading-7 lg:leading-8 whitespace-nowrap lg:whitespace-normal">
               {{ category.name }}
             </span>
 
@@ -60,7 +60,7 @@
 
             <button [routerLink]="[category.pageUrl]"
               class="flex justify-center items-center w-[82px] lg:w-[137px] h-[30px] lg:h-[47px] px-[5px] lg:px-5 py-1 lg:py-[14px] bg-coco-darkest-blue rounded lg:rounded-lg">
-              <span class="text-white text-uppercase text-sm lg:text-base font-medium !font-anekb leading-6">
+              <span class="text-white uppercase text-sm lg:text-base font-medium !font-anekb leading-6">
                 Shop now
               </span>
             </button>
@@ -76,8 +76,7 @@
           </div>
 
           <div class="flex justify-center items-center lg:p-1">
-            <span
-              class="text-coco-darkest-blue text-center text-uppercase text-xs lg:text-lg font-semibold !font-anekt">
+            <span class="text-coco-darkest-blue text-center uppercase text-xs lg:text-lg font-semibold !font-anekt">
               {{ category.name }}
             </span>
           </div>

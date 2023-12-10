@@ -46,7 +46,6 @@
     "ngx-toastr": "^16.2.0",
     "ngx-turnstile": "^0.0.7",
     "rxjs": "~7.5.0",
-    "shopify-buy": "^2.20.1",
     "ts-node": "^10.9.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -71,7 +70,6 @@
     "@types/hammerjs": "^2.0.41",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
-    "@types/shopify-buy": "^2.17.2",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "autoprefixer": "^10.4.15",

@@ -4,7 +4,7 @@
     <div class="h-11 md:h-5 lg:h-0"></div>
     <div class="flex justify-center align-items-center py-0.5">
       <span [innerHTML]="freeShippingText"
-        class="text-white text-uppercase text-[9px] font-roboto leading-[11px] tracking-[0.72px]">
+        class="text-white uppercase text-[9px] font-roboto leading-[11px] tracking-[0.72px]">
       </span>
     </div>
   </div>
@@ -28,7 +28,7 @@
 
             <app-dropdown-menu>
               <div mainTemplate>
-                <span class="text-uppercase">Products</span>
+                <span class="uppercase">Products</span>
               </div>
 
               <ng-container
@@ -94,7 +94,7 @@
 <ng-template #navLink let-title="title" let-link="link">
   <a [routerLink]="[link]" class="h-full">
     <div class="flex items-center h-full">
-      <span class="text-uppercase">
+      <span class="uppercase">
         {{ title }}
       </span>
     </div>
@@ -110,7 +110,7 @@
 <ng-template #dropdownLink let-title="title" let-link="link">
   <a [routerLink]="link">
     <div>
-      <span class="text-uppercase whitespace-nowrap">
+      <span class="uppercase whitespace-nowrap">
         {{ title }}
       </span>
     </div>

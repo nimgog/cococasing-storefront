@@ -15,11 +15,15 @@ export class AddToCartComponent {
   private serieCasePipe = new SerieCasePipe();
 
   @Input()
-  productVariant!: ProductVariant;
+  productVariant?: ProductVariant;
 
   constructor(private shoppingCartService: ShoppingCartService) {}
 
   get variantTitle() {
+    if (!this.productVariant) {
+      return null;
+    }
+
     const serieTitle = this.serieCasePipe.transform(
       this.titleCasePipe.transform(
         this.productVariant.serie.replaceAll('-', ' ')
@@ -47,6 +51,10 @@ export class AddToCartComponent {
   }
 
   addToCart() {
+    if (!this.productVariant) {
+      return;
+    }
+
     const addItemAndOpenCart$ = this.shoppingCartService
       .addLineItem(this.productVariant.id)
       .pipe(tap(() => this.shoppingCartService.openCart()));

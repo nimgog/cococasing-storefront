@@ -56,13 +56,7 @@ import { ProductImageSliderComponent } from './product-page/product-image-slider
 import { ProductDescriptionComponent } from './product-page/product-description/product-description.component';
 import { ProductControlsComponent } from './product-page/product-controls/product-controls.component';
 import { AssetImageDirective } from './common/utils/asset-image.directive';
-
-const Client = require('shopify-buy');
-
-export const client = Client.buildClient({
-  domain: 'cococasing.myshopify.com',
-  storefrontAccessToken: environment.storeFrontAT,
-});
+import { SkeletonLoaderComponent } from './common/skeleton-loader/skeleton-loader.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +95,7 @@ export const client = Client.buildClient({
     ProductDescriptionComponent,
     ProductControlsComponent,
     AssetImageDirective,
+    SkeletonLoaderComponent,
   ],
   imports: [
     MatExpansionModule,

@@ -11,7 +11,7 @@
     <div class="flex flex-col items-center max-w-blog-content px-4 pt-8 lg:pt-36 pb-10 lg:pb-28">
       <div *ngIf="blogPost" class="w-full flex flex-col gap-y-8 border-b border-coco-light-medium-gray">
         <span
-          class="text-center lg:text-left text-uppercase text-coco-slate-gray text-lg lg:text-5xl font-bold !font-anekt lg:leading-[48px]">
+          class="text-center lg:text-left uppercase text-coco-slate-gray text-lg lg:text-5xl font-bold !font-anekt lg:leading-[48px]">
           {{ blogPost.title }}
         </span>
 
@@ -33,7 +33,7 @@
               </div>
 
               <span
-                class="text-uppercase text-coco-slate-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
+                class="uppercase text-coco-slate-gray text-xs lg:text-base font-medium !font-anekb tracking-[1.2px] lg:tracking-[1.6px]">
                 {{ blogPost.date | date }}
               </span>
             </div>
@@ -62,7 +62,7 @@
       <!-- all categories or a specific (current post's category) one -->
       <div>
         <button routerLink="/blog" class="px-6 py-4 bg-coco-dark-blue rounded-lg">
-          <span class="text-uppercase text-white text-sm font-semibold !font-anekb">
+          <span class="uppercase text-white text-sm font-semibold !font-anekb">
             Return to blog
           </span>
         </button>

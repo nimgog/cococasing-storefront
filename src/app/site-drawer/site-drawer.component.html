@@ -26,7 +26,7 @@
             <button (click)="toggleProductsMenu()">
               <div class="flex justify-between items-center">
                 <div>
-                  <span class="text-uppercase text-lg font-roboto">Products</span>
+                  <span class="uppercase text-lg font-roboto">Products</span>
                 </div>
 
                 <div>
@@ -78,7 +78,7 @@
 
 <ng-template #menuItem let-title="title" let-link="link">
   <a (click)="closeDrawer()" [routerLink]="link">
-    <span class="text-uppercase text-lg font-roboto">
+    <span class="uppercase text-lg font-roboto">
       {{ title }}
     </span>
   </a>
@@ -87,7 +87,7 @@
 <ng-template #submenuItem let-title="title" let-link="link">
   <a (click)="closeDrawer()" [routerLink]="link">
     <div class="px-8">
-      <span class="text-uppercase text-sm font-medium font-roboto">
+      <span class="uppercase text-sm font-medium font-roboto">
         {{ title }}
       </span>
     </div>

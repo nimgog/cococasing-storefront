@@ -2,7 +2,7 @@
   <div class="grow flex flex-col max-w-centered-content">
     <div class="grow flex flex-col sm:flex-row sm:justify-between gap-y-8">
       <div class="grid grid-cols-2 gap-x-20 sm:gap-x-16 lg:gap-x-24 px-2 sm:pr-0 lg:pl-0 pb-8">
-        <div class="text-uppercase">
+        <div class="uppercase">
           <span class="text-coco-off-white text-sm font-medium !font-anekt">
             About
           </span>
@@ -46,7 +46,7 @@
           </ul>
         </div>
 
-        <div class="text-uppercase">
+        <div class="uppercase">
           <span class=" text-coco-off-white text-sm font-medium !font-anekt">
             Pages
           </span>
@@ -59,7 +59,7 @@
             </li>
 
             <li>
-              <button (click)="navigateToProducts()" role="link" class="text-uppercase whitespace-nowrap">
+              <button (click)="navigateToProducts()" role="link" class="uppercase whitespace-nowrap">
                 Products
               </button>
             </li>
@@ -80,11 +80,10 @@
       </div>
 
       <div class="grow flex justify-between md:gap-x-10 lg:gap-x-24 px-2 sm:px-0 pb-8">
-        <div
-          class="shrink-0 text-coco-medium-gray text-uppercase text-xs lg:text-sm font-normal lg:font-medium font-roboto">
-          <span class="block whitespace-nowrap">Shadida Trading Company AB</span>
-          <span class="block whitespace-nowrap">559356-9345</span>
-          <span class="block whitespace-nowrap">Kristianstadsgatan 10</span>
+        <div class="shrink-0 text-coco-medium-gray uppercase text-xs lg:text-sm font-normal lg:font-medium font-roboto">
+          <span class="block whitespace-nowrap">Shadida Trading Company AB</span>{{' '}}
+          <span class="block whitespace-nowrap">559356-9345</span>{{' '}}
+          <span class="block whitespace-nowrap">Kristianstadsgatan 10</span>{{' '}}
           <span class="block whitespace-nowrap">21423 Malmö, Sweden</span>
         </div>
 
@@ -108,7 +107,7 @@
           <img *ngFor="let image of paymentOptionImages" [src]="image.src" [alt]="image.alt" class="w-8 lg:w-9" />
         </div>
         <span class="block text-center text-coco-medium-gray text-xs font-medium !font-anekt leading-5">
-          &copy;{{ currentYear }}, Coco-Casing
+          &copy;{{ currentYear }}, Coco Casing
         </span>
       </div>
     </div>

@@ -11,8 +11,10 @@ export class ProductDescriptionComponent {
   descriptionHtml?: SafeHtml;
 
   @Input()
-  set description(value: string) {
-    this.descriptionHtml = this.domSanitizer.bypassSecurityTrustHtml(value);
+  set description(value: string | null | undefined) {
+    if (value) {
+      this.descriptionHtml = this.domSanitizer.bypassSecurityTrustHtml(value);
+    }
   }
 
   constructor(private domSanitizer: DomSanitizer) {}

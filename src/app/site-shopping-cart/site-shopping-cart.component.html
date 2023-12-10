@@ -3,7 +3,7 @@
 
   <div class="shrink-0 flex flex-col w-full max-w-[516px] bg-white">
     <div class="relative flex justify-center items-center p-4 border-b border-coco-lighter-gray">
-      <span class="text-uppercase text-coco-slate-gray text-2xl font-medium !font-anekt">
+      <span class="uppercase text-coco-slate-gray text-2xl font-medium !font-anekt">
         Your Cart
       </span>
 
@@ -27,17 +27,17 @@
       <div class="shrink-0 px-5 py-8">
         <div class="flex flex-col gap-y-4 pt-4 border-t border-coco-lighter-gray">
           <div class="flex justify-between">
-            <span class="text-uppercase text-coco-slate-gray text-sm font-medium !font-anekt">
+            <span class="uppercase text-coco-slate-gray text-sm font-medium !font-anekt">
               Subtotal ({{ cart.totalQuantity }} items)
             </span>
 
             <div class="flex items-baseline gap-x-2">
               <span *ngIf="cart.originalTotalPrice"
-                class="text-uppercase text-coco-red text-xs font-medium !font-anekt line-through decoration-1">
+                class="uppercase text-coco-red text-xs font-medium !font-anekt line-through decoration-1">
                 {{ cart.originalTotalPrice.amount }} {{ cart.originalTotalPrice.currencyCode }}
               </span>
 
-              <span class="text-uppercase text-coco-slate-gray text-sm font-semibold !font-anekt">
+              <span class="uppercase text-coco-slate-gray text-sm font-semibold !font-anekt">
                 {{ cart.totalPrice.amount }} {{ cart.totalPrice.currencyCode }}
               </span>
             </div>
@@ -49,14 +49,14 @@
 
           <a [href]="cart.checkoutUrl" rel="noopener noreferrer">
             <div class="flex justify-center w-full px-6 py-4 bg-coco-orange rounded">
-              <span class="text-uppercase text-white text-sm font-semibold !font-anekb">
+              <span class="uppercase text-white text-sm font-semibold !font-anekb">
                 Check Out
               </span>
             </div>
           </a>
 
           <button (click)="closeCart()" class="w-full px-6 py-4 bg-white border border-coco-orange rounded">
-            <span class="text-uppercase text-coco-slate-gray text-sm font-semibold !font-anekb">
+            <span class="uppercase text-coco-slate-gray text-sm font-semibold !font-anekb">
               Continue Shopping
             </span>
           </button>
@@ -76,7 +76,7 @@
           </span>
         </div>
         <button (click)="navigateToProducts()" role="link" class="w-full px-6 py-4 bg-coco-orange rounded">
-          <span class="text-uppercase text-white text-sm font-semibold !font-anekb">Shop Now</span>
+          <span class="uppercase text-white text-sm font-semibold !font-anekb">Shop Now</span>
         </button>
       </div>
     </ng-template>

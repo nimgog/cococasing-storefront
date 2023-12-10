@@ -5,7 +5,7 @@
     i === currentProductIndex ? 'block' : 'hidden',
     isNewProduct(product) ? 'bg-coco-orange' : 'bg-coco-red'
   ]" class="flex justify-center w-[81px] px-2 pt-1 mb-1.5">
-    <span class="text-white text-center text-uppercase text-[12px] font-medium !font-anekt leading-7 tracking-[1.2px]">
+    <span class="text-white text-center uppercase text-[12px] font-medium !font-anekt leading-7 tracking-[1.2px]">
       {{ getProductAnnouncement(product) }}
     </span>
   </div>
@@ -39,7 +39,7 @@
       [@fadeAnimation]="i === currentProductIndex ? 'shown' : 'hidden'"
       [ngClass]="i === currentProductIndex ? 'block' : 'hidden'" class="flex flex-col items-center pb-2.5">
       <span
-        class="text-center text-white text-uppercase text-sm md:text-base lg:text-lg font-medium !font-anekt leading-5 tracking-[1.4px] lg:tracking-[1.8px]">
+        class="text-center text-white uppercase text-sm md:text-base lg:text-lg font-medium !font-anekt leading-5 tracking-[1.4px] lg:tracking-[1.8px]">
         {{ product.title }}
       </span>
 
@@ -50,12 +50,12 @@
 
       <div *scullyExclude class="flex gap-x-2">
         <span *ngIf="product.originalPrice"
-          class="text-uppercase text-coco-red text-xs md:text-sm lg:text-base font-normal !font-anekt leading-5 lg:leading-7 tracking-[1.2px] lg:tracking-[1.6px] line-through decoration-1">{{
+          class="uppercase text-coco-red text-xs md:text-sm lg:text-base font-normal !font-anekt leading-5 lg:leading-7 tracking-[1.2px] lg:tracking-[1.6px] line-through decoration-1">{{
           product.originalPrice.amount
           }} {{ product.originalPrice.currencyCode }}</span>
 
         <span
-          class="text-uppercase text-white text-sm md:text-base lg:text-lg font-semibold !font-anekt tracking-[1.4px] lg:tracking-[1.8px]">{{
+          class="uppercase text-white text-sm md:text-base lg:text-lg font-semibold !font-anekt tracking-[1.4px] lg:tracking-[1.8px]">{{
           product.price.amount }} {{ product.price.currencyCode
           }}</span>
       </div>
@@ -66,7 +66,7 @@
     <button
       [routerLink]="['/products', products[currentProductIndex].productSlug, products[currentProductIndex].variantSlug]"
       role="link" class="bg-coco-orange w-[143px] h-[34px] px-8 py-1 rounded">
-      <span class="text-white text-uppercase text-[14px] font-semibold !font-anekb">
+      <span class="text-white uppercase text-[14px] font-semibold !font-anekb">
         Shop Now
       </span>
     </button>

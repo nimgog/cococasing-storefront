@@ -58,6 +58,10 @@ export class ProductImageSliderComponent implements OnChanges, OnDestroy {
   }
 
   showNextImage() {
+    if (!this.selectedVariant) {
+      return;
+    }
+
     const nextImageIndex =
       ((this.isFullscreen
         ? this.fullscreenHighlightedImageIndex
@@ -73,6 +77,10 @@ export class ProductImageSliderComponent implements OnChanges, OnDestroy {
   }
 
   showPreviousImage() {
+    if (!this.selectedVariant) {
+      return;
+    }
+
     const previousImageIndex =
       ((this.isFullscreen
         ? this.fullscreenHighlightedImageIndex

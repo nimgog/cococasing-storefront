@@ -7,7 +7,7 @@
   <div class="grow flex flex-col justify-between gap-y-[30px]">
     <div class="flex justify-between items-between">
       <div class="flex flex-col">
-        <span class="text-uppercase text-coco-slate-gray text-sm	font-semibold !font-anekt">
+        <span class="uppercase text-coco-slate-gray text-sm	font-semibold !font-anekt">
           {{ lineItem.product.title | replace:'-': ' ' }}
         </span>
 
@@ -53,11 +53,11 @@
 
       <div class="flex flex-wrap justify-end items-baseline gap-x-2">
         <span *ngIf="lineItem.originalTotalPrice"
-          class="text-uppercase text-coco-red text-sm font-normal !font-anekb line-through decoration-1">
+          class="uppercase text-coco-red text-sm font-normal !font-anekb line-through decoration-1">
           {{ lineItem.originalTotalPrice.amount }} {{ lineItem.originalTotalPrice.currencyCode }}
         </span>
 
-        <span class="text-uppercase text-coco-slate-gray text-base font-medium !font-anekb">
+        <span class="uppercase text-coco-slate-gray text-base font-medium !font-anekb">
           {{ lineItem.totalPrice.amount }} {{ lineItem.totalPrice.currencyCode }}
         </span>
       </div>

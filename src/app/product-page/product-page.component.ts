@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Location, TitleCasePipe } from '@angular/common';
 import type { ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Component, HostListener, ViewChild } from '@angular/core';
@@ -30,10 +29,9 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   private productSub!: Subscription;
   private productPriceRefreshSignalSub!: Subscription;
 
-  // TODO: Create a loading indicator
   isLoading = true;
-  product!: Product;
-  selectedVariant!: ProductVariant;
+  product?: Product;
+  selectedVariant?: ProductVariant;
 
   markerElementReached = false;
 
@@ -62,20 +60,20 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private titleService: Title
   ) {}
 
-  get selectedSerie(): string {
-    return this.selectedVariant.serie;
+  get selectedSerie(): string | undefined {
+    return this.selectedVariant?.serie;
   }
 
-  get selectedModel(): string {
-    return this.selectedVariant.model;
+  get selectedModel(): string | undefined {
+    return this.selectedVariant?.model;
   }
 
   get selectedColor(): string | undefined {
-    return this.selectedVariant.color;
+    return this.selectedVariant?.color;
   }
 
   get selectedTier(): string | undefined {
-    return this.selectedVariant.tier;
+    return this.selectedVariant?.tier;
   }
 
   ngOnInit() {
@@ -102,10 +100,10 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     this.productPriceRefreshSignalSub =
       this.shopifyProductService.productPriceRefreshSignal$
         .pipe(
-          filter(() => !this.isLoading),
+          filter(() => !this.isLoading && !!this.product),
           map(() => ({
-            productSlug: this.product.slug,
-            variantSlug: this.selectedVariant.slug,
+            productSlug: this.product?.slug || '',
+            variantSlug: this.selectedVariant?.slug,
           })),
           this.fetchProductAndVariantBySlug()
         )
@@ -152,7 +150,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   selectDefaultVariant(product: Product) {
-    const expectedOptions = expectedProductOptions.get(product.slug)!;
+    const expectedOptions = expectedProductOptions.get(product.slug) || [];
 
     const filterColor = expectedOptions.some((option) => option === 'color')
       ? defaultProductColor
@@ -187,13 +185,21 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     newTier?: string,
     redirect = false
   ) {
+    if (!this.product) {
+      return;
+    }
+
     const newVariant = this.product.variants.find(
       (variant) =>
         variant.serie === newSerie &&
         variant.model === newModel &&
         variant.color === newColor &&
         variant.tier === newTier
-    )!;
+    );
+
+    if (!newVariant) {
+      return;
+    }
 
     const url = `/products/${this.product.slug}/${newVariant.slug}`;
 
@@ -208,9 +214,15 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   changeSerie(newSerie: string) {
-    const newModel = this.isValidModelForSerie(newSerie, this.selectedModel)
-      ? this.selectedModel
-      : defaultProductModel;
+    if (!this.product) {
+      return;
+    }
+
+    const newModel =
+      this.selectedModel &&
+      this.isValidModelForSerie(newSerie, this.selectedModel)
+        ? this.selectedModel
+        : defaultProductModel;
 
     let newColor: string | undefined;
 
@@ -242,9 +254,11 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   changeModel(newModel: string) {
-    console.log('PARENT');
-
-    if (!this.isValidModelForSerie(this.selectedSerie, newModel)) {
+    if (
+      !this.product ||
+      !this.selectedSerie ||
+      !this.isValidModelForSerie(this.selectedSerie, newModel)
+    ) {
       return;
     }
 
@@ -278,7 +292,11 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   changeColor(newColor: string) {
-    if (this.isValidVariant('color', newColor)) {
+    if (
+      this.selectedSerie &&
+      this.selectedModel &&
+      this.isValidVariant('color', newColor)
+    ) {
       this.changeVariant(
         this.selectedSerie,
         this.selectedModel,
@@ -289,7 +307,11 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   changeTier(newTier: string) {
-    if (this.isValidVariant('tier', newTier)) {
+    if (
+      this.selectedSerie &&
+      this.selectedModel &&
+      this.isValidVariant('tier', newTier)
+    ) {
       this.changeVariant(
         this.selectedSerie,
         this.selectedModel,
@@ -300,12 +322,16 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   isValidModelForSerie(serie: string, model: string) {
-    return this.product.variants.some(
+    return this.product?.variants.some(
       (variant) => variant.serie === serie && variant.model === model
     );
   }
 
   isValidVariant(option: string, newValue: string) {
+    if (!this.selectedSerie || !this.selectedModel) {
+      return false;
+    }
+
     const serie = option === 'serie' ? newValue : this.selectedSerie;
     const model = option === 'model' ? newValue : this.selectedModel;
     const color = option === 'color' ? newValue : this.selectedColor;
@@ -320,16 +346,22 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     color?: string,
     tier?: string
   ) {
-    return this.product.variants.some(
-      (variant) =>
-        variant.serie === serie &&
-        variant.model === model &&
-        variant.color === color &&
-        variant.tier === tier
+    return (
+      this.product?.variants.some(
+        (variant) =>
+          variant.serie === serie &&
+          variant.model === model &&
+          variant.color === color &&
+          variant.tier === tier
+      ) || false
     );
   }
 
   setPageTitle() {
+    if (!this.product || !this.selectedSerie) {
+      return;
+    }
+
     const productTitle = this.titleCasePipe.transform(
       this.product.slug.replaceAll('-', ' ')
     );
