@@ -47,9 +47,14 @@ export class ShoppingCartService implements OnDestroy {
             return of(null);
           }
 
-          return this.shopifyCartService
-            .fetchCart(cartId)
-            .pipe(tap((cart) => this.cartSubject.next(cart)));
+          return this.shopifyCartService.fetchCart(cartId).pipe(
+            tap((cart) => {
+              if (!cart) {
+                this.localStorageService.remove('shopify:cart_id');
+              }
+            }),
+            tap((cart) => this.cartSubject.next(cart))
+          );
         }
 
         return of(cart);
