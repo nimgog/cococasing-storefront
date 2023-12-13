@@ -42,9 +42,7 @@
       </button>
 
       <img [src]="selectedVariantImages[highlightedImageIndex].src"
-        [alt]="selectedVariantImages[highlightedImageIndex].alt"
-        [srcset]="selectedVariantImages[highlightedImageIndex].srcset"
-        [sizes]="selectedVariantImages[highlightedImageIndex].sizes" class="max-h-[300px] lg:max-h-[500px]" />
+        [alt]="selectedVariantImages[highlightedImageIndex].alt" class="max-h-[300px] lg:max-h-[500px]" />
     </div>
   </div>
 
@@ -55,8 +53,7 @@
     <div *ngFor="let image of selectedVariantImages; let i = index" class="border rounded cursor-pointer"
       [ngClass]="[i === highlightedImageIndex ? 'border-coco-medium-gray' : 'border-coco-light-gray']"
       (click)="highlightedImageIndex = i">
-      <img [src]="image.src" [alt]="image.alt" [srcset]="image.srcset" [sizes]="image.sizes"
-        class="max-h-[50px] rounded" />
+      <img [src]="image.src" [alt]="image.alt" class="max-h-[50px] rounded" />
     </div>
   </div>
 </div>

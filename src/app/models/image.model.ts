@@ -3,11 +3,6 @@ export type Image = {
   alt?: string;
 };
 
-export type ResponsiveImage = Image & {
-  srcset: string;
-  sizes: string;
-};
-
 export type ImageBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 export const imageBreakpointOrder: ImageBreakpoint[] = [
