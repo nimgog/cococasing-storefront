@@ -58,7 +58,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
     private activatedRoute: ActivatedRoute,
     private shopifyProductService: ShopifyProductService,
-    private titleService: Title,
+    private titleService: Title
   ) {}
 
   get selectedSerie(): string | undefined {
@@ -141,13 +141,24 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   setProductAndSelectedVariant(product: Product, variant?: ProductVariant) {
     this.product = product;
+
     if (variant) {
-      if(variant.originalPrice)
-      this.discount = 100 - Math.round(variant.price.amount / variant.originalPrice.amount * 100);
       this.selectedVariant = variant;
       this.setPageTitle();
     } else {
       this.selectDefaultVariant(product);
+    }
+
+    const selectedVariant = this.selectedVariant;
+
+    if (selectedVariant && selectedVariant.originalPrice) {
+      this.discount =
+        100 -
+        Math.round(
+          (selectedVariant.price.amount /
+            selectedVariant.originalPrice.amount) *
+            100
+        );
     }
   }
 
