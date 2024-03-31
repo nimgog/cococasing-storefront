@@ -1,49 +1,210 @@
 <div class="flex justify-center pb-1">
   <div class="flex flex-col items-center w-full">
-    <div class="flex flex-col items-center w-full max-w-centered-content gap-y-10 pt-10 pb-10 px-2 lg:px-0">
+    <div
+      class="flex flex-col items-center w-full max-w-centered-content gap-y-10 pt-10 pb-10 px-2 lg:px-0"
+    >
       <div class="flex flex-col lg:flex-row lg:justify-center gap-y-6 w-full">
         <div class="flex flex-col gap-y-6 lg:w-[700px]">
           <div class="flex justify-center">
-            <app-skeleton-loader *ngIf="!product"
-              class="w-full lg:w-4/5 max-w-[340px] lg:max-w-none h-9 lg:h-[60px]"></app-skeleton-loader>
+            <app-skeleton-loader
+              *ngIf="!product"
+              class="w-full lg:w-4/5 max-w-[340px] lg:max-w-none h-9 lg:h-[60px]"
+            ></app-skeleton-loader>
 
-            <span *ngIf="product" class="uppercase text-coco-dark-blue text-3xl lg:text-6xl font-bold !font-anekt">
-              {{ product.slug | replace:'-':' ' }}
+            <span
+              *ngIf="product"
+              class="uppercase text-coco-dark-blue text-3xl lg:text-6xl font-bold !font-anekt"
+            >
+              {{ product.slug | replace : '-' : ' ' }}
             </span>
           </div>
           <div *ngIf="discount" class="w-full flex justify-center">
             <div class="py-2 px-4 text-white bg-red-500 rounded-lg w-fit">
-              <h3 class="text-2xl">{{discount}}% OFF</h3>
+              <h3 class="text-2xl">{{ discount }}% OFF</h3>
             </div>
           </div>
           <div class="lg:grow flex flex-col lg:flex-col-reverse gap-y-8">
-            <app-product-description [description]="product?.description"
-              class="flex justify-center"></app-product-description>
+            <app-product-description
+              [description]="product?.description"
+              class="flex justify-center"
+            ></app-product-description>
 
-            <app-product-image-slider [product]="product" [selectedVariant]="selectedVariant"
-              class="w-full"></app-product-image-slider>
+            <app-product-image-slider
+              [product]="product"
+              [selectedVariant]="selectedVariant"
+              class="w-full"
+            ></app-product-image-slider>
           </div>
         </div>
 
         <div class="shrink-0 lg:max-w-[400px] lg:pt-[84px]">
           <div class="flex flex-col justify-center lg:h-[500px]">
-            <div class="flex flex-col lg:gap-y-4 lg:ml-4 lg:pl-4 lg:border-l lg:border-[rgb(0,0,0,0.25)]">
-              <app-product-controls [availableVariants]="product?.variants || []" [selectedVariant]="selectedVariant"
-                [isValidVariant]="isValidVariant.bind(this)" (serieChange)="changeSerie($event)"
-                (modelChange)="changeModel($event)" (colorChange)="changeColor($event)"
-                (tierChange)="changeTier($event)"></app-product-controls>
-
-              <app-add-to-cart class="hidden lg:block" [productVariant]="selectedVariant"></app-add-to-cart>
+            <div
+              class="flex flex-col lg:gap-y-4 lg:ml-4 lg:pl-4 lg:border-l lg:border-[rgb(0,0,0,0.25)]"
+            >
+              <app-product-controls
+                [availableVariants]="product?.variants || []"
+                [selectedVariant]="selectedVariant"
+                [isValidVariant]="isValidVariant.bind(this)"
+                (serieChange)="changeSerie($event)"
+                (modelChange)="changeModel($event)"
+                (colorChange)="changeColor($event)"
+                (tierChange)="changeTier($event)"
+              ></app-product-controls>
+              <div class="flex justify-center gap-x-1 sm:gap-x-2 py-4">
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="American Express"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/amex.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="Apple Pay"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/apple.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="Google Pay"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/google.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="Klarna"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/klarna.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="Maestro"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/maestro.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="Mastercard"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/mastercard.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="Shop Pay"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/shop.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="UnionPay"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/union.png"
+                  />
+                </div>
+                <div>
+                  <img
+                    width="38"
+                    height="24"
+                    ng-reflect-width="38"
+                    ng-reflect-height="24"
+                    ng-reflect-ng-src="/assets/img/site-footer/paymen"
+                    alt="Visa"
+                    loading="lazy"
+                    fetchpriority="auto"
+                    ng-img="true"
+                    src="/assets/img/site-footer/payment/visa.png"
+                  />
+                </div>
+                <!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}-->
+              </div>
+              <app-add-to-cart
+                class="hidden lg:block"
+                [productVariant]="selectedVariant"
+              ></app-add-to-cart>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="lg:hidden w-full h-16 bg-coco-darkest-blue" #addToCartPlaceholder>
-      <app-add-to-cart class="w-full h-16"
-        [ngClass]="[markerElementReached ? '' : 'fixed bottom-0 left-0 right-0 z-add-to-cart']"
-        [productVariant]="selectedVariant"></app-add-to-cart>
+    <div
+      class="lg:hidden w-full h-16 bg-coco-darkest-blue"
+      #addToCartPlaceholder
+    >
+      <app-add-to-cart
+        class="w-full h-16"
+        [ngClass]="[
+          markerElementReached
+            ? ''
+            : 'fixed bottom-0 left-0 right-0 z-add-to-cart'
+        ]"
+        [productVariant]="selectedVariant"
+      ></app-add-to-cart>
     </div>
   </div>
 </div>
